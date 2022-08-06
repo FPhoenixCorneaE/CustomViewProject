@@ -69,24 +69,9 @@ open class SZJContextExtImpl private constructor(private val context: Context) :
         }
     }
 
-    /*
-     * 作者:android 超级兵
-     * 创建时间: 1/7/22 5:27 PM
-     * TODO float to dp
-     */
-    fun toDp(value: Float) = let {
-        (TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            value,
-            context.resources.displayMetrics
-        ))
-    }
-
-
     infix fun toast(value: Any) {
         Toast.makeText(context, value.toString(), Toast.LENGTH_SHORT).show()
     }
-
 
     // 屏幕的宽
     fun screenWidth() = let {
