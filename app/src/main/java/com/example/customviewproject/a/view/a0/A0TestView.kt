@@ -1,11 +1,10 @@
-package com.example.customviewproject.a.view
+package com.example.customviewproject.a.view.a0
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
-import com.example.customviewproject.ext.szj.szj
 
 /**
  *
@@ -14,13 +13,12 @@ import com.example.customviewproject.ext.szj.szj
  * @CreateDate: 8/5/22$ 9:55 AM$
  * TODO 参考:https://rengwuxian.com/ui-1-1/
  */
-class A1View @JvmOverloads constructor(
+class A0TestView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ) : View(context, attrs, defStyleAttr) {
 
-    // 屏幕宽高
-    private val screenWidth = context.szj.screenWidth()
-    private val screenHeight = context.szj.screenHeight()
+    // 宽
+    private var currentWidth = 0
 
     // 画笔
     private val paint by lazy {
@@ -37,6 +35,11 @@ class A1View @JvmOverloads constructor(
             // 抗锯齿
             it.isAntiAlias = true
         }
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        currentWidth = w
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -210,15 +213,15 @@ class A1View @JvmOverloads constructor(
          * @param ry: 圆角的纵向半径
          */
         paint.color = Color.RED
-        canvas.drawRoundRect(20f, 550F, screenWidth / 3f, 550f + 100f, 40f, 40f, paint)
+        canvas.drawRoundRect(20f, 550F, currentWidth / 3f, 550f + 100f, 40f, 40f, paint)
 
 
         // 2.
         paint.color = Color.RED
         paint.style = Paint.Style.FILL
-        canvas.drawRoundRect(screenWidth / 3f + 20f,
+        canvas.drawRoundRect(currentWidth / 3f + 20f,
             550F,
-            screenWidth / 3f * 2,
+            currentWidth / 3f * 2,
             550f + 100f,
             40f,
             40f,
@@ -239,30 +242,30 @@ class A1View @JvmOverloads constructor(
         // 1.
         paint.strokeWidth = 6f
         paint.color = Color.RED
-        canvas.drawLine(30f, 460f, screenWidth / 2f - 30f, 500f, paint)
-        canvas.drawLine(30f, 500f, screenWidth / 2f - 30f, 460f, paint)
+        canvas.drawLine(30f, 460f, currentWidth / 2f - 30f, 500f, paint)
+        canvas.drawLine(30f, 500f, currentWidth / 2f - 30f, 460f, paint)
 
         // 2. 绘制多条线
         var i = 0
         val floats = floatArrayOf(
-            screenWidth / 2f + i * 30, // startX,
+            currentWidth / 2f + i * 30, // startX,
             460f, // endX
-            screenWidth / 2f + i * 30, // endX
+            currentWidth / 2f + i * 30, // endX
             520f,    // endY
 
-            screenWidth / 2f + ++i * 30,
+            currentWidth / 2f + ++i * 30,
             460f,
-            screenWidth / 2f + i * 30,
+            currentWidth / 2f + i * 30,
             520f,
 
-            screenWidth / 2f + ++i * 30,
+            currentWidth / 2f + ++i * 30,
             460f,
-            screenWidth / 2f + i * 30,
+            currentWidth / 2f + i * 30,
             520f,
 
-            screenWidth / 2f + ++i * 30,
+            currentWidth / 2f + ++i * 30,
             460f,
-            screenWidth / 2f + i * 30,
+            currentWidth / 2f + i * 30,
             520f
         )
         paint.color = Color.GREEN
@@ -278,16 +281,16 @@ class A1View @JvmOverloads constructor(
      */
     private fun drawOval(canvas: Canvas) {
         // 1.
-        canvas.drawOval(10f, 350f, screenWidth / 4f, 420f, paint)
+        canvas.drawOval(10f, 350f, currentWidth / 4f, 420f, paint)
 
         // 2.
         paint.style = Paint.Style.STROKE // 空心椭圆
-        canvas.drawOval(screenWidth / 4 + 10f, 350f, screenWidth / 4 * 2f, 420f, paint)
+        canvas.drawOval(currentWidth / 4 + 10f, 350f, currentWidth / 4 * 2f, 420f, paint)
 
         // 3.
         paint.color = Color.GREEN
         paint.strokeWidth = 2f
-        canvas.drawOval(RectF(screenWidth / 4 * 2 + 20f, 350f, screenWidth / 4 * 3f, 420f),
+        canvas.drawOval(RectF(currentWidth / 4 * 2 + 20f, 350f, currentWidth / 4 * 3f, 420f),
             paint)
     }
 
@@ -357,26 +360,26 @@ class A1View @JvmOverloads constructor(
         // 1.
         paint.style = Paint.Style.STROKE // 空心样式
         paint.strokeWidth = 10f // 设置线条宽度
-        canvas.drawRect(10f, 150f, screenWidth / 8f, 150f + 100f, paint)
+        canvas.drawRect(10f, 150f, currentWidth / 8f, 150f + 100f, paint)
 
         // 2.
         paint.style = Paint.Style.FILL // 实心样式
-        canvas.drawRect(screenWidth / 8 + 10f,
+        canvas.drawRect(currentWidth / 8 + 10f,
             150f,
-            screenWidth / 8 * 2f,
+            currentWidth / 8 * 2f,
             150f + 100f,
             this.paint)
 
 
         // 3.
         paint.color = Color.BLACK
-        canvas.drawRect(Rect(screenWidth / 8 * 2 + 10, 150, screenWidth / 8 * 3, 150 + 100),
+        canvas.drawRect(Rect(currentWidth / 8 * 2 + 10, 150, currentWidth / 8 * 3, 150 + 100),
             paint)
 
 
         // 3.
         paint.color = Color.GREEN
-        canvas.drawRect(RectF(screenWidth / 8 * 3 + 10f, 150f, screenWidth / 8 * 4f, 150 + 100f),
+        canvas.drawRect(RectF(currentWidth / 8 * 3 + 10f, 150f, currentWidth / 8 * 4f, 150 + 100f),
             paint)
 
     }

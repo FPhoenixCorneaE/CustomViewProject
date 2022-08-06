@@ -11,6 +11,7 @@ import android.util.TypedValue
  * TODO
  */
 
-val Float.px
+val Float.dp
     get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this,
         Resources.getSystem().displayMetrics)
+

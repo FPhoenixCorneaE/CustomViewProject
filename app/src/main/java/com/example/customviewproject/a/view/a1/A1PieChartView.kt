@@ -1,4 +1,4 @@
-package com.example.customviewproject.a.view
+package com.example.customviewproject.a.view.a1
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import com.example.customviewproject.ext.szj.px
+import com.example.customviewproject.ext.szj.dp
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -18,7 +18,7 @@ import kotlin.math.sin
  * @CreateDate: 8/6/22$ 10:13 AM$
  * TODO 饼状图View
  */
-class PieChartView @JvmOverloads constructor(
+class A1PieChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ) : View(context, attrs, defStyleAttr) {
 
@@ -35,7 +35,7 @@ class PieChartView @JvmOverloads constructor(
 
     companion object {
         // 饼状图半径
-        private val RADIUS = 100f.px
+        private val RADIUS = 100f.dp
 
         // 选中
         private const val SELECT = 2

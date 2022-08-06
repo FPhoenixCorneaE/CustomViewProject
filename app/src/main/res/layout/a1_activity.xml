@@ -10,16 +10,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_margin="@dimen/dp_10"
         android:text="难度:入门绘制\n绘制完成时间: 2022.8.5 - 2022.8.6" />
 
-    <com.example.customviewproject.a.view.DashBoardView
+    <com.example.customviewproject.a.view.a1.A1DashBoardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <com.example.customviewproject.a.view.PieChartView
+    <com.example.customviewproject.a.view.a1.A1PieChartView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />

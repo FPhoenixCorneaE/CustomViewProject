@@ -1,4 +1,4 @@
-package com.example.customviewproject.a.view
+package com.example.customviewproject.a.view.a1
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,7 +6,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import com.example.customviewproject.ext.szj.px
+import com.example.customviewproject.ext.szj.dp
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -17,7 +17,7 @@ import kotlin.math.sin
  * @CreateDate: 8/5/22$ 7:13 PM$
  * TODO 仪表盘View
  */
-class DashBoardView @JvmOverloads constructor(
+class A1DashBoardView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ) : View(context, attrs, defStyleAttr) {
 
@@ -30,7 +30,7 @@ class DashBoardView @JvmOverloads constructor(
     companion object {
 
         // 仪表盘半径
-        private val RADIUS = 100f.px
+        private val RADIUS = 100f.dp
 
         // 仪表盘角度
         private const val ANGLE = 120f
@@ -42,7 +42,7 @@ class DashBoardView @JvmOverloads constructor(
         private const val POINTER_MAX_COUNT = 25f
 
         // 箭头宽高
-        private val ARROW_LENGTH = 80f.px
+        private val ARROW_LENGTH = 80f.dp
 
         // 当前箭头位置
         private var CURRENT_POSITION = 2
