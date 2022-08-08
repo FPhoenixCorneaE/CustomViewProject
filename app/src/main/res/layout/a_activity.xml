@@ -27,4 +27,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="进度条与文字绘制" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="范围裁切" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="几何变换(camera)" />
 </LinearLayout>

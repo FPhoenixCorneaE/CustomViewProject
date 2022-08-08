@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomViewProject">
-        <activity android:name=".MainActivity">
+        <!--        <activity android:name=".MainActivity">-->
+        <activity android:name=".a.activity.A4Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +22,8 @@
         <activity android:name=".a.activity.A2Activity" />
         <activity android:name=".a.activity.A3Activity" />
         <activity android:name=".a.activity.A0Activity" />
+        <!--        <activity android:name=".a.activity.A4Activity" />-->
+        <activity android:name=".a.activity.A5Activity" />
 
     </application>
 </manifest>

@@ -1,6 +1,10 @@
 package com.example.customviewproject.ext
 
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.View
+import com.example.customviewproject.R
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
@@ -37,4 +41,15 @@ fun View.click(
             override fun onComplete() {
             }
         })
+}
+
+// 获取通用图片
+fun View.getBitMap(width: Int = 640): Bitmap = let {
+    val options = BitmapFactory.Options()
+    options.inJustDecodeBounds = true
+    BitmapFactory.decodeResource(resources, R.mipmap.user)
+    options.inJustDecodeBounds = false
+    options.inDensity = options.outWidth
+    options.inTargetDensity = width
+    BitmapFactory.decodeResource(resources, R.mipmap.user, options)
 }
