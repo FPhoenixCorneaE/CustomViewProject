@@ -38,5 +38,11 @@
         android:id="@+id/bt5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="几何变换(camera)" />
+        android:text="几何变换" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="camera(三维变换)" />
 </LinearLayout>

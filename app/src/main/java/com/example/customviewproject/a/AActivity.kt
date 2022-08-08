@@ -38,5 +38,8 @@ class AActivity : BaseActivity<AActivityBinding>() {
         binding.bt5.click {
             jumpActivity(it, A5Activity::class.java)
         }
+        binding.bt6.click {
+            jumpActivity(it, A6Activity::class.java)
+        }
     }
 }
