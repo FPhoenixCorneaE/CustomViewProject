@@ -7,7 +7,6 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.graphics.withSave
-import androidx.core.graphics.withTranslation
 import com.example.customviewproject.ext.dp
 import com.example.customviewproject.ext.getBitMap
 
@@ -44,16 +43,91 @@ class A6CameraView @JvmOverloads constructor(
 
     private val bitMap by lazy { getBitMap(width / 2) }
 
+
+    // 旋转角度
+    var rotateAngle = 0f
+        set(value) {
+            field = value
+            postInvalidate()
+        }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
         // 基本认识
 //        drawTest1(canvas)
 
-        drawFlip(canvas)
+        // 绘制中心线变大
+//        drawFlip(canvas)
 
+        // 绘制30度变大
+        drawFlip2(canvas)
     }
 
+    // 绘制30度变大
+    private fun drawFlip2(canvas: Canvas) {
+        val left = width / 2f - bitMap.width / 2f
+        val top = height / 2f - bitMap.height / 2f
+        val right = left + bitMap.width
+        val bottom = top + bitMap.height
+
+        // TODO 绘制第一张平的图片
+        canvas.withSave {
+            // 6. 将图片中心点移动到屏幕中心
+            canvas.translate((left + bitMap.width / 2), (top + bitMap.height / 2))
+
+            // 5. 将图片旋转回来
+            canvas.rotate(-rotateAngle)
+//
+//            // 4. 裁剪
+            canvas.clipRect(-bitMap.width.toFloat(),
+                -bitMap.height.toFloat(),
+                bitMap.width.toFloat(),
+                0f) // 裁剪
+
+            // 3.旋转
+            canvas.rotate(rotateAngle)
+
+            // 2. 将图片中心点移动到屏幕左上角(0,0)
+            canvas.translate(-(left + bitMap.width / 2), -(top + bitMap.height / 2))
+
+            // 1. 绘制图片
+            canvas.drawBitmap(bitMap,
+                left,
+                top,
+                paint)
+        }
+
+        // TODO 绘制第二张弯的图
+        canvas.withSave {
+
+            // 6. 将图片中心点移动到屏幕中心
+            canvas.translate((left + bitMap.width / 2), (top + bitMap.height / 2))
+
+            // 5. 将图片旋转回来
+            canvas.rotate(-rotateAngle)
+
+            // 将 图片x轴变大
+            camera.applyToCanvas(canvas)
+//
+//            // 4. 裁剪
+            canvas.clipRect(-bitMap.width.toFloat(),
+                0f,
+                bitMap.width.toFloat(),
+                bitMap.height.toFloat()) // 裁剪
+
+            // 3.旋转
+            canvas.rotate(rotateAngle)
+
+            // 2. 将图片中心点移动到屏幕左上角(0,0)
+            canvas.translate(-(left + bitMap.width / 2), -(top + bitMap.height / 2))
+
+            // 1. 绘制图片
+            canvas.drawBitmap(bitMap,
+                left,
+                top,
+                paint)
+        }
+    }
 
     //region
     /*

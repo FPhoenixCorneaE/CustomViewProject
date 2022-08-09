@@ -44,5 +44,5 @@
         android:id="@+id/bt6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="camera(三维变换)" />
+        android:text="camera(三维变换) 与 属性动画" />
 </LinearLayout>
