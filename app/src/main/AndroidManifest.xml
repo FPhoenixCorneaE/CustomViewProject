@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomViewProject">
         <!--        <activity android:name=".MainActivity">-->
-        <activity android:name=".a.activity.A6Activity">
+        <activity android:name=".b.activity.B1Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,6 +23,7 @@
         <activity android:name=".a.activity.A3Activity" />
         <activity android:name=".a.activity.A0Activity" />
         <activity android:name=".a.activity.A4Activity" />
+        <activity android:name=".b.BActivity" />
         <!--        <activity android:name=".a.activity.A5Activity" />-->
 
     </application>

@@ -61,6 +61,8 @@ class A6CameraView @JvmOverloads constructor(
 
         // 绘制30度变大
         drawFlip2(canvas)
+
+
     }
 
     // 绘制30度变大

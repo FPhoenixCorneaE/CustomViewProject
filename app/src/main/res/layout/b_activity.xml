@@ -5,15 +5,8 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tooltipText="只有在drawFlip2情况下可用"
-        android:id="@+id/btRotate"
-        android:text="尝试旋转" />
-
-    <com.example.customviewproject.a.view.a6.A6CameraView
-        android:id="@+id/cameraView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:text="缩放ImageView" />
 </LinearLayout>

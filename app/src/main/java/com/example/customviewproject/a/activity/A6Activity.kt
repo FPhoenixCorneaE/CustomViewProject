@@ -6,9 +6,11 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.os.Bundle
 import android.view.animation.*
+import android.widget.LinearLayout
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.A6ActivityBinding
 import com.example.customviewproject.ext.click
+import kotlin.concurrent.thread
 
 /**
  *

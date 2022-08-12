@@ -32,12 +32,15 @@ class AActivity : BaseActivity<AActivityBinding>() {
         binding.bt3.click {
             jumpActivity(it, A3Activity::class.java)
         }
+
         binding.bt4.click {
             jumpActivity(it, A4Activity::class.java)
         }
+
         binding.bt5.click {
             jumpActivity(it, A5Activity::class.java)
         }
+
         binding.bt6.click {
             jumpActivity(it, A6Activity::class.java)
         }
