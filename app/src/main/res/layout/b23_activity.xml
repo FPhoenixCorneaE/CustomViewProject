@@ -5,15 +5,14 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt1"
         android:layout_width="match_parent"
+        android:id="@+id/clearBt"
         android:layout_height="wrap_content"
-        android:text="缩放ImageView" />
+        android:text="clear" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.example.customviewproject.b.view.b2.B23TouchView
         android:layout_width="match_parent"
-        android:id="@+id/bt2"
-        android:layout_height="wrap_content"
-        android:text="多点触控" />
-
+        android:id="@+id/touchView"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>

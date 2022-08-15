@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="默认型" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="抢夺型" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="配合型" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="默认画板类型" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="各自为战型" />
+
+
+</LinearLayout>

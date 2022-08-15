@@ -1,6 +1,7 @@
 package com.example.customviewproject.b.activity
 
 import android.os.Bundle
+import android.util.SparseArray
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.B1ActivityBinding
 
@@ -12,7 +13,7 @@ import com.example.customviewproject.databinding.B1ActivityBinding
  * TODO zoomImageView
  */
 class B1Activity : BaseActivity<B1ActivityBinding>() {
-    override fun initView(savedInstanceState: Bundle?) {
 
+    override fun initView(savedInstanceState: Bundle?) {
     }
 }

@@ -281,6 +281,7 @@ class ZoomImageView @JvmOverloads constructor(
         return true
     }
 
+    // 缩放结束
     override fun onScaleEnd(detector: ScaleGestureDetector?) {
         // 当前图片的宽
         val currentWidth = bitmap.width * currentZoom

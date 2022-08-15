@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        android:text="移动过程中，通过多点触控，解决默认类型抢夺《指挥权》问题"
+        android:layout_height="match_parent"/>
+    <com.example.customviewproject.b.view.b2.B21TouchView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>
