@@ -114,7 +114,7 @@ class B21TouchView @JvmOverloads constructor(
                 val pointId = event.getPointerId(index)
 
                 Log.e("szjACTION_POINTER_UP", "${event.actionIndex}")
-                // 如果当前抬起手指的id == 当前手指的id; 就让最后一根手指来 "指挥"
+                // 如果当前抬起手指的id == 当前按下手指的id; 就让最后一根手指来 "指挥"
                 if (pointId == currentPointId) {
 
                     // 判断当前手指是否是最后一根手指

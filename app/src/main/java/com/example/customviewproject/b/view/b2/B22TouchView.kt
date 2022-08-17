@@ -58,7 +58,7 @@ class B22TouchView @JvmOverloads constructor(
 //        Log.e("szjOnTouchEvent","${event.actionIndex}")
 
         (0 until event.pointerCount).forEach {
-            // 如果当前是pointer_up事件 并且 当前事件为最后一个抬起 那么就累加
+            // ！(如果当前是pointer_up事件 并且 当前事件为最后一个抬起) 那么就累加
             if (!(isPointUp && it == event.actionIndex)) {
                 sumX += event.getX(it)
                 sumY += event.getY(it)

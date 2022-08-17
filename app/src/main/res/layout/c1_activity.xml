@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <com.example.customviewproject.b.view.b1.ZoomImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
+    <com.example.customviewproject.c.view.C1View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

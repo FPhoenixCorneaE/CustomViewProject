@@ -11,10 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="入门" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="基础" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="小进阶" />
 
 </LinearLayout>
