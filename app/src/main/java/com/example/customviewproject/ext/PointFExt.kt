@@ -18,9 +18,9 @@ import androidx.core.graphics.minus
  * return: 在内返回true
  */
 fun PointF.contains(b: PointF, bPadding: Float = 0f): Boolean {
-    val isX = this.x < b.x + bPadding && this.x > b.x - bPadding
+    val isX = this.x <= b.x + bPadding && this.x >= b.x - bPadding
 
-    val isY = this.y < b.y + bPadding && this.y > b.y - bPadding
+    val isY = this.y <= b.y + bPadding && this.y >= b.y - bPadding
     return isX && isY
 }
 

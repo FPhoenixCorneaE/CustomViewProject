@@ -1,5 +1,8 @@
 package com.example.customviewproject.c.view
 
+import android.animation.ObjectAnimator
+import android.animation.PointFEvaluator
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
@@ -7,9 +10,13 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.OvershootInterpolator
+import androidx.core.animation.doOnEnd
 import androidx.core.graphics.minus
+import com.example.customviewproject.R
 import com.example.customviewproject.ext.contains
 import com.example.customviewproject.ext.dp
+import com.example.customviewproject.ext.getBitMap
 import kotlin.math.*
 
 /**
@@ -27,6 +34,41 @@ class C1View @JvmOverloads constructor(
         style = Paint.Style.FILL_AND_STROKE
     }
 
+    // 加载20张图片 对应 [explode_0.jpg .. explode_19.jpg]
+    val explodeImages by lazy {
+        val list = arrayListOf<Bitmap>()
+        val width = BIG_RADIUS * 2 * 2
+        list.add(getBitMap(R.mipmap.explode_0, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_1, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_2, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_3, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_4, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_5, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_5, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_6, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_7, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_8, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_9, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_10, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_11, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_12, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_13, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_14, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_15, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_16, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_17, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_18, width.toInt()))
+        list.add(getBitMap(R.mipmap.explode_19, width.toInt()))
+        list
+    }
+
+    // 爆炸下标
+    var explodeIndex = -1
+        set(value) {
+            field = value
+            invalidate()
+        }
+
     companion object {
         // 大圆半径
         private val BIG_RADIUS = 20.dp
@@ -34,23 +76,74 @@ class C1View @JvmOverloads constructor(
         // 小圆半径
         private val SMALL_RADIUS = BIG_RADIUS
 
-        // 最大范围，超出这个范围大圆不显示
+        // 最大范围(半径)，超出这个范围大圆不显示
         private val MAX_RADIUS = 150.dp
     }
 
     // 大圆位置
-    private val bigPointF by lazy { PointF(width / 2f, height / 2f) }
+    var bigPointF = PointF(0f, 0f)
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     // 小圆位置
     private val smallPointF by lazy { PointF(width / 2f, height / 2f) }
+
+    // 爆炸效果动画
+    private val explodeAnimator by lazy {
+        ObjectAnimator.ofInt(this, "explodeIndex", 19, -1).apply {
+            duration = 1000
+        }
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val width = resolveSize((MAX_RADIUS * 2).toInt(), widthMeasureSpec)
+        val height = resolveSize((MAX_RADIUS * 2).toInt(), heightMeasureSpec)
+        setMeasuredDimension(width, height)
+    }
+
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        bigPointF = PointF(width / 2f, height / 2f)
+    }
+
+    var isMove = false
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
 
         when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                isMove = bigPointF.contains(PointF(event.x, event.y), BIG_RADIUS)
+
+            }
             MotionEvent.ACTION_MOVE -> {
-                bigPointF.x = event.x
-                bigPointF.y = event.y
+                if (isMove) {
+                    // 如果当前点击的位置 包含 bigPointF 说明选中了
+                    bigPointF.x = event.x
+                    bigPointF.y = event.y
+                } else {
+                    bigPointF.x = width / 2f
+                    bigPointF.y = height / 2f
+                }
+
+            }
+            MotionEvent.ACTION_UP -> {
+                // 如果大圆位置超出拖拽范围，不回弹
+                if (bigPointF.contains(smallPointF, MAX_RADIUS)) {
+                    bigAnimator().start()
+                } else {
+                    // 绘制爆炸效果
+                    explodeAnimator.start()
+                    // 爆炸效果结束后，将图片移动到原始位置
+                    explodeAnimator.doOnEnd {
+                        bigPointF.x = width / 2f
+                        bigPointF.y = height / 2f
+                    }
+                }
             }
         }
 
@@ -58,8 +151,17 @@ class C1View @JvmOverloads constructor(
         return true
     }
 
+    private fun bigAnimator(): ValueAnimator {
+        return ObjectAnimator.ofObject(this, "bigPointF", PointFEvaluator(),
+            PointF(width / 2f, height / 2f)).apply {
+            duration = 400
+            interpolator = OvershootInterpolator(3f) // 设置回弹迭代器
+        }
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+
 
         paint.color = Color.RED
 
@@ -87,7 +189,10 @@ class C1View @JvmOverloads constructor(
 //        val isDrawBigY =
 //            bigPointF.y < smallPointF.y + MAX_RADIUS && bigPointF.y > smallPointF.y - MAX_RADIUS
 //        if (isDrawBigX && isDrawBigY) {
-        if (bigPointF.contains(smallPointF, MAX_RADIUS)) {
+        val isContains = bigPointF.contains(smallPointF, MAX_RADIUS)
+        Log.e("szj是否包含",
+            "isContains:$isContains\tbigPointF:$bigPointF\tsmallPointF:$smallPointF")
+        if (isContains) {
             // 大圆
             canvas.drawCircle(bigPointF.x, bigPointF.y, BIG_RADIUS, paint)
 
@@ -95,6 +200,13 @@ class C1View @JvmOverloads constructor(
             drawBezier(canvas, smallRadius, BIG_RADIUS)
         }
 
+        // 绘制爆炸效果
+        if (explodeIndex != -1) {
+            canvas.drawBitmap(explodeImages[explodeIndex],
+                bigPointF.x - BIG_RADIUS,
+                bigPointF.y - BIG_RADIUS,
+                paint)
+        }
 
         // 辅助圆范围
         paint.color = Color.argb(30, 255, 0, 0)
@@ -142,7 +254,6 @@ class C1View @JvmOverloads constructor(
         path.quadTo(controlPointX, controlPointY, p3X.toFloat(), p3Y.toFloat())
         path.close()
         canvas.drawPath(path, paint)
-
     }
 
     // 小圆与大圆之间的距离
@@ -150,7 +261,5 @@ class C1View @JvmOverloads constructor(
         val current = bigPointF - smallPointF
         return sqrt(current.x.toDouble().pow(2.0) + (current.y.toDouble().pow(2.0))).toFloat()
     }
-
-
 }
 

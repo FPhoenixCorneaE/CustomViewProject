@@ -1,9 +1,9 @@
 package com.example.customviewproject.ext
 
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.View
+import androidx.annotation.DrawableRes
 import com.example.customviewproject.R
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.disposables.Disposable
@@ -44,12 +44,13 @@ fun View.click(
 }
 
 // 获取通用图片
-fun View.getBitMap(width: Int = 640): Bitmap = let {
+
+fun View.getBitMap(@DrawableRes bitmap: Int = R.mipmap.user, width: Int = 640): Bitmap = let {
     val options = BitmapFactory.Options()
     options.inJustDecodeBounds = true
-    BitmapFactory.decodeResource(resources, R.mipmap.user)
+    BitmapFactory.decodeResource(resources, bitmap)
     options.inJustDecodeBounds = false
     options.inDensity = options.outWidth
     options.inTargetDensity = width
-    BitmapFactory.decodeResource(resources, R.mipmap.user, options)
+    BitmapFactory.decodeResource(resources, bitmap, options)
 }
