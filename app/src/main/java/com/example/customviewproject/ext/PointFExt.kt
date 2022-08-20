@@ -23,7 +23,3 @@ fun PointF.contains(b: PointF, bPadding: Float = 0f): Boolean {
     val isY = this.y <= b.y + bPadding && this.y >= b.y - bPadding
     return isX && isY
 }
-
-fun PointF.distance(b: PointF) {
-    this - b
-}

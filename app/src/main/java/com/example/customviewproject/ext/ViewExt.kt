@@ -9,6 +9,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 
+
 /**
  *
  * @ClassName: ViewExt
@@ -44,7 +45,6 @@ fun View.click(
 }
 
 // 获取通用图片
-
 fun View.getBitMap(@DrawableRes bitmap: Int = R.mipmap.user, width: Int = 640): Bitmap = let {
     val options = BitmapFactory.Options()
     options.inJustDecodeBounds = true
@@ -53,4 +53,10 @@ fun View.getBitMap(@DrawableRes bitmap: Int = R.mipmap.user, width: Int = 640): 
     options.inDensity = options.outWidth
     options.inTargetDensity = width
     BitmapFactory.decodeResource(resources, bitmap, options)
+}
+
+// 从View中获取bitMap
+fun View.getBackgroundBitMap(): Bitmap = let {
+    this.buildDrawingCache()
+    this.drawingCache
 }

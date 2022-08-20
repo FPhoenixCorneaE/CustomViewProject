@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.util.TypedValue
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.IntRange
@@ -27,6 +28,16 @@ val screenWidth
 val screenHeight
     get() = Resources.getSystem().displayMetrics.heightPixels
 
+// 获取状态栏高度
+fun Context.statusBarHeight() = let {
+    var height = 0
+    val resourceId: Int = resources
+        .getIdentifier("status_bar_height", "dimen", "android")
+    if (resourceId > 0) {
+        height = resources.getDimensionPixelSize(resourceId)
+    }
+    height
+}
 /*
  * TODO 获取样式
  */

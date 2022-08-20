@@ -2,6 +2,8 @@ package com.example.customviewproject.c.activity
 
 import android.os.Bundle
 import com.example.customviewproject.base.BaseActivity
+import com.example.customviewproject.c.view.c2.DragBubbleUtil
+import com.example.customviewproject.c.view.c2.blog.BlogDragBubbleUtil
 import com.example.customviewproject.databinding.C1ActivityBinding
 
 /**
@@ -13,9 +15,8 @@ import com.example.customviewproject.databinding.C1ActivityBinding
  */
 class C1Activity : BaseActivity<C1ActivityBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
-
-
+//        BlogDragBubbleUtil(binding.bt1).bind()
+//        BlogDragBubbleUtil(binding.bt2).bind()
+//        BlogDragBubbleUtil(binding.bt3).bind()
     }
-
-
 }
