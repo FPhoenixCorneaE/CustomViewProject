@@ -11,9 +11,15 @@
         android:text="缩放ImageView" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="match_parent"
         android:id="@+id/bt2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="多点触控" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="贝塞尔公式(花束效果)" />
 
 </LinearLayout>
