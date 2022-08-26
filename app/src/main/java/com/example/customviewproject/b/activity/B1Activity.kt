@@ -1,7 +1,9 @@
 package com.example.customviewproject.b.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.util.SparseArray
+import com.example.customviewproject.R
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.B1ActivityBinding
 
@@ -15,5 +17,6 @@ import com.example.customviewproject.databinding.B1ActivityBinding
 class B1Activity : BaseActivity<B1ActivityBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
+
     }
 }

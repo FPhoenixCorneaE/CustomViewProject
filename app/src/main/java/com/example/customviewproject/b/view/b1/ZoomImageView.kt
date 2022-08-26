@@ -31,6 +31,13 @@ class ZoomImageView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ) : View(context, attrs, defStyleAttr), GestureDetector.OnGestureListener,
     GestureDetector.OnDoubleTapListener, Runnable, ScaleGestureDetector.OnScaleGestureListener {
+//    init {
+//        for (i in 0 until attrs!!.attributeCount) {
+//            val name = attrs.getAttributeName(i)
+//            val value = attrs.getAttributeValue(i)
+//            Log.e("szjAttrs", "name:${name}\tvalue:${value}")
+//        }
+//    }
 
     private val bitmap = getBitMap()
     private val paint = Paint()
@@ -111,7 +118,7 @@ class ZoomImageView @JvmOverloads constructor(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
-         scaleGesture.onTouchEvent(event)
+        scaleGesture.onTouchEvent(event)
         // 是否在进行缩放
         if (!scaleGesture.isInProgress) {
             return gestureDetector.onTouchEvent(event)

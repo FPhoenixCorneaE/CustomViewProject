@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- TODO 视差动画 start  -->
+
+
+    <!--  出场  -->
+    <attr name="parallaxTransformOutX" format="float" />
+    <attr name="parallaxTransformOutY" format="float" />
+
+    <!--  如场  -->
+    <attr name="parallaxTransformInX" format="float" />
+    <attr name="parallaxTransformInY" format="float" />
+
+    <!-- 旋转 (圈数)  -->
+    <attr name="parallaxRotateIn" format="integer" />
+    <attr name="parallaxRotateOut" format="integer" />
+
+
+    <!--  缩放(倍数)  -->
+    <attr name="parallaxZoomIn" format="float" />
+    <attr name="parallaxZoomOut" format="float" />
+    <!--  TODO 视差动画 end  -->
+</resources>

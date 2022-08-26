@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.view.LayoutInflaterCompat
 import com.example.customviewproject.R
 import com.example.customviewproject.ext.dp
 import com.example.customviewproject.ext.getBitMap
@@ -17,7 +18,7 @@ import com.example.customviewproject.ext.getBitMap
  * @ClassName: C3View
  * @Author: 史大拿
  * @CreateDate: 8/22/22$ 2:24 PM$
- * TODO
+ * TODO 贝塞尔曲线
  */
 class B3View @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
