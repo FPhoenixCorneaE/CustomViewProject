@@ -5,13 +5,16 @@ import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.LayoutInflaterCompat
 import androidx.fragment.app.Fragment
+import com.example.customviewproject.R
 import com.example.customviewproject.c.view.c3.C3Bean
 import com.example.customviewproject.system.SystemAppCompatViewInflater
 import org.jetbrains.annotations.NotNull
@@ -76,18 +79,13 @@ class C3Fragment private constructor() : Fragment(), LayoutInflater.Factory2 {
                 "parallaxTransformOutY" -> {
                     data.parallaxTransformOutY = attrs.getAttributeValue(it).toFloat()
                 }
-                "parallaxRotateIn" -> {
-                    data.parallaxRotateIn = attrs.getAttributeValue(it).toInt()
+                "parallaxRotate" -> { // 旋转
+                    data.parallaxRotate = attrs.getAttributeValue(it).toFloat()
                 }
-                "parallaxRotateOut" -> {
-                    data.parallaxRotateOut = attrs.getAttributeValue(it).toInt()
+                "parallaxZoom" -> { // 缩放
+                    data.parallaxZoom = attrs.getAttributeValue(it).toFloat()
                 }
-                "parallaxZoomIn" -> {
-                    data.parallaxZoomIn = attrs.getAttributeValue(it).toFloat()
-                }
-                "parallaxZoomOut" -> {
-                    data.parallaxZoomOut = attrs.getAttributeValue(it).toFloat()
-                }
+
             }
             Log.i("szj属性",
                 "key:${attrs.getAttributeName(it)}\tvalue:${attrs.getAttributeValue(it)}")

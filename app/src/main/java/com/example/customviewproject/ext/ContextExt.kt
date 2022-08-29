@@ -38,6 +38,7 @@ fun Context.statusBarHeight() = let {
     }
     height
 }
+
 /*
  * TODO 获取样式
  */
@@ -72,5 +73,9 @@ fun Context.randomColor(@IntRange(from = 0, to = 255) alpha: Int = 255): Int = l
 
 infix fun Context.toast(value: Any) {
     Toast.makeText(this, value.toString(), Toast.LENGTH_SHORT).show()
+}
+
+infix fun <T> T.toast(context: Context) {
+    Toast.makeText(context, this.toString(), Toast.LENGTH_SHORT).show()
 }
 

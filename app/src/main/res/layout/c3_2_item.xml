@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/purple_200">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/contentImage2"
@@ -28,12 +27,9 @@
         android:src="@mipmap/feiji"
         app:layout_constraintLeft_toRightOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/contentImage2"
-        app:parallaxRotateIn="10"
-        app:parallaxRotateOut="1"
-        app:parallaxZoomIn="1.5"
-        app:parallaxZoomOut="2.5"
-        app:parallaxTransformInX="0.8"
-        app:parallaxTransformOutX="0.3"
+        app:parallaxTransformInX="1"
+        app:parallaxTransformOutX="1"
+        app:parallaxZoom="1.5"
         tools:ignore="ContentDescription,MissingPrefix" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -41,5 +37,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

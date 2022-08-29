@@ -3,14 +3,11 @@ package com.example.customviewproject.c.view.c3
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
-import android.view.View
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.customviewproject.R
 import com.example.customviewproject.c.fragment.c3.C3Fragment
 import java.util.ArrayList
 
@@ -24,7 +21,31 @@ import java.util.ArrayList
 class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(context, attrs) {
     private val listFragment = arrayListOf<C3Fragment>()
 
-    init {
+    /*
+     * 作者:史大拿
+     * 创建时间: 8/29/22 9:47 AM
+     * TODO
+     * @param2 list: 所有layout布局
+     * @param3 block参数: @param1 :Fragment总长度
+     *                   @param2 :当前切换下标
+     *                   @param3 :当前切换到的fragment
+     */
+    fun setLayout(
+        fm: FragmentManager,
+        @LayoutRes list: ArrayList<Int>,
+        block: (Int, Int, Fragment) -> Unit,
+    ) {
+        listFragment.clear()
+        // 加载fragment
+        list.map {
+            C3Fragment.instance(it)
+        }.forEach {
+            listFragment.add(it)
+        }
+
+        adapter = ParallaxAdapter(listFragment, fm)
+
+
         // 监听变化
         addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrolled(
@@ -38,18 +59,18 @@ class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(cont
                 val currentFragment = listFragment[position]
                 currentFragment.list.forEach { view ->
                     val tag = view.getTag(view.id)
-                    Log.i("szjCurrentFragment", "${view::class.java.simpleName}\t$tag")
 
                     (tag as? C3Bean)?.let {
                         // 入场
                         view.translationX = -it.parallaxTransformInX * positionOffsetPixels
                         view.translationY = -it.parallaxTransformInY * positionOffsetPixels
-                        view.rotation = -it.parallaxRotateIn * 360 * positionOffset
+                        view.rotation = -it.parallaxRotate * 360 * positionOffset
 
-                        if (positionOffset != 0f && it.parallaxZoomIn != 0f) {
-                            view.scaleX = 1 + it.parallaxZoomIn * positionOffset
-                            view.scaleY = 1 + it.parallaxZoomIn * positionOffset
-                        }
+
+                        view.scaleX =
+                            1 + it.parallaxZoom - (it.parallaxZoom * positionOffset)
+                        view.scaleY =
+                            1 + it.parallaxZoom - (it.parallaxZoom * positionOffset)
 
                     }
                 }
@@ -64,34 +85,33 @@ class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(cont
 
                         (tag as? C3Bean)?.let {
                             view.translationX =
-                                it.parallaxTransformOutX * (width - positionOffsetPixels)
+                                it.parallaxTransformInX * (width - positionOffsetPixels)
                             view.translationY =
-                                it.parallaxTransformOutY * (height - positionOffsetPixels)
-                            view.rotation = it.parallaxRotateOut * 360 * positionOffset
+                                it.parallaxTransformInY * (height - positionOffsetPixels)
 
-                            if (positionOffset != 0f && it.parallaxZoomIn != 0f) {
-                                view.scaleX = it.parallaxZoomOut * positionOffset
-                                view.scaleY = it.parallaxZoomOut * positionOffset
-                            }
+                            view.rotation = it.parallaxRotate * 360 * positionOffset
+
+
+                            view.scaleX = (1 + it.parallaxZoom * positionOffset)
+                            view.scaleY = (1 + it.parallaxZoom * positionOffset)
                         }
                     }
                 }
             }
 
+            //TODO 当页面切换完成时候调用 返回当前页面位置
             override fun onPageSelected(position: Int) {
-                // 当页面切换完成时候调用 返回当前页面位置
                 Log.e("szjParallaxViewPager", "onPageSelected:$position")
+                block(listFragment.size, position, listFragment[position])
             }
 
             override fun onPageScrollStateChanged(state: Int) {
                 when (state) {
                     SCROLL_STATE_IDLE -> {
                         Log.e("szjParallaxViewPager", "onPageScrollStateChanged:页面空闲中..")
-
                     }
                     SCROLL_STATE_DRAGGING -> {
                         Log.e("szjParallaxViewPager", "onPageScrollStateChanged:拖动中..")
-
                     }
                     SCROLL_STATE_SETTLING -> {
                         Log.e("szjParallaxViewPager", "onPageScrollStateChanged:拖动停止了..")
@@ -99,26 +119,12 @@ class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(cont
                 }
             }
         })
-    }
-
-    fun setLayout(fm: FragmentManager, list: ArrayList<Int>) {
-        listFragment.clear()
-        // 加载fragment
-        list.map {
-            C3Fragment.instance(it)
-        }.forEach {
-            listFragment.add(it)
-        }
-
-        adapter = ParallaxAdapter(listFragment, fm)
-
 
     }
 
     inner class ParallaxAdapter(private val list: List<Fragment>, fm: FragmentManager) :
-        FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        FragmentPagerAdapter(fm) {
         override fun getCount(): Int = list.size
         override fun getItem(position: Int) = list[position]
     }
-
 }

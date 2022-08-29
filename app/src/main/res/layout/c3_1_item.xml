@@ -26,12 +26,10 @@
         android:src="@mipmap/dengpao"
         app:layout_constraintLeft_toRightOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/contentImage1"
-        app:parallaxRotateIn="10"
-        app:parallaxRotateOut="1"
+        app:parallaxRotate="10"
         app:parallaxTransformInY="0.5"
-        app:parallaxTransformOutY="0.5"
-        app:parallaxZoomIn="2.5"
-        tools:ignore="ContentDescription,MissingPrefix" />
+        app:parallaxZoom="1.5"
+        tools:ignore="MissingPrefix" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
