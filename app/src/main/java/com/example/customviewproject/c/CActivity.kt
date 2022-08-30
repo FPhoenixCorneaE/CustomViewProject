@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.c.activity.C1Activity
 import com.example.customviewproject.c.activity.C2Activity
+import com.example.customviewproject.c.activity.C3Activity
 import com.example.customviewproject.databinding.CActivityBinding
 import com.example.customviewproject.ext.click
 import com.example.customviewproject.ext.jumpActivity
@@ -23,6 +24,9 @@ class CActivity : BaseActivity<CActivityBinding>() {
         }
         binding.bt2.click {
             jumpActivity(it, C2Activity::class.java)
+        }
+        binding.bt3.click {
+            jumpActivity(it, C3Activity::class.java)
         }
     }
 }

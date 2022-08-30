@@ -16,4 +16,10 @@
         android:layout_height="wrap_content"
         android:text="仿QQ拖拽效果(实战)" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="引导页-视差动画" />
+
 </LinearLayout>

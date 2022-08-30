@@ -41,6 +41,7 @@
         <activity android:name=".c.activity.C1Activity" />
         <activity android:name=".c.activity.C2Activity" />
         <activity android:name=".base.BaseTabActivityImpl" />
+        <activity android:name=".c.activity.C3Activity" />
 
     </application>
 </manifest>

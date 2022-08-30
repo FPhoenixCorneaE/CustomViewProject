@@ -25,7 +25,7 @@
         android:src="@mipmap/shuben"
         app:layout_constraintLeft_toRightOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/contentImage3"
-        app:parallaxZoom="3.0"
+        app:parallaxRotate="3.0"
         tools:ignore="ContentDescription,MissingPrefix" />
 
     <TextView

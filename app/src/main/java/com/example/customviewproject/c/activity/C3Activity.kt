@@ -21,10 +21,13 @@ class C3Activity : BaseActivity<C3ActivityBinding>() {
 
         binding.viewpager.setLayout(
             supportFragmentManager,
-            arrayListOf(R.layout.c3_1_item,
+            arrayListOf(
+                R.layout.c3_1_item,
                 R.layout.c3_2_item,
                 R.layout.c3_3_item,
-                R.layout.c3_4_item)) { size, position, fragment ->
+                R.layout.c3_4_item
+            )
+        ) { size, position, fragment ->
             Log.e("szjFragment执行了", "size:$size\tposition:${position}\t:fragment:${fragment}")
 
             if (position == size - 1) {
@@ -34,7 +37,6 @@ class C3Activity : BaseActivity<C3ActivityBinding>() {
                     }
                 }
             }
-
         }
     }
 }
