@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.LayoutRes
 import androidx.core.os.bundleOf
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.base.BaseTabActivityImpl
@@ -26,10 +27,14 @@ fun <T : Activity> Activity.jumpActivity(
     )
 }
 
-fun Activity.jumpTabActivity(data: List<Pair<String, Int>>) {
+fun Activity.jumpTabActivity(
+    data: List<Pair<String, Int>>,
+    @LayoutRes
+    headLayout: Int = -1,
+) {
 
     val keys = data.map { it.first }.toTypedArray()
-    val values = data.map {  it.second }.toIntArray()
+    val values = data.map { it.second }.toIntArray()
     Intent(this, BaseTabActivityImpl::class.java).also {
         it.putExtras(
             bundleOf(
@@ -41,6 +46,7 @@ fun Activity.jumpTabActivity(data: List<Pair<String, Int>>) {
                 BaseTabActivityImpl.VALUE to values
             )
         )
+        it.putExtra(BaseTabActivityImpl.HEAD_VIEW_LAYOUT_ID, headLayout)
         startActivity(
             it
         )

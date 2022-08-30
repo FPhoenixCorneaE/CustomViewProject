@@ -1,8 +1,9 @@
 package com.example.customviewproject.base
 
 import android.os.Bundle
-import android.util.Log
-import com.example.customviewproject.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.annotation.Nullable
 import org.jetbrains.annotations.NotNull
 
 /**
@@ -20,6 +21,11 @@ class BaseTabActivityImpl : BaseTabActivity() {
 
         @NotNull
         const val VALUE = "value"
+
+        @Nullable
+        const val HEAD_VIEW_LAYOUT_ID = "head_view_layout_id"
+
+        const val DEFAULT_VALUE = -1
     }
 
     private val pairKey by lazy {
@@ -27,6 +33,16 @@ class BaseTabActivityImpl : BaseTabActivity() {
     }
     private val pairValue by lazy {
         intent.extras?.getIntArray(VALUE)
+    }
+
+    private val headLayoutId by lazy {
+        intent.getIntExtra(HEAD_VIEW_LAYOUT_ID, DEFAULT_VALUE)
+    }
+
+    override fun initHeadView(vp: ViewGroup) {
+        if (headLayoutId != DEFAULT_VALUE) {
+            LayoutInflater.from(this).inflate(headLayoutId, vp, true)
+        }
     }
 
     override fun initData(): List<Pair<String, Int>> = let {

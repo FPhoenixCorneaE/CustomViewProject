@@ -10,14 +10,15 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomViewProject">
-        <activity android:name=".MainActivity">
+<!--        <activity android:name=".MainActivity">-->
+        <activity android:name=".a.AActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".a.AActivity" />
+<!--        <activity android:name=".a.AActivity" />-->
         <activity android:name=".a.activity.A1Activity" />
         <activity android:name=".a.activity.A2Activity" />
         <activity android:name=".a.activity.A3Activity" />

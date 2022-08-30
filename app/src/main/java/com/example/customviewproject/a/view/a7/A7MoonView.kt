@@ -21,7 +21,7 @@ import com.example.customviewproject.ext.dp
  */
 class A7MoonView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
-) : View(context, attrs, defStyleAttr){
+) : View(context, attrs, defStyleAttr) {
 
     private var lightAlpha = 155
         set(value) {
@@ -33,7 +33,12 @@ class A7MoonView @JvmOverloads constructor(
         strokeWidth = 2.dp
 //        style = Paint.Style.STROKE
 
-        // @param radius: 光晕范围
+        // @param radius: 模糊范围
+        // @param style:
+            // NORMAL: 内外都模糊绘制
+            // SOLID: 内部正常绘制，外部模糊
+            // INNER: 内部模糊，外部不绘制
+            // OUTER: 内部不绘制，外部模糊
         maskFilter = BlurMaskFilter(1000f, BlurMaskFilter.Blur.OUTER)
     }
 

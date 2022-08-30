@@ -3,6 +3,8 @@ package com.example.customviewproject.base
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -17,16 +19,19 @@ import com.google.android.material.tabs.TabLayoutMediator
  * @CreateDate: 8/29/22$ 3:17 PM$
  * TODO
  */
- abstract class BaseTabActivity : BaseActivity<TabActivityBinding>() {
+abstract class BaseTabActivity : BaseActivity<TabActivityBinding>() {
 
     @SuppressLint("InflateParams")
     override fun customViewBinDing(): TabActivityBinding {
-        val view = LayoutInflater.from(this).inflate(R.layout.tab_activity,null,false)
+        val view = LayoutInflater.from(this).inflate(R.layout.tab_activity, null, false)
         return TabActivityBinding.bind(view)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        initHeadView(binding.headFrameLayout)
 
         val data = initData()
         val list = data.map { BaseTabFragment.instance(it.second) }.toList()
@@ -41,11 +46,14 @@ import com.google.android.material.tabs.TabLayoutMediator
         }.attach()
     }
 
+
     inner class TabAdapter(fragmentManager: FragmentManager, val list: List<Fragment>) :
         FragmentStateAdapter(fragmentManager, lifecycle) {
         override fun getItemCount(): Int = list.size
         override fun createFragment(position: Int) = list[position]
     }
+
+    abstract fun initHeadView(vp: ViewGroup)
 
     /*
      * 作者:史大拿

@@ -41,7 +41,7 @@ class A6CameraView @JvmOverloads constructor(
         it.setLocation(0f, 0f, -6f * context.resources.displayMetrics.density)
     }
 
-    private val bitMap by lazy { getBitMap(width / 2) }
+    private val bitMap by lazy { getBitMap(width = width / 2) }
 
 
     // 旋转角度
