@@ -45,6 +45,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         setContentView(binding.root)
 
+
         /*
          * 作者:android 超级兵
          * 创建时间: 1/8/22 12:46 PM

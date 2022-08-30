@@ -19,7 +19,6 @@ import java.util.ArrayList
  * TODO 视差动画
  */
 class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(context, attrs) {
-    private val listFragment = arrayListOf<C3Fragment>()
 
     /*
      * 作者:史大拿
@@ -35,7 +34,7 @@ class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(cont
         @LayoutRes list: ArrayList<Int>,
         block: (Int, Int, Fragment) -> Unit,
     ) {
-        listFragment.clear()
+        val listFragment = arrayListOf<C3Fragment>()
         // 加载fragment
         list.map {
             C3Fragment.instance(it)
@@ -119,7 +118,6 @@ class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(cont
                 }
             }
         })
-
     }
 
     inner class ParallaxAdapter(private val list: List<Fragment>, fm: FragmentManager) :

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.LayoutInflaterCompat
@@ -32,7 +33,7 @@ class C3Fragment private constructor() : Fragment(), LayoutInflater.Factory2 {
         @NotNull
         private const val LAYOUT_ID = "layout_id"
 
-        fun instance(@IdRes layoutId: Int) = let {
+        fun instance(@LayoutRes layoutId: Int) = let {
             C3Fragment().apply {
                 arguments = bundleOf(LAYOUT_ID to layoutId)
             }

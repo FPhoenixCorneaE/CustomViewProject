@@ -17,6 +17,8 @@ import com.example.customviewproject.ext.jumpActivity
 class AActivity : BaseActivity<AActivityBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
 
+        // 可参考文档: https://juejin.cn/post/6844903487570968584
+
         binding.bt0.click {
             jumpActivity(it, A0Activity::class.java)
         }
@@ -43,6 +45,9 @@ class AActivity : BaseActivity<AActivityBinding>() {
 
         binding.bt6.click {
             jumpActivity(it, A6Activity::class.java)
+        }
+        binding.bt7.click {
+            jumpActivity(it, A7Activity::class.java)
         }
     }
 }

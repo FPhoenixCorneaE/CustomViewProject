@@ -20,7 +20,7 @@ class A4ClipView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     // 通用bitmap
-    private val bitmap by lazy { getBitMap(width / 4) }
+    private val bitmap by lazy { getBitMap(width = width / 4) }
 
     private val paint = Paint()
 

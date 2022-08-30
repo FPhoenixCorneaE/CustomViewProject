@@ -10,8 +10,7 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomViewProject">
-        <!--        <activity android:name=".MainActivity">-->
-        <activity android:name=".c.activity.C3Activity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,20 +23,24 @@
         <activity android:name=".a.activity.A3Activity" />
         <activity android:name=".a.activity.A0Activity" />
         <activity android:name=".a.activity.A4Activity" />
+        <activity android:name=".a.activity.A5Activity" />
+        <activity android:name=".a.activity.A6Activity" />
+        <activity android:name=".a.activity.A7Activity" />
+
         <activity android:name=".b.BActivity" />
         <activity android:name=".b.activity.B20Activity" />
         <activity android:name=".b.activity.B21Activity" />
         <activity android:name=".b.activity.B22Activity" />
         <activity android:name=".b.activity.B23Activity" />
-        <activity android:name=".a.activity.A5Activity" />
-        <activity android:name=".a.activity.A6Activity" />
         <activity android:name=".b.activity.B1Activity" />
         <activity android:name=".b.activity.B2Activity" />
         <activity android:name=".b.activity.B24Activity" />
+        <activity android:name=".b.activity.B3Activity" />
+
         <activity android:name=".c.CActivity" />
         <activity android:name=".c.activity.C1Activity" />
         <activity android:name=".c.activity.C2Activity" />
-        <activity android:name=".b.activity.B3Activity" />
+        <activity android:name=".base.BaseTabActivityImpl" />
 
     </application>
 </manifest>
