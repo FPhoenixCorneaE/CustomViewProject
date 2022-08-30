@@ -2,6 +2,7 @@ package com.example.customviewproject.ext
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Paint
 import android.view.View
 import androidx.annotation.DrawableRes
 import com.example.customviewproject.R
@@ -17,6 +18,9 @@ import java.util.concurrent.TimeUnit
  * @CreateDate: 8/6/22$ 5:44 PM$
  * TODO
  */
+
+
+
 /*
      * 作者:史大拿
      * 创建时间: 8/5/22 9:31 AM

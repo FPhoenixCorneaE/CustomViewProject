@@ -1,8 +1,6 @@
 package com.example.customviewproject.a
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import androidx.appcompat.widget.AppCompatImageView
 import com.example.customviewproject.R
 import com.example.customviewproject.a.activity.*
 import com.example.customviewproject.base.BaseActivity
@@ -21,7 +19,7 @@ import com.example.customviewproject.ext.jumpTabActivity
 class AActivity : BaseActivity<AActivityBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
 
-        // 可参考文档: https://juejin.cn/post/6844903487570968584
+        // 基础api可参考文档: https://juejin.cn/post/6844903487570968584
 
         binding.bt0.click {
             jumpActivity(it, A0Activity::class.java)
@@ -55,8 +53,10 @@ class AActivity : BaseActivity<AActivityBinding>() {
             jumpActivity(it, A7Activity::class.java)
         }
 
+        // 路径效应
         binding.bt8.click {
             jumpTabActivity(
+                it,
                 listOf(
                     "CornerPathEffect" to R.layout.corner_path_effect,
                     "DiscretePathEffect" to R.layout.discrete_path_effect,
@@ -66,6 +66,32 @@ class AActivity : BaseActivity<AActivityBinding>() {
                     "ComposePathEffect" to R.layout.compose_path_effect,
                 ),
                 R.layout.path_effect_head
+            )
+        }
+
+        // 颜色过滤
+        binding.bt9.click {
+            jumpTabActivity(
+                it,
+                listOf(
+                    "LightingColorFilter" to R.layout.lighting_color_filter,
+                    "PorterDuffColorFilter" to R.layout.porter_duffcolor_filter,
+                    "ColorMatrixColorFilter" to R.layout.color_matrix_color_filter,
+                ),
+                R.layout.color_filter_head
+            )
+        }
+
+        // 颜色渐变
+        binding.bt10.click {
+            jumpTabActivity(
+                it,
+                listOf(
+                    "LinearGradient" to R.layout.linear_gradient, // linear渐变
+                    "RadialGradient" to R.layout.radial_gradient, // 辐射渐变
+                    "SweepGradient" to R.layout.sweep_gradient, // 扫描渐变
+                ),
+                R.layout.gradient_head
             )
         }
     }

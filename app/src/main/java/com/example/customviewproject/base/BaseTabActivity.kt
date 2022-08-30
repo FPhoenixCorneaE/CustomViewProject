@@ -30,7 +30,6 @@ abstract class BaseTabActivity : BaseActivity<TabActivityBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         initHeadView(binding.headFrameLayout)
 
         val data = initData()

@@ -1,60 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt0"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="基础函数" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="仪表盘与饼状图" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="基础函数" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="XFermode图片裁剪" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="仪表盘与饼状图" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="进度条与文字绘制" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Xfermode图片裁剪" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="范围裁切" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="进度条与文字绘制" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="几何变换" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="范围裁切" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="camera(三维变换) 与 属性动画" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="几何变换" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="高斯模糊-BlurMaskFilter" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="camera(三维变换) 与 属性动画" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="PathEffect" />
-</LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="高斯模糊-BlurMaskFilter" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="路径效应-PathEffect" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="颜色过滤-ColorFilter" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="颜色渐变-Gradient" />
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

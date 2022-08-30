@@ -28,11 +28,11 @@ fun <T : Activity> Activity.jumpActivity(
 }
 
 fun Activity.jumpTabActivity(
+    view: View,
     data: List<Pair<String, Int>>,
     @LayoutRes
     headLayout: Int = -1,
 ) {
-
     val keys = data.map { it.first }.toTypedArray()
     val values = data.map { it.second }.toIntArray()
     Intent(this, BaseTabActivityImpl::class.java).also {
@@ -46,12 +46,13 @@ fun Activity.jumpTabActivity(
                 BaseTabActivityImpl.VALUE to values
             )
         )
+        // headView
         it.putExtra(BaseTabActivityImpl.HEAD_VIEW_LAYOUT_ID, headLayout)
-        startActivity(
-            it
-        )
-    }
 
+        it title (view as? TextView)?.text.toString()
+
+        startActivity(it)
+    }
 }
 
 

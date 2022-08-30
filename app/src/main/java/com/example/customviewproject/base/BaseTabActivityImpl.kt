@@ -54,5 +54,6 @@ class BaseTabActivityImpl : BaseTabActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+
     }
 }

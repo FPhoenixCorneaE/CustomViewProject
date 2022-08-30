@@ -5,7 +5,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
-import com.example.customviewproject.R
+import com.example.customviewproject.ext.getBitMap
 
 /**
  *
@@ -19,7 +19,7 @@ class A2XFermodeView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     // 需要裁剪的图片
-    private val bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.user)
+    private val bitmap = getBitMap()
 
     private val paint = Paint()
 
@@ -36,8 +36,10 @@ class A2XFermodeView @JvmOverloads constructor(
 //            20f,
 //            paint)
 
-        canvas.drawOval(rect,
-            paint)
+        canvas.drawOval(
+            rect,
+            paint
+        )
 
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         canvas.drawBitmap(bitmap, 20f, 20f, paint)
