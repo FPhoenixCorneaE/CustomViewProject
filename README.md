@@ -1,5 +1,8 @@
 # customViewProject
 
+# 2022-8-31
+[android 自定义View:视差动画](https://blog.csdn.net/weixin_44819566/article/details/126623382)
+
 # 2022-8-20
 [android 自定义View:仿QQ拖拽效果](https://blog.csdn.net/weixin_44819566/article/details/126441557)
 
