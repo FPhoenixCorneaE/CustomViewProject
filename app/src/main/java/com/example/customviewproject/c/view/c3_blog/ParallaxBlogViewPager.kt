@@ -1,4 +1,4 @@
-package com.example.customviewproject.c.view.c3
+package com.example.customviewproject.c.view.c3_blog
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,52 +8,42 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.example.customviewproject.c.fragment.C3BlogFragment
 import com.example.customviewproject.c.fragment.C3Fragment
+import com.example.customviewproject.c.view.c3.C3Bean
 import java.util.ArrayList
 
 /**
  *
- * @ClassName: ParallaxViewPager
+ * @ClassName: ParallaxBlogViewPager
  * @Author: 史大拿
- * @CreateDate: 8/25/22$ 4:31 PM$
- * TODO 视差动画
+ * @CreateDate: 8/31/22$ 10:26 AM$
+ * TODO
  */
-class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(context, attrs) {
+class ParallaxBlogViewPager(context: Context, attrs: AttributeSet?) : ViewPager(context, attrs) {
 
-    /*
-     * 作者:史大拿
-     * 创建时间: 8/29/22 9:47 AM
-     * TODO
-     * @param2 list: 所有layout布局
-     * @param3 block参数: @param1 :Fragment总长度
-     *                   @param2 :当前切换下标
-     *                   @param3 :当前切换到的fragment
-     */
-    fun setLayout(
-        fm: FragmentManager,
-        @LayoutRes list: ArrayList<Int>,
-        block: (Int, Int, Fragment) -> Unit,
-    ) {
-        val listFragment = arrayListOf<C3Fragment>()
+    fun setLayout(fragmentManager: FragmentManager,
+                  @LayoutRes list: ArrayList<Int>,
+                  block: (Int, Int, Fragment) -> Unit,
+                  ) {
+        val listFragment = arrayListOf<C3BlogFragment>()
         // 加载fragment
         list.map {
-            C3Fragment.instance(it)
+            C3BlogFragment.instance(it)
         }.forEach {
             listFragment.add(it)
         }
 
-        adapter = ParallaxAdapter(listFragment, fm)
-
+        adapter = ParallaxBlockAdapter(listFragment, fragmentManager)
 
         // 监听变化
         addOnPageChangeListener(object : OnPageChangeListener {
+            // TODO 滑动过程中一直回调
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int,
             ) {
-                Log.e("szjParallaxViewPager",
-                    "onPageScrolled:position$position\tpositionOffset:${positionOffset}\tpositionOffsetPixels:${positionOffsetPixels}")
                 // TODO 当前fragment
                 val currentFragment = listFragment[position]
                 currentFragment.list.forEach { view ->
@@ -80,16 +70,14 @@ class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(cont
                     val nextFragment = listFragment[position + 1]
                     nextFragment.list.forEach { view ->
                         val tag = view.getTag(view.id)
-//                        Log.i("szjNextFragment", "${view::class.java.simpleName}\t$tag")
 
-                        (tag as? C3Bean)?.let {
+                        (tag as? C3Bean)?.also {
                             view.translationX =
                                 it.parallaxTransformInX * (width - positionOffsetPixels)
                             view.translationY =
                                 it.parallaxTransformInY * (height - positionOffsetPixels)
 
                             view.rotation = it.parallaxRotate * 360 * positionOffset
-
 
                             view.scaleX = (1 + it.parallaxZoom * positionOffset)
                             view.scaleY = (1 + it.parallaxZoom * positionOffset)
@@ -100,8 +88,8 @@ class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(cont
 
             //TODO 当页面切换完成时候调用 返回当前页面位置
             override fun onPageSelected(position: Int) {
-                Log.e("szjParallaxViewPager", "onPageSelected:$position")
                 block(listFragment.size, position, listFragment[position])
+                Log.e("szjParallaxViewPager", "onPageSelected:$position")
             }
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -120,9 +108,10 @@ class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(cont
         })
     }
 
-
-   private inner class ParallaxAdapter(private val list: List<Fragment>, fm: FragmentManager) :
-        FragmentPagerAdapter(fm) {
+    private inner class ParallaxBlockAdapter(
+        private val list: List<Fragment>,
+        fm: FragmentManager
+    ) : FragmentPagerAdapter(fm) {
         override fun getCount(): Int = list.size
         override fun getItem(position: Int) = list[position]
     }

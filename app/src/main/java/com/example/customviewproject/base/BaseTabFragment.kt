@@ -1,15 +1,12 @@
 package com.example.customviewproject.base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.example.customviewproject.c.fragment.c3.C3Fragment
 import org.jetbrains.annotations.NotNull
 
 /**

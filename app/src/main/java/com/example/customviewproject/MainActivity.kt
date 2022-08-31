@@ -17,9 +17,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.bt1.click {
             jumpActivity(it, AActivity::class.java)
         }
+
         binding.bt2.click {
             jumpActivity(it, BActivity::class.java)
         }
+
         binding.bt3.click {
             jumpActivity(it, CActivity::class.java)
         }

@@ -2,8 +2,8 @@
 <resources>
 
     <!-- TODO 视差动画 start  -->
-    <!--  出场  -->
     <declare-styleable name="View">
+        <!--  出场  -->
         <attr name="parallaxTransformOutX" format="float" />
         <attr name="parallaxTransformOutY" format="float" />
 

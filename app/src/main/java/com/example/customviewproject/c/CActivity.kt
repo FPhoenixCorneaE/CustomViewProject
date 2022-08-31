@@ -5,6 +5,7 @@ import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.c.activity.C1Activity
 import com.example.customviewproject.c.activity.C2Activity
 import com.example.customviewproject.c.activity.C3Activity
+import com.example.customviewproject.c.activity.C3BlogActivity
 import com.example.customviewproject.databinding.CActivityBinding
 import com.example.customviewproject.ext.click
 import com.example.customviewproject.ext.jumpActivity
@@ -27,6 +28,9 @@ class CActivity : BaseActivity<CActivityBinding>() {
         }
         binding.bt3.click {
             jumpActivity(it, C3Activity::class.java)
+        }
+        binding.bt4.click {
+            jumpActivity(it, C3BlogActivity::class.java)
         }
     }
 }
