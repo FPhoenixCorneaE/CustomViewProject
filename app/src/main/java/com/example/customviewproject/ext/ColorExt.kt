@@ -1,7 +1,6 @@
 package com.example.customviewproject.ext
 
 import android.graphics.Color
-import androidx.annotation.IntRange
 
 /**
  *
@@ -10,6 +9,14 @@ import androidx.annotation.IntRange
  * @CreateDate: 8/8/22$ 4:22 PM$
  * TODO
  */
-fun Color.red(@IntRange(from = 0, to = 255) alpha: Int = 255) {
-    Color.argb(alpha, 255, 0, 0)
-}
+ val colorRandom: Int
+    get() {
+        return Color.argb(
+            255,
+            (0 until 255).random(),
+            (0 until 255).random(),
+            (0 until 255).random()
+        )
+    }
+
+
