@@ -24,14 +24,13 @@ import kotlin.math.sqrt
  * @CreateDate: 8/31/22$ 3:32 PM$
  * TODO
  */
-class C4LoadingView @JvmOverloads constructor(
+open class C4LoadingView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
     companion object {
         // 小圆半径
         val SMALL_RADIUS = 10.dp
-
 
         // 旋转时间
         const val ROTATION_TIME = 5000L
@@ -70,6 +69,7 @@ class C4LoadingView @JvmOverloads constructor(
 
         // 3秒后改变为缩放状态
         postDelayed({
+            currentState.close()
             currentState = ZoomState()
         }, 2000)
     }
@@ -80,7 +80,6 @@ class C4LoadingView @JvmOverloads constructor(
 
     // 旋转状态
     inner class RotateState : LoadingViewState {
-
         // 弧度动画
         private val angleAnimator by lazy {
             ObjectAnimator.ofFloat(this@C4LoadingView, "angle", 360f).apply {
@@ -112,7 +111,22 @@ class C4LoadingView @JvmOverloads constructor(
                 canvas.drawCircle(dx, dy, SMALL_RADIUS, paint)
             }
         }
+
+        override fun close() {
+            angleAnimator.clone()
+        }
     }
+
+    // 手动关闭
+    open fun clone() {
+        currentState.close()
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        clone()
+    }
+
 
     // 缩放状态
     inner class ZoomState : LoadingViewState {
@@ -126,6 +140,7 @@ class C4LoadingView @JvmOverloads constructor(
         init {
             bigRadiusAnimator.start()
             bigRadiusAnimator.doOnEnd {
+                currentState.close()
                 currentState = DiffusionState()
             }
         }
@@ -143,6 +158,11 @@ class C4LoadingView @JvmOverloads constructor(
                 // 每一次改变角度
                 angle += 360 / data.size - 1
             }
+        }
+
+        override fun close() {
+            bigRadiusAnimator.clone()
+            bigRadiusAnimator.removeAllUpdateListeners()
         }
     }
 
@@ -166,10 +186,12 @@ class C4LoadingView @JvmOverloads constructor(
             paint.color = Color.WHITE
             paint.style = Paint.Style.STROKE
 
-            ObjectAnimator.ofFloat(this, "radius", diagonal).apply {
-                duration = 2000
-                start()
-            }
+
+        }
+
+        private val radiusAnimator = ObjectAnimator.ofFloat(this, "radius", diagonal).apply {
+            duration = 2000
+            start()
         }
 
 
@@ -186,9 +208,14 @@ class C4LoadingView @JvmOverloads constructor(
             Log.e("szjRadius", "$radius\tstrokeWidth:${paint.strokeWidth}")
             canvas.drawCircle(width / 2f, height / 2f, radius, paint)
         }
+
+        override fun close() {
+            radiusAnimator.clone()
+        }
     }
 
     interface LoadingViewState {
         fun onDraw(canvas: Canvas)
+        fun close()
     }
 }

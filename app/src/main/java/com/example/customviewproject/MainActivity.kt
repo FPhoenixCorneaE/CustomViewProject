@@ -6,9 +6,7 @@ import com.example.customviewproject.b.BActivity
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.c.CActivity
 import com.example.customviewproject.databinding.ActivityMainBinding
-import com.example.customviewproject.ext.click
-import com.example.customviewproject.ext.jumpActivity
-import com.example.customviewproject.ext.jumpTabActivity
+import com.example.customviewproject.ext.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
