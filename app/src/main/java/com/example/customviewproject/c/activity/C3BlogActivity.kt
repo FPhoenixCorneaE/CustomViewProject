@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.Button
 import com.example.customviewproject.R
 import com.example.customviewproject.base.BaseActivity
-import com.example.customviewproject.databinding.C3ActivityBinding
 import com.example.customviewproject.databinding.C3BlogActivityBinding
 import com.example.customviewproject.ext.click
 import com.example.customviewproject.ext.toast

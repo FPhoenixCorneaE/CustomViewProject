@@ -23,10 +23,22 @@
         android:text="引导页-视差动画" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt4"
+        android:id="@+id/bt3_blog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="引导页-视差动画"
         android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LoadingView" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="抢红包效果" />
 
 </LinearLayout>

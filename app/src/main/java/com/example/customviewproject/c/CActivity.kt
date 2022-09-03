@@ -1,14 +1,13 @@
 package com.example.customviewproject.c
 
 import android.os.Bundle
+import com.example.customviewproject.R
 import com.example.customviewproject.base.BaseActivity
-import com.example.customviewproject.c.activity.C1Activity
-import com.example.customviewproject.c.activity.C2Activity
-import com.example.customviewproject.c.activity.C3Activity
-import com.example.customviewproject.c.activity.C3BlogActivity
+import com.example.customviewproject.c.activity.*
 import com.example.customviewproject.databinding.CActivityBinding
 import com.example.customviewproject.ext.click
 import com.example.customviewproject.ext.jumpActivity
+import com.example.customviewproject.ext.jumpLayoutActivity
 
 /**
  *
@@ -23,14 +22,25 @@ class CActivity : BaseActivity<CActivityBinding>() {
         binding.bt1.click {
             jumpActivity(it, C1Activity::class.java)
         }
+
         binding.bt2.click {
             jumpActivity(it, C2Activity::class.java)
         }
+
         binding.bt3.click {
             jumpActivity(it, C3Activity::class.java)
         }
-        binding.bt4.click {
+
+        binding.bt3Blog.click {
             jumpActivity(it, C3BlogActivity::class.java)
+        }
+
+        binding.bt4.click {
+            jumpActivity(it, C4Activity::class.java)
+        }
+
+        binding.bt5.click {
+           jumpLayoutActivity(it, R.layout.c5_layout)
         }
     }
 }

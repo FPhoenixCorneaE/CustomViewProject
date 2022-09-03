@@ -96,6 +96,7 @@ class LinearGradientView @JvmOverloads constructor(
         paint.shader = shader4
         canvas.drawCircle(cx, cy, radius, paint)
 
+
         // 辅助线
         canvas.withSave {
             paint.color = Color.BLACK

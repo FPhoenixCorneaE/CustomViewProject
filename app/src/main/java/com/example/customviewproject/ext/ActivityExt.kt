@@ -7,8 +7,10 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.annotation.Nullable
 import androidx.core.os.bundleOf
 import com.example.customviewproject.base.BaseActivity
+import com.example.customviewproject.base.BaseLayoutActivity
 import com.example.customviewproject.base.BaseTabActivityImpl
 
 /**
@@ -17,6 +19,9 @@ import com.example.customviewproject.base.BaseTabActivityImpl
  * @Author: 史大拿
  * @CreateDate: 8/6/22$ 5:44 PM$
  * TODO
+ */
+/**
+ * 跳转具体页面
  */
 fun <T : Activity> Activity.jumpActivity(
     view: View,
@@ -27,11 +32,15 @@ fun <T : Activity> Activity.jumpActivity(
     )
 }
 
+/**
+ * tabActivity
+ */
 fun Activity.jumpTabActivity(
     view: View,
-    data: List<Pair<String, Int>>,
+    data: List<Pair<String, Int>>, // 标题 + 布局
+    @Nullable
     @LayoutRes
-    headLayout: Int = -1,
+    headLayout: Int = -1, // headView 可以不传
 ) {
     val keys = data.map { it.first }.toTypedArray()
     val values = data.map { it.second }.toIntArray()
@@ -53,6 +62,22 @@ fun Activity.jumpTabActivity(
 
         startActivity(it)
     }
+}
+
+/**
+ * 只展示Layout
+ */
+fun Activity.jumpLayoutActivity(
+    view: View,
+    @LayoutRes layoutId: Int
+) {
+    Intent(this, BaseLayoutActivity::class.java).also {
+        it.putExtra(BaseLayoutActivity.LAYOUT_ID, layoutId)
+
+        it title (view as? TextView)?.text.toString()
+        startActivity(it)
+    }
+
 }
 
 
