@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.C4ActivityBinding
+import com.example.customviewproject.ext.click
 
 /**
  *
@@ -14,8 +15,5 @@ import com.example.customviewproject.databinding.C4ActivityBinding
  */
 class C4Activity : BaseActivity<C4ActivityBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
-        val a = 11.052f
-        val b = 15.213f
-        Log.e("szjFloat", "${a / b}")
     }
 }

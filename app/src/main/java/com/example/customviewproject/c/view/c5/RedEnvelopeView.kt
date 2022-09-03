@@ -1,13 +1,13 @@
 package com.example.customviewproject.c.view.c5
 
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import android.view.animation.BounceInterpolator
-import androidx.core.animation.addListener
+import android.view.animation.AnticipateInterpolator
 import androidx.core.animation.doOnEnd
 import com.example.customviewproject.R
 import com.example.customviewproject.ext.dp
@@ -31,40 +31,30 @@ class RedEnvelopeView @JvmOverloads constructor(
     private val honBaoBitMap = getBitMap(R.mipmap.hongbao)
 
     // 总进度
-    var totalProgress = 5
+    private var totalProgress = 3f
 
     // 当前进度
-    var currentProgress = 1
+    private var currentProgress = 0f
         set(value) {
             field = value
             invalidate()
         }
-
-    // 当前位置
-    var currentPosition = 0f
-        set(value) {
-            field = value
-            invalidate()
-        }
-
-    // 是否每一格都扩散
-    var isDiffusion = true
 
     // 扩散范围
-    var diffusionRadius = 0f
+    private var diffusionRadius = 0f
         set(value) {
             field = value
             invalidate()
         }
 
     // 扩散最大范围
-    private val diffusionRadiusMax by lazy { max(width, height) * 0.2f }
+    private var diffusionRadiusMax = 0f
 
     // 扩散图片个数
     private val diffusionNumber = 8
 
     // 扩散的图片
-    val diffusionBitmaps by lazy {
+    private val diffusionBitmaps by lazy {
         arrayListOf(
             getBitMap(R.mipmap.icon_red_package_bomb_1),
             getBitMap(R.mipmap.icon_red_package_bomb_2)
@@ -75,17 +65,16 @@ class RedEnvelopeView @JvmOverloads constructor(
 
     // 进度条走动动画
     private val processBarAnimator by lazy {
-        ObjectAnimator.ofInt(this, "currentProgress", totalProgress).apply {
+        ObjectAnimator.ofFloat(this, "currentProgress", totalProgress).apply {
             duration = 2000
             interpolator = null
         }
     }
 
-    // 扩散动画
-    private val diffusionAnimator by lazy {
-        ObjectAnimator.ofFloat(this, "diffusionRadius", diffusionRadiusMax).apply {
-            duration = 1000
-        }
+
+    companion object {
+        // 缩放比例
+        private const val SCALE_MAX = 1.2f
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -96,14 +85,35 @@ class RedEnvelopeView @JvmOverloads constructor(
         setMeasuredDimension(width, height)
     }
 
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+
+        diffusionRadiusMax = max(width, height) * 0.2f
         processBarAnimator.start()
 
-        processBarAnimator.addUpdateListener {
-            Log.e("szj执行了", "23")
+        // 进度条动画
+        processBarAnimator.doOnEnd {
+            val animator = diffusionAnimator()
+            animator.doOnEnd {
+                // 放大动画
+                executeMagnifyAnimator()
+            }
+            animator.start()
         }
     }
+
+    // 扩散动画
+    private fun diffusionAnimator() = let {
+        ObjectAnimator.ofFloat(this, "diffusionRadius", diffusionRadiusMax).apply {
+            duration = 1000
+        }
+    }
+
+
+    // 是否执行放大动画
+    var isZoom = false
+
 
     override fun onDraw(canvas: Canvas) {
 
@@ -125,10 +135,57 @@ class RedEnvelopeView @JvmOverloads constructor(
         // TODO 绘制当前进度
         val progressRect = drawProgressBar(canvas, progressBackGroundRect)
 
-        // TODO 绘制扩散的图片
-        val centerX = progressRect.right
-        val centerY = (progressRect.bottom - progressRect.top) / 2 + progressRect.top
-        drawBitmap(canvas, centerX, centerY, diffusionRadius)
+        // 如果已经满了，绘制扩散图片
+        if (currentProgress == totalProgress) {
+            val centerX: Float
+            val centerY: Float
+            if (!isZoom) {
+                // 没有执行放大动画
+                // TODO 绘制扩散的图片
+                centerX = progressRect.right
+                centerY = (progressRect.bottom - progressRect.top) / 2 + progressRect.top
+            } else {
+                centerX = width / 2f
+                centerY = height * 0.4f
+            }
+
+            drawBitmap(canvas, centerX, centerY, diffusionRadius)
+        }
+    }
+
+
+    // 放大动画
+    private fun executeMagnifyAnimator() = let {
+        val set = AnimatorSet()
+
+        val scaleXAnimator = ObjectAnimator.ofFloat(this, "scaleX", 1f, SCALE_MAX)
+        val scaleYAnimator = ObjectAnimator.ofFloat(this, "scaleY", 1f, SCALE_MAX)
+
+        // 两个动画同时执行
+        set.play(scaleXAnimator).with(scaleYAnimator)
+        set.interpolator = AnticipateInterpolator(3f)
+        set.duration = 1000
+        set.start()
+        set.doOnEnd {
+            // 放大动画结束后 继续"撒花"
+            diffusionRadius = 0f
+            isZoom = true
+            diffusionRadiusMax = max(width, height) * 0.5f
+            diffusionAnimator().start()
+        }
+        set
+    }
+
+    // 缩小动画
+    fun executeShrinkAnimator() {
+        val set = AnimatorSet()
+        val scaleXAnimator = ObjectAnimator.ofFloat(this, "scaleX", SCALE_MAX, 1f)
+        val scaleYAnimator = ObjectAnimator.ofFloat(this, "scaleY", SCALE_MAX, 1f)
+
+        // 两个动画同时执行
+        set.play(scaleXAnimator).with(scaleYAnimator)
+        set.duration = 1000
+        set.start()
     }
 
     /*
@@ -149,7 +206,6 @@ class RedEnvelopeView @JvmOverloads constructor(
 
         // 当前分 / 总分 * 255
         paint.alpha = 255 - (((radius / diffusionRadiusMax) * 255)).toInt()
-
 
         Log.e(
             "szjpaintAlpha",
@@ -181,10 +237,13 @@ class RedEnvelopeView @JvmOverloads constructor(
      * @return : 当前进度条位置
      */
     private fun drawProgressBar(canvas: Canvas, rect: RectF) = let {
+
+//        val currentWidth = rect.width()
+//        rect.right = currentWidth * currentProgress / totalProgress + rect.left
+
         // 一格的进度
         val progress = (rect.right - rect.left) / totalProgress
-
-        // 一格的进度 * 当前的进度 + 左侧的距离 = 当前的right
+//         一格的进度 * 当前的进度 + 左侧的距离 = 当前的right
         rect.right = progress * currentProgress + rect.left
 
         paint.style = Paint.Style.FILL
@@ -193,6 +252,7 @@ class RedEnvelopeView @JvmOverloads constructor(
         canvas.drawRoundRect(rect, rect.bottom / 2f, rect.bottom / 2f, paint)
         rect
     }
+
 
     /*
      * 作者:史大拿
