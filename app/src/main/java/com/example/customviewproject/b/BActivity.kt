@@ -5,6 +5,7 @@ import com.example.customviewproject.R
 import com.example.customviewproject.b.activity.B1Activity
 import com.example.customviewproject.b.activity.B2Activity
 import com.example.customviewproject.b.activity.B3Activity
+import com.example.customviewproject.b.activity.B5Activity
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.BActivityBinding
 import com.example.customviewproject.ext.click
@@ -35,6 +36,9 @@ class BActivity : BaseActivity<BActivityBinding>() {
 
         binding.bt4.click {
             jumpLayoutActivity(it, R.layout.b4_activity)
+        }
+        binding.bt5.click {
+            jumpActivity(it, B5Activity::class.java)
         }
     }
 }

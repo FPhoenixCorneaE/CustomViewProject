@@ -4,9 +4,9 @@
     android:layout_height="match_parent">
 
     <com.example.customviewproject.b.view.b1.ZoomImageView
-        android:layout_width="match_parent"
         android:id="@+id/zoom"
-        android:layout_height="match_parent"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

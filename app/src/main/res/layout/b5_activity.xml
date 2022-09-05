@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/moveTv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="滑动右侧进度条->" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/drawable_red_radius"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:visibility="gone" />
+
+    <com.example.customviewproject.b.view.b5.LetterNavigationView
+        android:id="@+id/letterView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10" />
+</RelativeLayout>

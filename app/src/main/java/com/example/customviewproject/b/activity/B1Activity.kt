@@ -17,6 +17,5 @@ import com.example.customviewproject.databinding.B1ActivityBinding
 class B1Activity : BaseActivity<B1ActivityBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
-
     }
 }
