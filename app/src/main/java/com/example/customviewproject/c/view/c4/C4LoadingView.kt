@@ -113,18 +113,18 @@ open class C4LoadingView @JvmOverloads constructor(
         }
 
         override fun close() {
-            angleAnimator.clone()
+            angleAnimator.removeAllListeners()
         }
     }
 
     // 手动关闭
-    open fun clone() {
+    open fun close() {
         currentState.close()
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        clone()
+        close()
     }
 
 
@@ -161,8 +161,7 @@ open class C4LoadingView @JvmOverloads constructor(
         }
 
         override fun close() {
-            bigRadiusAnimator.clone()
-            bigRadiusAnimator.removeAllUpdateListeners()
+            bigRadiusAnimator.removeAllListeners()
         }
     }
 
@@ -210,7 +209,7 @@ open class C4LoadingView @JvmOverloads constructor(
         }
 
         override fun close() {
-            radiusAnimator.clone()
+            radiusAnimator.removeAllListeners()
         }
     }
 

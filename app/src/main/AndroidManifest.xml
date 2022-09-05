@@ -11,8 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomViewProject">
         <activity android:name=".MainActivity">
-
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,7 +35,6 @@
         <activity android:name=".b.activity.B1Activity" />
         <activity android:name=".b.activity.B2Activity" />
         <activity android:name=".b.activity.B24Activity" />
-        <activity android:name=".b.activity.B3Activity" />
         <activity android:name=".c.activity.C1Activity" />
         <activity android:name=".c.activity.C2Activity" />
         <activity android:name=".base.BaseTabActivityImpl" />
@@ -47,7 +44,7 @@
         <activity android:name=".c.CActivity" />
         <activity android:name=".c.view.c5.C5Activity" />
         <activity android:name=".c.activity.C4Activity" />
-
+        <activity android:name=".b.activity.B3Activity" />
 
     </application>
 </manifest>

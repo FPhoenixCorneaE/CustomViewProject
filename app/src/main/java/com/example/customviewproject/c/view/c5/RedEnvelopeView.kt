@@ -328,7 +328,6 @@ open class RedEnvelopeView @JvmOverloads constructor(
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        processBarAnimator.clone()
         processBarAnimator.removeAllUpdateListeners()
     }
 }

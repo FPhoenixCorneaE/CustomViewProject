@@ -22,4 +22,10 @@
         android:layout_height="wrap_content"
         android:text="贝塞尔公式(花束效果)" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LoadingView" />
+
 </LinearLayout>
