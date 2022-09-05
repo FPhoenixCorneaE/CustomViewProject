@@ -2,6 +2,7 @@ package com.example.customviewproject.b.view.b3
 
 import android.animation.ObjectAnimator
 import android.animation.TypeEvaluator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
@@ -60,6 +61,7 @@ class B3ListView @JvmOverloads constructor(
             invalidate()
         }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_UP -> {

@@ -1,13 +1,12 @@
 package com.example.customviewproject.c
 
 import android.os.Bundle
-import com.example.customviewproject.R
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.c.activity.*
+import com.example.customviewproject.c.view.c5.C5Activity
 import com.example.customviewproject.databinding.CActivityBinding
 import com.example.customviewproject.ext.click
 import com.example.customviewproject.ext.jumpActivity
-import com.example.customviewproject.ext.jumpLayoutActivity
 
 /**
  *
@@ -40,7 +39,7 @@ class CActivity : BaseActivity<CActivityBinding>() {
         }
 
         binding.bt5.click {
-           jumpLayoutActivity(it, R.layout.c5_layout)
+            jumpActivity(it, C5Activity::class.java)
         }
     }
 }

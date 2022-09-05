@@ -1,10 +1,8 @@
 package com.example.customviewproject.c.activity
 
 import android.os.Bundle
-import android.util.Log
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.C4ActivityBinding
-import com.example.customviewproject.ext.click
 
 /**
  *
@@ -15,5 +13,7 @@ import com.example.customviewproject.ext.click
  */
 class C4Activity : BaseActivity<C4ActivityBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
+
+
     }
 }

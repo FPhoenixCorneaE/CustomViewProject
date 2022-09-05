@@ -1,14 +1,14 @@
 package com.example.customviewproject.b
 
 import android.os.Bundle
+import com.example.customviewproject.R
 import com.example.customviewproject.b.activity.B1Activity
-import com.example.customviewproject.b.activity.B20Activity
 import com.example.customviewproject.b.activity.B2Activity
-import com.example.customviewproject.b.activity.B3Activity
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.BActivityBinding
 import com.example.customviewproject.ext.click
 import com.example.customviewproject.ext.jumpActivity
+import com.example.customviewproject.ext.jumpLayoutActivity
 
 /**
  *
@@ -28,7 +28,8 @@ class BActivity : BaseActivity<BActivityBinding>() {
         }
 
         binding.bt3.click {
-            jumpActivity(it, B3Activity::class.java)
+//            jumpActivity(it, B3Activity::class.java)
+            jumpLayoutActivity(it, R.layout.b3_activity)
         }
     }
 }

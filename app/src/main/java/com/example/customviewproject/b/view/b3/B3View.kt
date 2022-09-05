@@ -8,7 +8,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.view.LayoutInflaterCompat
 import com.example.customviewproject.R
 import com.example.customviewproject.ext.dp
 import com.example.customviewproject.ext.getBitMap

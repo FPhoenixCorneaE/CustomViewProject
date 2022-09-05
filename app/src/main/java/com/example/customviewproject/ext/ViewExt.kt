@@ -2,7 +2,6 @@ package com.example.customviewproject.ext
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Paint
 import android.view.View
 import androidx.annotation.DrawableRes
 import com.example.customviewproject.R

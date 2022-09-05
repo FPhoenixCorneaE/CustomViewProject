@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import androidx.core.animation.doOnEnd
@@ -23,7 +22,7 @@ import kotlin.math.sin
  * @CreateDate: 9/3/22$ 11:28 AM$
  * TODO
  */
-class RedEnvelopeView @JvmOverloads constructor(
+open class RedEnvelopeView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
@@ -63,8 +62,11 @@ class RedEnvelopeView @JvmOverloads constructor(
 
     val paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
+    // 原始范围
+    private var originRadiusMax = 0f
+
     // 进度条走动动画
-    private val processBarAnimator by lazy {
+    val processBarAnimator: ObjectAnimator by lazy {
         ObjectAnimator.ofFloat(this, "currentProgress", totalProgress).apply {
             duration = 2000
             interpolator = null
@@ -88,12 +90,13 @@ class RedEnvelopeView @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-
-        diffusionRadiusMax = max(width, height) * 0.2f
+        originRadiusMax = max(width, height) * 0.2f
+        diffusionRadiusMax = originRadiusMax
         processBarAnimator.start()
 
         // 进度条动画
         processBarAnimator.doOnEnd {
+            // 扩散动画
             val animator = diffusionAnimator()
             animator.doOnEnd {
                 // 放大动画
@@ -104,15 +107,18 @@ class RedEnvelopeView @JvmOverloads constructor(
     }
 
     // 扩散动画
-    private fun diffusionAnimator() = let {
-        ObjectAnimator.ofFloat(this, "diffusionRadius", diffusionRadiusMax).apply {
-            duration = 1000
+    private fun diffusionAnimator(duration: Long = 1000L) = let {
+        ObjectAnimator.ofFloat(this, "diffusionRadius", diffusionRadiusMax).also {
+            it.duration = duration
         }
     }
 
 
     // 是否执行放大动画
-    var isZoom = false
+    private var isZoom = false
+
+    // 是否是放大状态
+    private var isScaleBig = false
 
 
     override fun onDraw(canvas: Canvas) {
@@ -168,16 +174,27 @@ class RedEnvelopeView @JvmOverloads constructor(
         set.start()
         set.doOnEnd {
             // 放大动画结束后 继续"撒花"
-            diffusionRadius = 0f
+            // 缩小
             isZoom = true
+
+            // 默认半径
+            diffusionRadius = 0f
+
             diffusionRadiusMax = max(width, height) * 0.5f
-            diffusionAnimator().start()
+            diffusionAnimator().also {
+                it.start()
+                it.doOnEnd {
+                    executeShrinkAnimator()
+                }
+            }
+            isScaleBig = true
         }
         set
     }
 
+
     // 缩小动画
-    fun executeShrinkAnimator() {
+    private fun executeShrinkAnimator() {
         val set = AnimatorSet()
         val scaleXAnimator = ObjectAnimator.ofFloat(this, "scaleX", SCALE_MAX, 1f)
         val scaleYAnimator = ObjectAnimator.ofFloat(this, "scaleY", SCALE_MAX, 1f)
@@ -186,6 +203,20 @@ class RedEnvelopeView @JvmOverloads constructor(
         set.play(scaleXAnimator).with(scaleYAnimator)
         set.duration = 1000
         set.start()
+    }
+
+    /*
+     * 作者:史大拿
+     * 创建时间: 9/5/22 9:54 AM
+     * TODO 重置
+     */
+    open fun reset() {
+        currentProgress = 0f
+        isZoom = false // 是否缩放
+        isScaleBig = false // 是否是放大状态
+        diffusionRadius = 0f
+        diffusionRadiusMax = originRadiusMax
+        invalidate()
     }
 
     /*
@@ -207,10 +238,10 @@ class RedEnvelopeView @JvmOverloads constructor(
         // 当前分 / 总分 * 255
         paint.alpha = 255 - (((radius / diffusionRadiusMax) * 255)).toInt()
 
-        Log.e(
-            "szjpaintAlpha",
-            "radius:${radius}\tdiffusionRadiusMax:${diffusionRadiusMax}\talpha:${(paint.alpha)}"
-        )
+//        Log.e(
+//            "szjPaintAlpha",
+//            "radius:${radius}\tDiffusionRadiusMax:${diffusionRadiusMax}\tAlpha:${(paint.alpha)}"
+//        )
 
         // 循环每一个图片
         repeat(diffusionNumber) {
@@ -247,9 +278,21 @@ class RedEnvelopeView @JvmOverloads constructor(
         rect.right = progress * currentProgress + rect.left
 
         paint.style = Paint.Style.FILL
-        paint.color = Color.BLACK
+
+        // 设置渐变颜色
+        paint.shader = LinearGradient(
+            rect.left,
+            0f,
+            rect.right,
+            0f,
+            Color.RED,
+            Color.YELLOW,
+            Shader.TileMode.CLAMP
+        )
+//        paint.color = Color.BLACK
         // 绘制当前进度
         canvas.drawRoundRect(rect, rect.bottom / 2f, rect.bottom / 2f, paint)
+        paint.shader = null
         rect
     }
 
@@ -281,5 +324,11 @@ class RedEnvelopeView @JvmOverloads constructor(
         // 绘制黄色边框
         canvas.drawRoundRect(rect, rect.bottom / 2f, rect.bottom / 2f, paint)
         rect
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        processBarAnimator.clone()
+        processBarAnimator.removeAllUpdateListeners()
     }
 }
