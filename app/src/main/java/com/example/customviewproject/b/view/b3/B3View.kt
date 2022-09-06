@@ -1,7 +1,6 @@
 package com.example.customviewproject.b.view.b3
 
 import android.animation.ObjectAnimator
-import android.animation.TypeEvaluator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
@@ -11,6 +10,7 @@ import android.view.View
 import com.example.customviewproject.R
 import com.example.customviewproject.ext.dp
 import com.example.customviewproject.ext.getBitMap
+import com.example.customviewproject.util.bezier.ThirdBezierTypeEvaluator
 
 /**
  *
@@ -80,7 +80,7 @@ class B3View @JvmOverloads constructor(
         Log.e("szjWidthRandom", "${(0 until width).random()}")
         val animator = ObjectAnimator.ofObject(this,
             "pointF",
-            C3TypeEvaluator(p1, p2),
+            ThirdBezierTypeEvaluator(p1, p2),
             p0,
             p3)
         animator.duration = 3000
@@ -113,44 +113,5 @@ class B3View @JvmOverloads constructor(
             paint)
     }
 
-    inner class C3TypeEvaluator(private val p1: PointF, private val p2: PointF) :
-        TypeEvaluator<PointF> {
 
-        override fun evaluate(t: Float, p0: PointF, p3: PointF): PointF {
-            // 三阶贝塞尔公式地址: https://baike.baidu.com/item/贝塞尔曲线/1091769
-
-//            pointF.x = p0.x * ((1 - t).pow(3))
-//            +3 * p1.x * t * ((1 - t).pow(2))
-//            +3 * p2.x * t.pow(2) * (1 - t)
-//            +p3.x * t.pow(3)
-//
-//            pointF.y = p0.y * ((1 - t).pow(3))
-//            +3 * p1.y * t * ((1 - t).pow(2))
-//            +3 * p2.y * t.pow(2) * (1 - t)
-//            +p3.y * t.pow(3)
-            val currentP = PointF(
-                p0.x * (1 - t) * (1 - t) * (1 - t)
-                        + 3 * p1.x * t * (1 - t) * (1 - t)
-                        + 3 * p2.x * t * t * (1 - t)
-                        + p3.x * t * t * t,
-                p0.y * (1 - t) * (1 - t) * (1 - t)
-                        + 3 * p1.y * t * (1 - t) * (1 - t)
-                        + 3 * p2.y * t * t * (1 - t)
-                        + p3.y * t * t * t
-            )
-//            currentP.x =
-//                p0.x * (1 - t) * (1 - t) * (1 - t)
-//            +3 * p1.x * t * (1 - t) * (1 - t)
-//            +3 * p2.x * t * t * (1 - t)
-//            +p3.x * t * t * t
-//
-//            currentP.y = p0.y * (1 - t) * (1 - t) * (1 - t)
-//            +3 * p1.y * t * (1 - t) * (1 - t)
-//            +3 * p2.y * t * t * (1 - t)
-//            +p3.y * t * t * t
-
-            Log.e("szjCurrentP", "$currentP")
-            return currentP
-        }
-    }
 }

@@ -22,6 +22,7 @@ class B5Activity : BaseActivity<B5ActivityBinding>() {
                 binding.moveTv.visibility = View.GONE
                 View.VISIBLE
             }
+
             binding.tv.text = value
         }
     }

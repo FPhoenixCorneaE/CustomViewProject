@@ -34,4 +34,10 @@
         android:layout_height="wrap_content"
         android:text="字母选择(导航条)" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="放烟花" />
+
 </LinearLayout>

@@ -14,7 +14,6 @@ import com.example.customviewproject.R
 import com.example.customviewproject.ext.dp
 import com.example.customviewproject.ext.getBitMap
 import kotlin.math.abs
-import kotlin.math.sign
 
 /**
  *
@@ -143,6 +142,7 @@ class B4LoadingView @JvmOverloads constructor(
         canvas.drawText(TEXT, 0, length, dx, offSetY, paint)
     }
 
+
     /*
      * 作者:史大拿
      * 创建时间: 9/5/22 2:51 PM
@@ -186,7 +186,6 @@ class B4LoadingView @JvmOverloads constructor(
         )
 
         return tempBottom
-
     }
 
     /*
@@ -206,7 +205,6 @@ class B4LoadingView @JvmOverloads constructor(
         canvas.rotate(-rotate, width / 2f, height / 2f)
         canvas.translate(0f, -translateDistance)
     }
-
 
     // 向上移动动画
     private val moveAnimator by lazy {

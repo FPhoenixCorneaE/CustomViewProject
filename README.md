@@ -1,5 +1,8 @@
 # customViewProject
 
+# 2022-9-6
+[android 自定义View:中秋节放个烟花吧~](https://blog.csdn.net/weixin_44819566/article/details/126728890)
+
 # 2022-8-31
 [android 自定义View:视差动画](https://blog.csdn.net/weixin_44819566/article/details/126623382)
 
