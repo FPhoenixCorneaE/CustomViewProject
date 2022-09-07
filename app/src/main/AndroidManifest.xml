@@ -10,8 +10,8 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomViewProject">
-        <activity android:name=".MainActivity">
-
+        <!--        <activity android:name=".MainActivity">-->
+        <activity android:name=".d.activity.D1Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,6 +47,7 @@
         <activity android:name=".b.activity.B5Activity" />
         <activity android:name=".b.activity.B1Activity" />
         <activity android:name=".b.BActivity" />
+        <activity android:name=".d.DActivity" />
 
     </application>
 </manifest>

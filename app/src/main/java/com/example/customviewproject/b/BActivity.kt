@@ -36,9 +36,11 @@ class BActivity : BaseActivity<BActivityBinding>() {
         binding.bt4.click {
             jumpLayoutActivity(it, R.layout.b4_activity)
         }
+
         binding.bt5.click {
             jumpActivity(it, B5Activity::class.java)
         }
+
         binding.bt6.click {
             jumpLayoutActivity(it, R.layout.b6_activity)
         }
