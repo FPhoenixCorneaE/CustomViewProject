@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.example.customviewproject.d.view.d1.KuGouDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/user"
-    android:orientation="vertical">
+    app:drawer_content_color="#55000000"
+    app:drawer_content_scale="0.75"
+    app:drawer_min_alpha="0.2"
+    app:drawer_style="drawer"
+    app:drawer_width_percent="0.7">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +19,6 @@
         <include layout="@layout/d1_kugou_drawer_layout" />
 
         <include layout="@layout/d1_kugou_content_layout" />
-
 
     </LinearLayout>
 

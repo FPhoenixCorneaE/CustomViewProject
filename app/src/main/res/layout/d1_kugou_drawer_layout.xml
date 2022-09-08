@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -9,7 +10,9 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="20dp"
-        android:src="@mipmap/emoji_11" />
+        android:src="@mipmap/emoji_11"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/name_tv"
@@ -17,16 +20,34 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
-        android:text="法外狂徒丶张三"
+        android:text="郭达"
         android:textColor="@color/white"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintLeft_toRightOf="@+id/user_img"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/user_img" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:text="道阻且长，行则将至"
-        android:textColor="@color/white" />
+        android:text="半场开香槟"
+        android:textColor="@color/white"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="@+id/name_tv"
+        app:layout_constraintStart_toStartOf="@+id/name_tv"
+        app:layout_constraintTop_toBottomOf="@+id/name_tv" />
 
+    <TextView
+        android:id="@+id/close_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="退出"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

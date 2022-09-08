@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="KuGouDrawerLayout">
+        <attr name="drawer_style">
+            <enum name="def" value="0" />
+            <enum name="drawer" value="1" />
+        </attr>
+
+        <!--  [0..1]  侧滑宽度比率  -->
+        <attr name="drawer_width_percent" format="float" />
+
+        <!--      [0..1] 设置最小透明度 透明度会从min - 1 跟随打开而变化  -->
+        <attr name="drawer_min_alpha" format="float" />
+
+
+        <!--  [0..1]  当打开侧滑时, 内容缩放比率 tips:在drawer_style="def" 生效    -->
+        <attr name="drawer_content_scale" format="float" />
+
+        <!--    设置在drawer_style="drawer"下，打开drawer content颜色   -->
+        <attr name="drawer_content_color" format="color" />
+
+    </declare-styleable>
 
 </resources>
