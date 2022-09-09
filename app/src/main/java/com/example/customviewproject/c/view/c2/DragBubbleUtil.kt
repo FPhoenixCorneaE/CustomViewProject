@@ -19,6 +19,7 @@ import java.util.*
  * @Author: 史大拿
  * @CreateDate: 8/18/22$ 4:10 PM$
  * TODO 拖动气泡view
+ * 详细实现步骤: https://blog.csdn.net/weixin_44819566/article/details/126441557
  */
 class DragBubbleUtil(private val view: View) {
 

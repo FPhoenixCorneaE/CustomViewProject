@@ -37,15 +37,8 @@ class D2Activity : BaseActivity<D2ActivityBinding>() {
 
         binding.chipGroup.setOnCheckedChangeListener { group, _ ->
             group.checkedChipIds.map {
-//                binding.dragGroup.open()
                 findViewById<Chip>(it).text.toString()
             } toast applicationContext
         }
-//
-//        binding.bt1.setOnClickListener {
-//            Log.i("szj点击了", "123")
-//            "点击了" toast applicationContext
-//        }
-
     }
 }

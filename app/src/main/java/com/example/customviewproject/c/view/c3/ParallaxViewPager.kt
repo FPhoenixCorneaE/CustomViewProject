@@ -17,6 +17,7 @@ import java.util.ArrayList
  * @Author: 史大拿
  * @CreateDate: 8/25/22$ 4:31 PM$
  * TODO 视差动画
+ * 详细实现步骤: https://blog.csdn.net/weixin_44819566/article/details/126623382
  */
 class ParallaxViewPager(context: Context, attrs: AttributeSet?) : ViewPager(context, attrs) {
 

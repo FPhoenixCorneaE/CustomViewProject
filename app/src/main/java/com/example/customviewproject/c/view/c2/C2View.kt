@@ -189,7 +189,7 @@ class C2View @JvmOverloads constructor(
         return ObjectAnimator.ofObject(this, "bigPointF", PointFEvaluator(),
             PointF(smallPointF.x, smallPointF.y)).apply {
             duration = 400
-            interpolator = OvershootInterpolator(3f) // 设置回弹迭代器
+            interpolator = OvershootInterpolator(3f) // 设置回弹插值器
         }
     }
 
