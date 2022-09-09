@@ -22,4 +22,9 @@
 
     </declare-styleable>
 
+    <declare-styleable name="DragGroup">
+        <!--   点击firstView后 默认是否关闭   -->
+        <attr name="drag_is_close" format="boolean" />
+    </declare-styleable>
+
 </resources>

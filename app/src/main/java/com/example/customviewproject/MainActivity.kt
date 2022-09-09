@@ -24,9 +24,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.bt3.click {
             jumpActivity(it, CActivity::class.java)
         }
+
         binding.bt4.click {
             jumpActivity(it, DActivity::class.java)
         }
-
     }
 }

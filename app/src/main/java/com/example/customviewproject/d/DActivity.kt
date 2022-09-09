@@ -3,6 +3,7 @@ package com.example.customviewproject.d
 import android.os.Bundle
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.d.activity.D1Activity
+import com.example.customviewproject.d.activity.D2Activity
 import com.example.customviewproject.databinding.DActivityBinding
 import com.example.customviewproject.ext.click
 import com.example.customviewproject.ext.jumpActivity
@@ -18,6 +19,10 @@ class DActivity : BaseActivity<DActivityBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         binding.bt1.click {
             jumpActivity(it, D1Activity::class.java)
+        }
+
+        binding.bt2.click {
+            jumpActivity(it, D2Activity::class.java)
         }
     }
 }

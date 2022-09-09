@@ -8,7 +8,7 @@
     app:drawer_content_color="#55000000"
     app:drawer_content_scale="0.75"
     app:drawer_min_alpha="0.2"
-    app:drawer_style="drawer"
+    app:drawer_style="def"
     app:drawer_width_percent="0.7">
 
     <LinearLayout
