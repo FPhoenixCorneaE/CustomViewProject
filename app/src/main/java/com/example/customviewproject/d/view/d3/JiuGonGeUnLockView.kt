@@ -48,7 +48,7 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
     private var currentType = ORIGIN
     private var currentStyle = Style.FILL
 
-    /// 是否闯过圆心
+    /// 是否穿过圆心
     private var isDrawLineCenterCircle = false
 
     open var adapter: UnLockBaseAdapter? = null
@@ -87,9 +87,7 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
 
         Log.i("measuredWidth", "$measuredWidth")
         val width = resolveSize(measuredWidth, widthMeasureSpec)
-
-        val diameter = width / NUMBER
-        val height = resolveSize((diameter * NUMBER), heightMeasureSpec)
+        val height = resolveSize(width, heightMeasureSpec)
         setMeasuredDimension(width, height)
     }
 
@@ -177,7 +175,7 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
 
     private val path = Path()
 
-    private var line = Pair(PointF(), PointF())
+    private val line = Pair(PointF(), PointF())
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -230,18 +228,22 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
                                 val end = recordList[recordList.size - 1]
 
                                 val d = PointF(start.x, start.y).distance(PointF(end.x, end.y))
-                                val rx = (end.x - start.x) * smallRadius / d
-                                val ry = (end.y - start.y) * smallRadius / d
+                                val dx = (end.x - start.x)
+                                val dy = (end.y - start.y)
+                                val offsetX = dx * smallRadius / d
+                                val offsetY = dy * smallRadius / d
 
-                                val x1 = start.x + rx
-                                val y1 = start.y + ry
+                                val x1 = start.x + offsetX
+                                val y1 = start.y + offsetY
                                 path.moveTo(x1, y1)
 
-                                val x2 = end.x - rx
-                                val y2 = end.y - ry
+                                val x2 = end.x - offsetX
+                                val y2 = end.y - offsetY
                                 path.lineTo(x2, y2)
-                                line.first.x = x2
-                                line.first.y = y2
+
+
+                                line.first.x = it.x + offsetX
+                                line.first.y = it.y + offsetY
                             }
                         }
                     }
@@ -262,8 +264,6 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
 
                 line.second.x = 0f
                 line.second.y = 0f
-
-
                 if (!isDOWN) {
                     return super.onTouchEvent(event)
                 }
@@ -378,8 +378,6 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
         paint.strokeWidth = 4.dp
         canvas.drawPath(path, paint)
 
-
-//
 //        // 画连接线
         if (line.first.x != 0f && line.second.x != 0f) {
 //            paint.style = Paint.Style.STROKE

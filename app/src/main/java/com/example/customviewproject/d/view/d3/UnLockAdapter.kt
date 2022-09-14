@@ -1,6 +1,7 @@
 package com.example.customviewproject.d.view.d3
 
 
+
 /**
  *
  * @ClassName: UnLockAdapter
@@ -9,11 +10,11 @@ package com.example.customviewproject.d.view.d3
  * TODO
  */
 class UnLockAdapter : UnLockBaseAdapter() {
-    override fun getNumber(): Int = 3
+    override fun getNumber(): Int = 4
 
     override fun getStyle(): JiuGonGeUnLockView.Style = JiuGonGeUnLockView.Style.STROKE
 
 //    override fun getOriginColor(): Int {
-//        return Color.BLACK
+//        return Color.YELLOW
 //    }
 }
