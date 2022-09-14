@@ -17,6 +17,13 @@ abstract class UnLockBaseAdapter {
     // 设置样式
     abstract fun getStyle(): JiuGonGeUnLockView.Style
 
+    /*
+     * 作者:史大拿
+     * 创建时间: 9/14/22 10:24 AM
+     * TODO 画连接线时,是否穿过圆心
+     */
+    open fun lineCenterCircle() = false
+
     // 设置原始颜色
     open fun getOriginColor(): Int = let {
         return Color.parseColor("#D8D9D8")

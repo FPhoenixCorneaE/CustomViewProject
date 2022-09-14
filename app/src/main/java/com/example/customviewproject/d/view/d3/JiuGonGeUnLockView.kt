@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import com.example.customviewproject.d.view.d3.JiuGonGeUnLockView.Type.*
 import com.example.customviewproject.ext.contains
+import com.example.customviewproject.ext.distance
 import com.example.customviewproject.ext.dp
 
 /**
@@ -47,6 +48,9 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
     private var currentType = ORIGIN
     private var currentStyle = Style.FILL
 
+    /// 是否闯过圆心
+    private var isDrawLineCenterCircle = false
+
     open var adapter: UnLockBaseAdapter? = null
 
     companion object {
@@ -78,6 +82,7 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
             DOWN_COLOR = it.getDownColor()
             UP_COLOR = it.getUpColor()
             ERROR_COLOR = it.getErrorColor()
+            isDrawLineCenterCircle = it.lineCenterCircle()
         }
 
         Log.i("measuredWidth", "$measuredWidth")
@@ -115,7 +120,7 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
             }
             unLockPoints.add(list)
         }
-        Log.i("szjUnLockPoints","$unLockPoints")
+        Log.i("szjUnLockPoints", "$unLockPoints")
 
         // TODO 只适合3*3的办法
 //        repeat(NUMBER) {
@@ -186,17 +191,19 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
                     it.type = DOWN
                     Log.i("szjDOWN", "$it")
                     recordList.add(it)
-                    path.moveTo(it.x, it.y)
+
+                    if (isDrawLineCenterCircle) {
+                        path.moveTo(it.x, it.y)
+                    }
 
                     line.first.x = it.x
                     line.first.y = it.y
-
                     currentType = DOWN
                 }
             }
 
             MotionEvent.ACTION_MOVE -> {
-                Log.i("szjMOVE", "移动中")
+//                Log.i("szjMOVE", "移动中")
 
                 if (!isDOWN) {
                     return super.onTouchEvent(event)
@@ -211,13 +218,34 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
                         Log.i("szjDOWN", "${recordList.size}")
                         recordList.add(it)
 
-                        path.lineTo(it.x, it.y)
+                        if (recordList.size >= 2) {
+                            if (isDrawLineCenterCircle) {
+                                // TODO 穿过圆心
+                                path.lineTo(it.x, it.y)
+                                line.first.x = recordList.last().x
+                                line.first.y = recordList.last().y
+                            } else {
+                                // TODO 不穿过圆心
+                                val start = recordList[recordList.size - 2]
+                                val end = recordList[recordList.size - 1]
 
-                        line.first.x = recordList[recordList.size - 1].x
-                        line.first.y = recordList[recordList.size - 1].y
+                                val d = PointF(start.x, start.y).distance(PointF(end.x, end.y))
+                                val rx = (end.x - start.x) * smallRadius / d
+                                val ry = (end.y - start.y) * smallRadius / d
+
+                                val x1 = start.x + rx
+                                val y1 = start.y + ry
+                                path.moveTo(x1, y1)
+
+                                val x2 = end.x - rx
+                                val y2 = end.y - ry
+                                path.lineTo(x2, y2)
+                                line.first.x = x2
+                                line.first.y = y2
+                            }
+                        }
                     }
                 }
-
 
                 line.second.x = event.x
                 line.second.y = event.y
@@ -244,7 +272,7 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
 
                 // 标记是否成功
                 val isSuccess =
-                    if (recordList.size == password.size ) {
+                    if (recordList.size == password.size) {
                         val list = recordList.zip(password).filter {
                             // 通过判断每一个值
                             it.first.index == it.second
@@ -257,7 +285,7 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
                     }
 
                 if (!isSuccess) {
-                    recordList.map {
+                    recordList.forEach {
                         it.type = ERROR
                     }
 
@@ -276,6 +304,7 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
         invalidate()
         return true
     }
+
 
     /*
      * 作者:史大拿
@@ -342,14 +371,14 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
             }
         }
 
-
-//        // 画线颜色默认为滑动颜色
+        // 画线颜色默认为滑动颜色
         paint.color = getTypeColor(currentType)
-//        // 画连接线
+////        // 画连接线
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 4.dp
         canvas.drawPath(path, paint)
-//
+
+
 //
 //        // 画连接线
         if (line.first.x != 0f && line.second.x != 0f) {
@@ -358,6 +387,7 @@ open class JiuGonGeUnLockView @JvmOverloads constructor(
             canvas.drawLine(line.first.x, line.first.y, line.second.x, line.second.y, paint)
         }
     }
+
 
     /*
      * 作者:史大拿
