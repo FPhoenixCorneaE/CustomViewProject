@@ -29,6 +29,25 @@ abstract class BaseDropDownAdapter {
     abstract fun contentView(position: Int, parent: ViewGroup): View
 
 
+    private val listObserved = arrayListOf<DropDownObserved>()
+
+    fun register(observed: DropDownObserved) {
+        listObserved.add(observed)
+    }
+
+    fun unregister(observed: DropDownObserved) {
+        if (listObserved.contains(observed)) {
+            listObserved.remove(observed)
+        }
+    }
+
+    // 通过观察者模式 关闭
+    open fun closeContent() {
+        listObserved.forEach {
+            it.closeContent()
+        }
+    }
+
     // 点击回调监听
     var blockClick: Click? = null
 

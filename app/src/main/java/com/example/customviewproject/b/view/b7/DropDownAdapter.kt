@@ -46,6 +46,8 @@ class DropDownAdapter(private val context: Context) : BaseDropDownAdapter() {
             view.findViewById<TextView>(R.id.bt).also {
                 it.text = list[position]
                 it.click { _ ->
+                    // 关闭窗口
+                    closeContent()
                     "${it.text}" toast context
                 }
             }

@@ -53,12 +53,32 @@ open class DropDownSelectView @JvmOverloads constructor(
     // 标记是否是打开状态
     private var isOpen = false
 
+    inner class AdapterObserved : DropDownObserved() {
+        override fun closeContent() {
+            close()
+        }
+    }
+
+    private var adapterObserved: AdapterObserved? = null
+
     open var adapter: BaseDropDownAdapter? = null
         set(value) {
+
+
+            if (adapterObserved != null) {
+                value?.unregister(adapterObserved!!)
+            }
+
             field = value
             if (field == null) {
                 throw AndroidRuntimeException("adapter null?")
             }
+
+            // 注册
+            adapterObserved = AdapterObserved()
+            value?.register(adapterObserved!!)
+
+
 
             tabView.orientation = HORIZONTAL
             field?.let { adapter ->
