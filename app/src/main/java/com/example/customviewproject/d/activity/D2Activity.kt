@@ -1,10 +1,9 @@
 package com.example.customviewproject.d.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.customviewproject.base.BaseActivity
-import com.example.customviewproject.c.view.c2.C2Adapter
+import com.example.customviewproject.adapter.QQDragAdapter
 import com.example.customviewproject.databinding.D2ActivityBinding
 import com.example.customviewproject.ext.toast
 import com.google.android.material.chip.Chip
@@ -32,7 +31,7 @@ class D2Activity : BaseActivity<D2ActivityBinding>() {
          */
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(applicationContext)
-            adapter = C2Adapter()
+            adapter = QQDragAdapter()
         }
 
         binding.chipGroup.setOnCheckedChangeListener { group, _ ->

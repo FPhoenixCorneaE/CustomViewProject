@@ -1,4 +1,4 @@
-package com.example.customviewproject.c.view.c2
+package com.example.customviewproject.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.customviewproject.R
+import com.example.customviewproject.c.view.c2.DragBubbleUtil
 
 /**
  *
@@ -14,7 +15,7 @@ import com.example.customviewproject.R
  * @CreateDate: 8/19/22$ 10:41 AM$
  * TODO
  */
-class C2Adapter : RecyclerView.Adapter<C2Adapter.ViewHolder>() {
+class QQDragAdapter : RecyclerView.Adapter<QQDragAdapter.ViewHolder>() {
 
     private val list = arrayListOf<String>()
 

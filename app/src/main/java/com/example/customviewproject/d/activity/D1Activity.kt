@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.customviewproject.R
 import com.example.customviewproject.base.BaseActivity
-import com.example.customviewproject.c.view.c2.C2Adapter
-import com.example.customviewproject.d.view.d1.KuGouDrawerLayout
+import com.example.customviewproject.adapter.QQDragAdapter
 import com.example.customviewproject.databinding.D1ActivityBinding
 import com.example.customviewproject.ext.click
 import com.example.customviewproject.ext.toast
@@ -55,7 +54,7 @@ class D1Activity : BaseActivity<D1ActivityBinding>() {
 
         findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(this@D1Activity)
-            adapter = C2Adapter()
+            adapter = QQDragAdapter()
         }
 
     }

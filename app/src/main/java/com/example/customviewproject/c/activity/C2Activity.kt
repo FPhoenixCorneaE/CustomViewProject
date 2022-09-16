@@ -3,7 +3,7 @@ package com.example.customviewproject.c.activity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.customviewproject.base.BaseActivity
-import com.example.customviewproject.c.view.c2.C2Adapter
+import com.example.customviewproject.adapter.QQDragAdapter
 import com.example.customviewproject.c.view.c2.DragBubbleUtil
 import com.example.customviewproject.databinding.C2ActivityBinding
 
@@ -24,6 +24,6 @@ class C2Activity : BaseActivity<C2ActivityBinding>() {
 
 
         binding.rv.layoutManager = LinearLayoutManager(this)
-        binding.rv.adapter = C2Adapter()
+        binding.rv.adapter = QQDragAdapter()
     }
 }

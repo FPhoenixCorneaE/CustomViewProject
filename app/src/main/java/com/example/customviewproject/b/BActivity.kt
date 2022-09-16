@@ -2,10 +2,7 @@ package com.example.customviewproject.b
 
 import android.os.Bundle
 import com.example.customviewproject.R
-import com.example.customviewproject.b.activity.B1Activity
-import com.example.customviewproject.b.activity.B2Activity
-import com.example.customviewproject.b.activity.B3Activity
-import com.example.customviewproject.b.activity.B5Activity
+import com.example.customviewproject.b.activity.*
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.BActivityBinding
 import com.example.customviewproject.ext.click
@@ -43,6 +40,10 @@ class BActivity : BaseActivity<BActivityBinding>() {
 
         binding.bt6.click {
             jumpLayoutActivity(it, R.layout.b6_activity)
+        }
+
+        binding.bt7.click {
+            jumpActivity(it, B7Activity::class.java)
         }
     }
 }
