@@ -145,6 +145,11 @@ class E1ChartView @JvmOverloads constructor(
                 if (offsetX > 0) {
                     offsetX = 0f
                 }
+
+                if (offsetX <= -(data.last().x - width)) {
+                    offsetX = -(data.last().x - width)
+                }
+                Log.e(TAG, "offsetXX:${offsetX}\t${data.last().x - width}")
 //                translationX = event.x
             }
         }
