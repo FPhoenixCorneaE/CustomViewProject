@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.graphics.withClip
 import com.example.customviewproject.ext.dp
 
 /**
@@ -95,6 +96,7 @@ class E1ChartView @JvmOverloads constructor(
         drawPoint(canvas, linePaint)
 
         canvas.scale(1f, 1f, width / 2f, width / 2f)
+
         if (!isFlag) {
 
             startLineAnimator()
@@ -149,8 +151,6 @@ class E1ChartView @JvmOverloads constructor(
                 if (offsetX <= -(data.last().x - width)) {
                     offsetX = -(data.last().x - width)
                 }
-                Log.e(TAG, "offsetXX:${offsetX}\t${data.last().x - width}")
-//                translationX = event.x
             }
         }
 
@@ -173,30 +173,33 @@ class E1ChartView @JvmOverloads constructor(
         paint.strokeCap = Paint.Cap.ROUND
 
 //        canvas.drawPoint(100.dp,100.dp,paint)
-        Log.e(TAG, "offsetX:${offsetX}")
 
         originList.forEachIndexed { index, value ->
             val x = (eachWidth * index) + offsetX
             val y = height - (eachHeight * value)
 
-            if (x <= width) {
+            // 在屏幕内才绘制点
+            if (x >= 0 && x <= width) {
                 // 绘制点
                 canvas.drawPoint(x, y, paint)
             }
+
             // 绘制线
             if (index == 0) {
                 path.moveTo(x, y)
             } else {
                 path.lineTo(x, y)
             }
-
-            Log.i(TAG, "point: width:${(eachWidth * index)}\t height:${(eachHeight * value)}")
         }
+
 
         // TODO 绘制连接线
         paint.strokeWidth = 2.dp
         paint.style = Paint.Style.STROKE
         pathMeasure.setPath(path, false)
+
+        // 裁剪矩形区域，保证线在屏幕内
+        canvas.clipRect(0, 0, width, height)
         canvas.drawPath(path, paint)
         path.reset()
     }
