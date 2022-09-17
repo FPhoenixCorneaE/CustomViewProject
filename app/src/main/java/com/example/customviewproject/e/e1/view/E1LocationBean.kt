@@ -7,4 +7,4 @@ package com.example.customviewproject.e.e1.view
  * @CreateDate: 9/16/22$ 3:01 PM$
  * TODO
  */
-data class E1Bean(val x: Float, val y: Float)
+data class E1LocationBean(val x: Float, val y: Float,val number:Int)

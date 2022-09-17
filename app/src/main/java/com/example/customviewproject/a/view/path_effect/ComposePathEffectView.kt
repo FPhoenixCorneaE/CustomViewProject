@@ -28,7 +28,6 @@ class ComposePathEffectView @JvmOverloads constructor(
         // 用来画抖动的线
         val discreteEffect = DiscretePathEffect(20f, 20f)
 
-
         // 组合起来，先虚线，然后让虚线抖起来
         pathEffect = ComposePathEffect(dashEffect, discreteEffect)
     }

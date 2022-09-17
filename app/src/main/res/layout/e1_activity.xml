@@ -5,5 +5,6 @@
 
     <com.example.customviewproject.e.e1.view.E1ChartView
         android:layout_width="match_parent"
+        android:id="@+id/e1_chart_view"
         android:layout_height="match_parent" />
 </LinearLayout>
