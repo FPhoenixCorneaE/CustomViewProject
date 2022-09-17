@@ -123,7 +123,7 @@ open class E1ChartView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
 //        canvas.drawColor(Color.YELLOW)
         canvas.scale(0.8f, 0.8f, width / 2f, width / 2f)
-        if(isDrawGrid){
+        if (isDrawGrid) {
             // 绘制网格
             drawGrid(canvas)
         }
@@ -362,10 +362,20 @@ open class E1ChartView @JvmOverloads constructor(
             val number = max - eachNumber * index
 //            Log.e("szj绘制文字", "$number")
             if (number > 0) {
+                val text = "$number"
+                val rect = Rect()
+
+                // 计算文字宽高
+                paint.getTextBounds(text, 0, text.length, rect)
+                val textWidth = rect.width()
+                val textHeight = rect.height()
+
+                val x = -textWidth - 5.dp
+                val y = value.y - paint.fontMetrics.top
                 canvas.drawText(
-                    "$number",
-                    (-20).dp,
-                    value.y,
+                    text,
+                    x,
+                    y - textHeight,
                     paint
                 )
             }
