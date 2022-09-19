@@ -195,10 +195,7 @@ open class E1ChartView @JvmOverloads constructor(
             paint.strokeWidth = 2.dp
             paint.style = Paint.Style.STROKE
             canvas.drawPath(path, paint)
-
         }
-
-
 
         paint.style = Paint.Style.STROKE
         pathMeasure.setPath(path, false)
@@ -251,8 +248,8 @@ open class E1ChartView @JvmOverloads constructor(
                 downX = event.x
 
                 originX = offsetX
-
             }
+
             MotionEvent.ACTION_MOVE -> {
                 // 当前偏移位置 = 当前位置 - 按压位置 + 原始偏移量
                 offsetX = event.x - downX + originX
@@ -268,7 +265,7 @@ open class E1ChartView @JvmOverloads constructor(
 
                 data.forEachIndexed { index, value ->
 
-                    if (PointF(event.x + -(offsetX), 0f).contains(
+                    if (PointF(event.x - offsetX, 0f).contains(
                             PointF(value.x, 0f),
                             eachWidth / 2f
                         )
@@ -277,6 +274,7 @@ open class E1ChartView @JvmOverloads constructor(
                         Log.e("szj选择了", "index:${index}")
                     }
                 }
+
             }
 
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
@@ -323,11 +321,13 @@ open class E1ChartView @JvmOverloads constructor(
 
         originList.forEachIndexed { index, value ->
             val x = ((eachWidth * index) + offsetX)
-            val y = (height - (eachHeight * value))
+            val y = height - (eachHeight * value)
 
             // 在屏幕内才绘制点
             if (x >= 0 && x <= width) {
-                if (drawHintTextPosition != -1) {
+                if (drawHintTextPosition != -1
+//                    && index == drawHintTextPosition
+                ) {
                     paint.textSize = 16.dp
                     paint.style = Paint.Style.FILL
                     val text = "${data[index].number}"
@@ -360,8 +360,10 @@ open class E1ChartView @JvmOverloads constructor(
 
         data.forEachIndexed { index, value ->
             val number = max - eachNumber * index
-//            Log.e("szj绘制文字", "$number")
-            if (number > 0) {
+            Log.e("szj绘制文字", "number:$number\tindex:$index\tcount:${verticalCount}")
+
+            // 如果number > 0 并且当前不是最后一行
+            if (number >= 0 && index != horizontalCount) {
                 val text = "$number"
                 val rect = Rect()
 

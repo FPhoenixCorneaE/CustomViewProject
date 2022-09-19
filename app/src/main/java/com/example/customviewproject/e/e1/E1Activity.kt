@@ -19,23 +19,24 @@ class E1Activity : BaseActivity<E1ActivityBinding>() {
         binding.e1ChartView.adapter = object : BaseChatAdapter() {
 
             // 实心
-            override fun fillStyle(): E1ChartView.FillStyle = E1ChartView.FillStyle.FILL
+            override fun fillStyle(): E1ChartView.FillStyle = E1ChartView.FillStyle.STROKE
 
             // 绘制虚线
-            override fun lineStyle(): E1ChartView.LineStyle = E1ChartView.LineStyle.DOTTED_LINE
+            override fun lineStyle(): E1ChartView.LineStyle = E1ChartView.LineStyle.SOLID_LINE
 
             // 点的样式
-            override fun pointStyle(): E1ChartView.PointStyle  = E1ChartView.PointStyle.SQUARE
+            override fun pointStyle(): E1ChartView.PointStyle = E1ChartView.PointStyle.ROUND
 
             // 是否绘制网格
             override fun isDrawGrid(): Boolean = true
 
-            override fun horizontalCount(): Int = 5
-            override fun verticalCount(): Int = 10
+            override fun horizontalCount(): Int = 20
+
+            override fun verticalCount(): Int = 5
         }
 
         binding.e1ChartView.originList = arrayListOf(
-            20, 40, 60, 80, 100,
+            0, 40, 60, 80, 100,
             70, 80, 100, 222, 60,
             20, 40, 60, 80, 100,
             70, 80, 100, 200, 46,

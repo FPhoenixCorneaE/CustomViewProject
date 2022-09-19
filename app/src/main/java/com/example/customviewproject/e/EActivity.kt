@@ -19,5 +19,9 @@ class EActivity : BaseActivity<EActivityBinding>() {
         binding.bt1.click {
             jumpActivity(it, E1Activity::class.java)
         }
+
+        binding.bt1Blog.click {
+            jumpActivity(it, E1BlogActivity::class.java)
+        }
     }
 }
