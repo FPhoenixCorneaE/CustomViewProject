@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt1"
@@ -14,5 +14,6 @@
         android:id="@+id/bt1_blog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="入门图表blog" />
+        android:text="入门图表blog"
+        android:visibility="gone" />
 </LinearLayout>

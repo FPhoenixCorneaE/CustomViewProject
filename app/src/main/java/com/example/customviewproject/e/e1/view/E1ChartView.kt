@@ -320,8 +320,8 @@ open class E1ChartView @JvmOverloads constructor(
         }
 
         originList.forEachIndexed { index, value ->
-            val x = ((eachWidth * index) + offsetX)
-            val y = height - (eachHeight * value)
+            val x = eachWidth * index + offsetX
+            val y = height - eachHeight * value
 
             // 在屏幕内才绘制点
             if (x >= 0 && x <= width) {

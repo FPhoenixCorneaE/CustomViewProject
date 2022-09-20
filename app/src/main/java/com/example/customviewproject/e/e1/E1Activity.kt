@@ -22,7 +22,7 @@ class E1Activity : BaseActivity<E1ActivityBinding>() {
             override fun fillStyle(): E1ChartView.FillStyle = E1ChartView.FillStyle.STROKE
 
             // 绘制虚线
-            override fun lineStyle(): E1ChartView.LineStyle = E1ChartView.LineStyle.SOLID_LINE
+            override fun lineStyle(): E1ChartView.LineStyle = E1ChartView.LineStyle.DOTTED_LINE
 
             // 点的样式
             override fun pointStyle(): E1ChartView.PointStyle = E1ChartView.PointStyle.ROUND
@@ -35,11 +35,13 @@ class E1Activity : BaseActivity<E1ActivityBinding>() {
             override fun verticalCount(): Int = 5
         }
 
+
         binding.e1ChartView.originList = arrayListOf(
-            0, 40, 60, 80, 100,
             70, 80, 100, 222, 60,
-            20, 40, 60, 80, 100,
-            70, 80, 100, 200, 46,
+            70, 80, 100, 222, 60,
+            777, 210, 100, 2222, 80,
+            70, 880, 100, 222, 700
         )
+
     }
 }
