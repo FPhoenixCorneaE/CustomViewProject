@@ -1,4 +1,6 @@
-package com.example.customviewproject.e.e1.view
+package com.example.customviewproject.e
+
+import com.example.customviewproject.e.e1.view.E1ChartView
 
 /**
  *

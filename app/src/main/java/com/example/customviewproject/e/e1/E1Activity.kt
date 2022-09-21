@@ -3,7 +3,7 @@ package com.example.customviewproject.e.e1
 import android.os.Bundle
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.E1ActivityBinding
-import com.example.customviewproject.e.e1.view.BaseChatAdapter
+import com.example.customviewproject.e.BaseChatAdapter
 import com.example.customviewproject.e.e1.view.E1ChartView
 
 /**
@@ -32,7 +32,7 @@ class E1Activity : BaseActivity<E1ActivityBinding>() {
 
             override fun horizontalCount(): Int = 20
 
-            override fun verticalCount(): Int = 5
+            override fun verticalCount(): Int = 10
         }
 
 
@@ -42,6 +42,5 @@ class E1Activity : BaseActivity<E1ActivityBinding>() {
             777, 210, 100, 2222, 80,
             70, 880, 100, 222, 700
         )
-
     }
 }

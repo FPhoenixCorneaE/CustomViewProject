@@ -7,8 +7,9 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import androidx.core.graphics.withSave
+import com.example.customviewproject.e.BaseChartView
+import com.example.customviewproject.e.BaseChatAdapter
 import com.example.customviewproject.e.e1.view.E1ChartView.LineStyle.*
 import com.example.customviewproject.e.e1.view.E1ChartView.PointStyle.*
 import com.example.customviewproject.ext.contains
@@ -23,20 +24,12 @@ import com.example.customviewproject.ext.dp
  */
 open class E1ChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+) : BaseChartView(context, attrs, defStyleAttr) {
 
     companion object {
-
-
         const val TAG = "E1ChartView"
-
-        // 网格颜色
-        val BACK_COLOR = Color.parseColor("#88888888")
     }
 
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).also {
-        it.strokeWidth = 1.dp
-    }
 
     // 线段画笔
     private val linePaint = Paint(Paint.ANTI_ALIAS_FLAG).also {
@@ -44,19 +37,11 @@ open class E1ChartView @JvmOverloads constructor(
     }
 
     // 水平个数 左侧文字显示个数
-    private val horizontalCount: Int
-        get() {
-            return adapter?.horizontalCount() ?: 5
-        }
+    override var horizontalCount: Int = -1
 
     // 垂直个数
-    private val verticalCount: Int
-        get() {
-            return adapter?.verticalCount() ?: 5
-        }
+    override var verticalCount = -1
 
-    // 原始数据
-    open var originList = arrayListOf<Int>()
 
     private val data = arrayListOf<E1LocationBean>()
 
@@ -94,6 +79,8 @@ open class E1ChartView @JvmOverloads constructor(
             if (field == null) {
                 throw NullPointerException("adapter = NULL")
             }
+            horizontalCount = field?.horizontalCount() ?: 5
+            verticalCount = field?.verticalCount() ?: 5
         }
 
 
@@ -121,16 +108,16 @@ open class E1ChartView @JvmOverloads constructor(
 
 
     override fun onDraw(canvas: Canvas) {
+        Log.e(TAG, "onDraw:eW:${eachWidth}\teH:$eachHeight")
 //        canvas.drawColor(Color.YELLOW)
         canvas.scale(0.8f, 0.8f, width / 2f, width / 2f)
         if (isDrawGrid) {
             // 绘制网格
-            drawGrid(canvas)
+            super.drawGrid(canvas)
         }
 
-
         // 绘制文字
-        drawText(canvas)
+        drawLeftText(canvas)
 
 
         // 因为绘制线需要裁剪，所以保存一下画布
@@ -342,93 +329,6 @@ open class E1ChartView @JvmOverloads constructor(
                 }
             }
         }
-    }
-
-
-    /*
-     * 作者:史大拿
-     * 创建时间: 9/16/22 4:11 PM
-     * TODO 绘制文字
-     */
-    private fun drawText(canvas: Canvas) {
-        paint.textSize = 16.dp
-        paint.color = Color.BLACK
-        // 获取最大值
-        val max = originList.maxOrNull()!!
-        // 计算每一格的值
-        val eachNumber = max / horizontalCount
-
-        data.forEachIndexed { index, value ->
-            val number = max - eachNumber * index
-            Log.e("szj绘制文字", "number:$number\tindex:$index\tcount:${verticalCount}")
-
-            // 如果number > 0 并且当前不是最后一行
-            if (number >= 0 && index != horizontalCount) {
-                val text = "$number"
-                val rect = Rect()
-
-                // 计算文字宽高
-                paint.getTextBounds(text, 0, text.length, rect)
-                val textWidth = rect.width()
-                val textHeight = rect.height()
-
-                val x = -textWidth - 5.dp
-                val y = value.y - paint.fontMetrics.top
-                canvas.drawText(
-                    text,
-                    x,
-                    y - textHeight,
-                    paint
-                )
-            }
-        }
-    }
-
-    /*
-     * 作者:史大拿
-     * 创建时间: 9/16/22 3:19 PM
-     * TODO 绘制网格
-     */
-    private fun drawGrid(canvas: Canvas) {
-        paint.color = BACK_COLOR
-
-        data.forEach {
-            Log.e("szjData", it.toString())
-
-            canvas.drawLine(
-                it.x,
-                0f,
-                it.x,
-                height * 1f,
-                paint
-            )
-
-            if (it.y <= height) {
-                canvas.drawLine(
-                    0f,
-                    it.y,
-                    width * 1f,
-                    it.y,
-                    paint
-                )
-            }
-
-        }
-        canvas.drawLine(
-            width * 1f,
-            0f,
-            width * 1f,
-            height * 1f,
-            paint
-        )
-
-        canvas.drawLine(
-            0f,
-            height * 1f,
-            width * 1f,
-            height * 1f,
-            paint
-        )
     }
 
 

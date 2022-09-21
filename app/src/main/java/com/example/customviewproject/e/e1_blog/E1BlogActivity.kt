@@ -1,4 +1,4 @@
-package com.example.customviewproject.e
+package com.example.customviewproject.e.e1_blog
 
 import android.os.Bundle
 import com.example.customviewproject.base.BaseActivity

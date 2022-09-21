@@ -4,6 +4,8 @@ import android.os.Bundle
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.EActivityBinding
 import com.example.customviewproject.e.e1.E1Activity
+import com.example.customviewproject.e.e1_blog.E1BlogActivity
+import com.example.customviewproject.e.e2.E2Activity
 import com.example.customviewproject.ext.click
 import com.example.customviewproject.ext.jumpActivity
 
@@ -22,6 +24,10 @@ class EActivity : BaseActivity<EActivityBinding>() {
 
         binding.bt1Blog.click {
             jumpActivity(it, E1BlogActivity::class.java)
+        }
+
+        binding.bt2.click {
+            jumpActivity(it, E2Activity::class.java)
         }
     }
 }

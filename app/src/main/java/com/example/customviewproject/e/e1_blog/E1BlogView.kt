@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.graphics.withSave
-import com.example.customviewproject.e.e1.view.E1ChartView.Companion.BACK_COLOR
+import com.example.customviewproject.e.BaseChartView.Companion.BACK_COLOR
 import com.example.customviewproject.e.e1.view.E1LocationBean
 import com.example.customviewproject.ext.dp
 
