@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import com.example.customviewproject.ext.szj.dp
+import com.example.customviewproject.ext.dp
 import kotlin.math.cos
 import kotlin.math.sin
 

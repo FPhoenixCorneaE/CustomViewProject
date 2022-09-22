@@ -2,7 +2,6 @@ package com.example.customviewproject.ext
 
 import android.content.res.Resources
 import android.util.TypedValue
-import com.example.customviewproject.ext.szj.diagonalDistance
 import kotlin.math.pow
 import kotlin.math.sqrt
 

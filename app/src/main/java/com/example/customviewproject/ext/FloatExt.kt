@@ -1,4 +1,4 @@
-package com.example.customviewproject.ext.szj
+package com.example.customviewproject.ext
 
 import android.content.res.Resources
 import android.util.TypedValue

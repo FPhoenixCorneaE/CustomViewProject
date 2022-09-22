@@ -10,7 +10,7 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomViewProject">
-        <!--        <activity android:name=".MainActivity">-->
+        <!--                <activity android:name=".MainActivity">-->
         <activity android:name=".e.e3.E3Activity">
 
             <intent-filter>

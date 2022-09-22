@@ -13,5 +13,16 @@ import com.example.customviewproject.databinding.E3ActivityBinding
  */
 class E3Activity : BaseActivity<E3ActivityBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
+
+        binding.polygonChartView.data = arrayListOf(
+            "技术/职能型" to 2f,
+            "综合管理型" to 2f,
+            "自主/独立型" to 1f,
+            "安全/稳定型" to 4f,
+            "创业创新型" to 2f,
+            "服务/奉献型" to 6f,
+            "纯粹挑战型" to 2f,
+            "生活方式型" to 1f,
+        )
     }
 }

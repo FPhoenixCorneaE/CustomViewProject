@@ -186,8 +186,8 @@ class ZoomImageView @JvmOverloads constructor(
 
     // onFling 事件
     override fun onFling(
-        e1: MotionEvent?,
-        e2: MotionEvent?,
+        e1: MotionEvent,
+        e2: MotionEvent,
         velocityX: Float,
         velocityY: Float,
     ): Boolean {
@@ -195,6 +195,7 @@ class ZoomImageView @JvmOverloads constructor(
 
         val startX = offset.x.toInt()
         val startY = offset.y.toInt()
+        Log.e("szjOffset","offset:$offset\te1:{x:${e1.x},y:${e1.y}}\te2:{x:${e2.x},y:${e2.y}}")
         val vX = velocityX.toInt() // 滑动速度
         val vY = velocityY.toInt()
         val minX = (width / 2 - (bitmap.width * currentZoom) / 2).toInt()
@@ -216,6 +217,7 @@ class ZoomImageView @JvmOverloads constructor(
         if (isOver) {
             offset.x = overScroll.currX.toFloat()
             offset.y = overScroll.currY.toFloat()
+            Log.e("szjRun","offset:$offset")
 
             invalidate()
             postOnAnimation(this) //
