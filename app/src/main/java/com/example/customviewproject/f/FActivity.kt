@@ -17,10 +17,13 @@ import com.example.customviewproject.ext.jumpTabActivity
 class FActivity : BaseActivity<FActivityBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         binding.bt1.click {
-            jumpTabActivity(it, listOf(
-                "左右滚动" to R.layout.f11_item,
-                "范围滚动" to R.layout.f12_item,
-            ))
+            jumpTabActivity(
+                it, listOf(
+                    "左右滚动" to R.layout.f11_item,
+                    "范围滚动" to R.layout.f12_item,
+                    "随机滚动" to R.layout.f13_item,
+                )
+            )
         }
     }
 }
