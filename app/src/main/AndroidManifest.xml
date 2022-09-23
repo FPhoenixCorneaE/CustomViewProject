@@ -10,7 +10,8 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomViewProject">
-        <activity android:name=".MainActivity">
+        <!--        <activity android:name=".MainActivity">-->
+        <activity android:name=".f.FActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
