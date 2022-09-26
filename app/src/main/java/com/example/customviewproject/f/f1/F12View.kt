@@ -28,8 +28,8 @@ class F12View @JvmOverloads constructor(
         const val SPEED = 5f
     }
 
-    var cx = 0f
-    var cy = 0f
+    private var cx = 0f
+    private var cy = 0f
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         if (cx == 0f && cy == 0f) {
@@ -39,7 +39,7 @@ class F12View @JvmOverloads constructor(
     }
 
     // 步长
-    var step = PointF(SPEED, SPEED)
+    private var step = PointF(SPEED, SPEED)
 
     override fun onDraw(canvas: Canvas) {
         val left = width * 1 / 4f
@@ -50,6 +50,7 @@ class F12View @JvmOverloads constructor(
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 2.dp
         canvas.drawRect(left, top, right, bottom, paint)
+
 
         paint.style = Paint.Style.FILL
         canvas.drawCircle(cx, cy, RADIUS, paint)
@@ -70,7 +71,6 @@ class F12View @JvmOverloads constructor(
             cy <= top -> {
                 step.y = SPEED
                 paint.color = colorRandom
-
             }
             cy >= bottom -> {
                 step.y = -SPEED

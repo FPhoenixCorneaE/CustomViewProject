@@ -1,5 +1,7 @@
 package com.example.customviewproject.f.f1
 
+import androidx.annotation.FloatRange
+
 /**
  *
  * @ClassName: SpeedBean
@@ -16,5 +18,9 @@ data class SpeedBean(
 
     var vX: Float = 10f, // 速度
     var vY: Float = 10f,
+    val randomV: Int = ((1 until 5).random()), // 随机速度
+    var angle : Float = 0f, // 相对于按下时候的角度
+
+    @FloatRange(from = 0.0, to = 1.0) var collisionWear: Float = 0.9f // 碰撞磨损
 
 )
