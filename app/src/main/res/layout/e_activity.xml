@@ -25,6 +25,12 @@
         android:text="入门图表(矩形)" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt2_blog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="入门图表(矩形)blog" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

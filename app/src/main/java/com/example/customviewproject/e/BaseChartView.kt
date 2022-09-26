@@ -28,7 +28,6 @@ open class BaseChartView @JvmOverloads constructor(
         it.strokeWidth = 1.dp
     }
 
-
     // 原始数据
     open var originList = arrayListOf<Int>()
 

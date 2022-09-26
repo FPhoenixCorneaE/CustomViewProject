@@ -1,6 +1,7 @@
 package com.example.customviewproject.e
 
 import android.os.Bundle
+import com.example.customviewproject.R
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.EActivityBinding
 import com.example.customviewproject.e.e1.E1Activity
@@ -9,6 +10,7 @@ import com.example.customviewproject.e.e2.E2Activity
 import com.example.customviewproject.e.e3.E3Activity
 import com.example.customviewproject.ext.click
 import com.example.customviewproject.ext.jumpActivity
+import com.example.customviewproject.ext.jumpTabActivity
 
 /**
  *
@@ -29,6 +31,13 @@ class EActivity : BaseActivity<EActivityBinding>() {
 
         binding.bt2.click {
             jumpActivity(it, E2Activity::class.java)
+        }
+
+        binding.bt2Blog.click {
+            jumpTabActivity(
+                it,
+                listOf("矩形图表绘制" to R.layout.e2_blog_item),
+            )
         }
 
         binding.bt3.click {
