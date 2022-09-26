@@ -9,6 +9,7 @@ import com.example.customviewproject.d.DActivity
 import com.example.customviewproject.databinding.ActivityMainBinding
 import com.example.customviewproject.e.EActivity
 import com.example.customviewproject.ext.*
+import com.example.customviewproject.f.FActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
@@ -37,6 +38,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         // 图表
         binding.bt5.click {
             jumpActivity(it, EActivity::class.java)
+        }
+
+        // 运动
+        binding.bt6.click {
+            jumpActivity(it, FActivity::class.java)
         }
     }
 }

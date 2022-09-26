@@ -1,9 +1,8 @@
 package com.example.customviewproject.ext
 
 import android.graphics.PointF
-import androidx.core.graphics.minus
-import kotlin.math.pow
-import kotlin.math.sqrt
+import android.util.Log
+import kotlin.math.*
 
 /**
  *
@@ -42,4 +41,72 @@ fun PointF.distance(b: PointF): Float = let {
     val dy = b.y - a.y * 1.0
 
     return@let sqrt(dx.pow(2) + dy.pow(2)).toFloat()
+}
+
+/*
+ * 作者:史大拿
+ * 创建时间: 9/26/22 10:55 AM
+ * TODO 计算角度
+ * @param startP: 开始点
+ * @param endP: 结束点
+ */
+fun PointF.angle(endP: PointF): Float {
+    val startP = this
+
+    // 原始位置
+    val angle = if (startP.x >= endP.x && startP.y >= endP.y) {
+        Log.e("szjLocation", "end在start右下角")
+        0
+    } else if (startP.x >= endP.x && startP.y <= endP.y) {
+        Log.e("szjLocation", "end在start右上角")
+        270
+    } else if (startP.x <= endP.x && startP.y <= endP.y) {
+        Log.e("szjLocation", "end在start左上角")
+        180
+    } else if (startP.x <= endP.x && startP.y >= endP.y) {
+        Log.e("szjLocation", "end在start左下角")
+        90
+    } else {
+        0
+    }
+    // 计算距离
+    val dx = startP.x - endP.x
+    val dy = startP.y - endP.y
+    // 弧度
+    val radian = abs(atan(dy / dx))
+
+    // 弧度转角度
+    var a = Math.toDegrees(radian.toDouble()).toFloat()
+
+    if (startP.x <= endP.x && startP.y >= endP.y) {
+        // 左下角
+        a = 90 - a
+    } else if (startP.x >= endP.x && startP.y <= endP.y) {
+        // 右上角
+        a = 90 - a
+    }
+    return a + angle
+}
+
+fun PointF.angle2(endP: PointF): Float {
+    val startP = this
+    val cx = endP.x
+    val cy = endP.y
+//        Log.i("szjCx", "cx:" + c.getX().toString() + "\t" + "y:" + c.y)
+    val tx = startP.x - cx
+    val ty = startP.y - cy
+    val length = sqrt((tx * tx + ty * ty).toDouble())
+
+    val r = acos(ty / length)
+
+    var angle = Math.toDegrees(r).toFloat()
+
+    if (startP.x > cx) angle = 360f - angle
+
+    // add 90° because chart starts EAST
+    angle += 90f
+
+    // neutralize overflow
+    if (angle > 360f) angle -= 360f
+    return angle
 }
