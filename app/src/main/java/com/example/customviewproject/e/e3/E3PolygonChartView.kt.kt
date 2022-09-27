@@ -244,6 +244,8 @@ open class E3PolygonChartView @JvmOverloads constructor(
      * 作者:史大拿
      * 创建时间: 9/22/22 1:19 PM
      * TODO 根据当前位置计算角度
+     *
+     * 粘贴自MPAndroidChart.java 也可以查看PointFExt#angle() 方法
      */
     private fun getAngleForPoint(x: Float, y: Float): Float {
         val cx = centerLocation.x
@@ -310,8 +312,8 @@ open class E3PolygonChartView @JvmOverloads constructor(
      * 作者:史大拿
      * 创建时间: 9/21/22 7:11 PM
      * TODO 获取对应位置
-     * @number : 编号
-     * @score: 成绩
+     * @number : 第几个点
+     * @score: 第几条边
      * @return PointF: <x X坐标> <y Y坐标>
      */
     private fun getLocation(number: Int, score: Float): PointF = let {
@@ -354,7 +356,6 @@ open class E3PolygonChartView @JvmOverloads constructor(
                 } else {
                     path.lineTo(x, y)
                 }
-
 
                 // 设置文字
                 if (index == polygonCount - 1) {
