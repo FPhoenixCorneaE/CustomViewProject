@@ -39,8 +39,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt3_blog"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="入门图表(蛛网/雷达图)blog" />
+        android:text="入门图表(蛛网/雷达图)blog"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="饼状图" />
 </LinearLayout>

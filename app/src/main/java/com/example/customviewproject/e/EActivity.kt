@@ -44,10 +44,10 @@ class EActivity : BaseActivity<EActivityBinding>() {
             jumpActivity(it, E3Activity::class.java)
         }
 
-        binding.bt3Blog.click {
+        binding.bt4.click {
             jumpTabActivity(
                 it,
-                listOf("入门图表(蛛网/雷达图)blog" to R.layout.e3_blog_item),
+                listOf("饼状图" to R.layout.e4_item),
             )
         }
     }
