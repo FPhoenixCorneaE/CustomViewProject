@@ -7,8 +7,9 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import com.example.customviewproject.ext.*
-import kotlin.math.abs
+import com.example.customviewproject.ext.angle
+import com.example.customviewproject.ext.angle2
+import com.example.customviewproject.ext.dp
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -37,9 +38,9 @@ open class E4PicChartView @JvmOverloads constructor(
 
     private val data = listOf(
         Triple(Color.RED, 1f, "红色"),
-        Triple(Color.WHITE, 1f, "白色"),
-        Triple(Color.YELLOW, 1f, "黄色"),
-        Triple(Color.GREEN, 1f, "绿色"),
+        Triple(Color.WHITE, 2f, "白色"),
+        Triple(Color.YELLOW, 3f, "黄色"),
+        Triple(Color.GREEN, 4f, "绿色"),
     )
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -51,7 +52,9 @@ open class E4PicChartView @JvmOverloads constructor(
 
     private var offsetAngle = 0f
     private var downAngle = 0f
+    private var downPointF = PointF()
     private var originAngle = 0f
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -62,6 +65,10 @@ open class E4PicChartView @JvmOverloads constructor(
             MotionEvent.ACTION_DOWN -> {
                 downAngle = (PointF(event.x, event.y)).angle(PointF(width / 2f, height / 2f))
                 originAngle = offsetAngle
+
+                downPointF.x = event.x
+                downPointF.y = event.y
+
             }
             MotionEvent.ACTION_MOVE -> {
 
@@ -75,54 +82,66 @@ open class E4PicChartView @JvmOverloads constructor(
                         height / 2f
                     )
                 ) - downAngle + originAngle
+                Log.e("szjOffsetAngle", "$offsetAngle")
             }
             MotionEvent.ACTION_UP -> {
 
-                // 当前角度 = 原始角度 + 偏移角度
+                // 当前角度
                 var angle =
-                    (PointF(event.x, event.y)).angle(PointF(width / 2f, height / 2f))
-                if (angle > 270) {
+                    (PointF(event.x, event.y)).angle2(PointF(width / 2f, height / 2f))
 
-                } else if (angle > 180) {
-                    angle -= abs(offsetAngle)
-                } else if (angle > 90) {
+                angle = getNormalizedAngle(angle)
 
-                } else {
-                    angle += offsetAngle
-                }
+                // 当前滑动距离
+                val offset = getNormalizedAngle(offsetAngle)
+                val a = getNormalizedAngle(angle - offset)
+                Log.e(
+                    "szjAngle",
+                    "a:$a\tangle:${angle}\toffset:${offset}"
+                )
 
-                Log.e("szjAngle", "angle:$angle\toffset:${offsetAngle}")
+                var startAngle = 0f
 
-                var startAngle = abs(offsetAngle)
                 data.forEachIndexed { index, value ->
                     // 每一格的占比
                     val ration = each * value.second
 
-                    var tempStartAngle = startAngle
-                    var tempEndAngle = (tempStartAngle + ration)
+                    startAngle += ration
 
-                    Log.e(
-                        "szjDOWNIndex2",
-                        "index:${index}\tangle:$angle\ttempStartAngle:${tempStartAngle}\ttempend:$tempEndAngle"
-                    )
-                    if (angle in tempStartAngle..tempEndAngle) {
-                        Log.e("szjDOWNIndex1", "$index")
-                        clickPosition = if (clickPosition == index && clickPosition != -1) {
-                            -1
-                        } else {
-                            index
-                        }
+                    if (startAngle > a) {
+                        clickPosition = index
                         invalidate()
                         return true
                     }
 
-                    startAngle = tempEndAngle
+
+//                    Log.e(
+//                        "szjDOWNIndex2",
+//                        "index:${index}\tangle:$angle\ttempStartAngle:${tempStartAngle}\ttempend:$tempEndAngle"
+//                    )
+//                    if (angle in tempStartAngle..tempEndAngle) {
+//                        Log.e("szjDOWNIndex1", "$index")
+//                        clickPosition = if (clickPosition == index && clickPosition != -1) {
+//                            -1
+//                        } else {
+//                            index
+//                        }
+//                        invalidate()
+//                        return true
+//                    }
+
                 }
             }
 
         }
         invalidate()
         return true
+    }
+
+    open fun getNormalizedAngle(angle: Float): Float {
+        var angle = angle
+        while (angle < 0f) angle += 360f
+        return angle % 360f
     }
 
     // 总数
