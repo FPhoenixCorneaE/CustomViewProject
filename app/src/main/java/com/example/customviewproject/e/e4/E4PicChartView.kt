@@ -2,15 +2,13 @@ package com.example.customviewproject.e.e4
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.PointF
+import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.example.customviewproject.ext.*
+import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -21,7 +19,7 @@ import kotlin.math.sin
  * @CreateDate: 9/27/22$ 4:41 PM$
  * TODO
  */
-class E4PicChartView @JvmOverloads constructor(
+open class E4PicChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
@@ -33,11 +31,17 @@ class E4PicChartView @JvmOverloads constructor(
     }
 
     // 点击图表
-    private var clickPosition = 3
+    open var clickPosition = -1
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
-    private val data = listOf(1f, 2f, 3f, 2f)
+    private val data = listOf(
+        Triple(Color.RED, 1f, "红色"),
+        Triple(Color.WHITE, 1f, "白色"),
+        Triple(Color.YELLOW, 1f, "黄色"),
+        Triple(Color.GREEN, 1f, "绿色"),
+    )
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val width = resolveSize((RADIUS + DISTANCE * 2).toInt(), widthMeasureSpec)
@@ -45,6 +49,9 @@ class E4PicChartView @JvmOverloads constructor(
         setMeasuredDimension(width, height)
     }
 
+    private var offsetAngle = 0f
+    private var downAngle = 0f
+    private var originAngle = 0f
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -52,28 +59,67 @@ class E4PicChartView @JvmOverloads constructor(
         val each = 360 / totalNumber
 
         when (event.action) {
-            MotionEvent.ACTION_UP -> {
-
-                val angle = (PointF(event.x, event.y)).angle(PointF(width / 2f, height / 2f))
-
-                var startAngle = 0f
-                data.forEachIndexed { index, value ->
-                    // 每一格的占比
-                    val ration = each * value
-
-                    if (angle in startAngle..(startAngle + ration)) {
-                        Log.e("szjDOWNIndex1", "$index")
-                        clickPosition = index
-                        return true
-                    }
-
-                    startAngle += ration
-                }
-
+            MotionEvent.ACTION_DOWN -> {
+                downAngle = (PointF(event.x, event.y)).angle(PointF(width / 2f, height / 2f))
+                originAngle = offsetAngle
             }
             MotionEvent.ACTION_MOVE -> {
 
+                // 滑动过程中始终保持未按下状态
+//                clickPosition = -1
+                parent.requestDisallowInterceptTouchEvent(true)
+
+                offsetAngle = (PointF(event.x, event.y)).angle(
+                    PointF(
+                        width / 2f,
+                        height / 2f
+                    )
+                ) - downAngle + originAngle
             }
+            MotionEvent.ACTION_UP -> {
+
+                // 当前角度 = 原始角度 + 偏移角度
+                var angle =
+                    (PointF(event.x, event.y)).angle(PointF(width / 2f, height / 2f))
+                if (angle > 270) {
+
+                } else if (angle > 180) {
+                    angle -= abs(offsetAngle)
+                } else if (angle > 90) {
+
+                } else {
+                    angle += offsetAngle
+                }
+
+                Log.e("szjAngle", "angle:$angle\toffset:${offsetAngle}")
+
+                var startAngle = abs(offsetAngle)
+                data.forEachIndexed { index, value ->
+                    // 每一格的占比
+                    val ration = each * value.second
+
+                    var tempStartAngle = startAngle
+                    var tempEndAngle = (tempStartAngle + ration)
+
+                    Log.e(
+                        "szjDOWNIndex2",
+                        "index:${index}\tangle:$angle\ttempStartAngle:${tempStartAngle}\ttempend:$tempEndAngle"
+                    )
+                    if (angle in tempStartAngle..tempEndAngle) {
+                        Log.e("szjDOWNIndex1", "$index")
+                        clickPosition = if (clickPosition == index && clickPosition != -1) {
+                            -1
+                        } else {
+                            index
+                        }
+                        invalidate()
+                        return true
+                    }
+
+                    startAngle = tempEndAngle
+                }
+            }
+
         }
         invalidate()
         return true
@@ -82,10 +128,21 @@ class E4PicChartView @JvmOverloads constructor(
     // 总数
     private val totalNumber: Float
         get() {
-            return data.fold(0f) { a, b -> a + b }
+            return data.map { it.second }.fold(0f) { a, b -> a + b }
         }
 
+    private val path: Path by lazy {
+        Path().also {
+            it.addCircle(width / 2f, height / 2f, RADIUS / 6f, Path.Direction.CCW)
+        }
+    }
+
     override fun onDraw(canvas: Canvas) {
+
+        canvas.rotate(offsetAngle, width / 2f, height / 2f)
+
+        // 需要android版本 >= api26 (8.0)
+        canvas.clipOutPath(path)
 
         // 每一格的大小
         val each = 360 / totalNumber
@@ -99,20 +156,25 @@ class E4PicChartView @JvmOverloads constructor(
         var startAngle = 0f
         data.forEachIndexed { position, value ->
 
-
             // 每一格的占比
-            val ration = each * value
-            paint.color = colorRandom
+            val ration = each * value.second
             if (position == clickPosition % data.size) {
                 canvas.save()
+
                 val dx =
                     DISTANCE * cos(Math.toRadians(startAngle.toDouble() + ration / 2f)).toFloat()
                 val dy =
                     DISTANCE * sin(Math.toRadians(startAngle.toDouble() + ration / 2f)).toFloat()
                 canvas.translate(dx, dy)
             }
+            paint.color = value.first
 
+            // 绘制扇形
             canvas.drawArc(left, top, right, bottom, startAngle, ration, true, paint)
+
+            // 绘制文字
+            drawText(canvas, startAngle, startAngle + ration, position)
+
             startAngle += ration
 
 
@@ -120,10 +182,39 @@ class E4PicChartView @JvmOverloads constructor(
                 canvas.restore()
             }
         }
+    }
+
+    /*
+     * 作者:史大拿
+     * 创建时间: 9/28/22 2:29 PM
+     * TODO 绘制文字
+     * @startAngle: 开始角度
+     * @endAngle: 结束角度
+     */
+    private fun drawText(canvas: Canvas, startAngle: Float, endAngle: Float, position: Int) {
+        val ration = (endAngle - startAngle) / 2f + startAngle
+        val radius = RADIUS / 3f
+//        Log.e("szjDrawText", "start:$startAngle\tend:$endAngle\tration:$ration")
+
+        val dx =
+            radius * cos(Math.toRadians(ration * 1.0)).toFloat() + width / 2f
+        val dy =
+            radius * sin(Math.toRadians(ration * 1.0)).toFloat() + height / 2f
 
 
+        paint.textSize = 16.dp
+//        paint.color = colorRandom
         paint.color = Color.BLACK
-        canvas.drawCircle(width / 2f, height / 2f, 10.dp, paint)
 
+//        canvas.drawCircle(dx, dy, 2.dp, paint)
+
+        val text = "${data[position].third}-$position"
+        val textWidth = paint.measureText(text) // 文字宽度
+        val textHeight = paint.descent() + paint.ascent() // 文字高度
+
+        val textX = dx - (textWidth / 2f)
+        val textY = dy - (textHeight / 2f)
+
+        canvas.drawText(text, 0, text.length, textX, textY, paint)
     }
 }
