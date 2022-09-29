@@ -41,7 +41,8 @@ class A2XFermodeView @JvmOverloads constructor(
             paint
         )
 
-        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+//        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OUT)
         canvas.drawBitmap(bitmap, 20f, 20f, paint)
         paint.xfermode = null
         canvas.restoreToCount(count)

@@ -1,4 +1,4 @@
-package com.example.customviewproject.e.e4
+package com.example.customviewproject.e.e4_blog
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -9,6 +9,9 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.graphics.withSave
+import com.example.customviewproject.e.e4.E4PicChartView
+import com.example.customviewproject.e.e4.E4PicChartView.Companion.DISTANCE
+import com.example.customviewproject.e.e4.E4PicChartView.Companion.RADIUS
 import com.example.customviewproject.ext.angle
 import com.example.customviewproject.ext.angle2
 import com.example.customviewproject.ext.dp
@@ -17,28 +20,14 @@ import kotlin.math.sin
 
 /**
  *
- * @ClassName: E4PicChartView
+ * @ClassName: E4PicChartBlogView
  * @Author: 史大拿
- * @CreateDate: 9/27/22$ 4:41 PM$
+ * @CreateDate: 9/29/22$ 9:32 AM$
  * TODO
  */
-open class E4PicChartView @JvmOverloads constructor(
+open class E4PicChartBlogView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-
-    companion object {
-        val RADIUS = 200.dp
-
-        // 选中移动距离
-        val DISTANCE = 20.dp
-
-        // 开场动画时间
-        const val ANIMATOR = 1000L
-    }
-
-    // 点击图表
-    open var clickPosition = -1
-
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     private val data = listOf(
@@ -48,17 +37,16 @@ open class E4PicChartView @JvmOverloads constructor(
         Triple(Color.GREEN, 1f, "绿色"),
     )
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val width = resolveSize((RADIUS + DISTANCE * 2).toInt(), widthMeasureSpec)
-        val height = resolveSize(width, heightMeasureSpec)
-        setMeasuredDimension(width, height)
-    }
+    // 总数
+    private val totalNumber: Float
+        get() {
+            return data.map { it.second }.fold(0f) { a, b -> a + b }
+        }
 
     private var currentFraction = 0f
     private val animator by lazy {
         val animator = ObjectAnimator.ofFloat(0f, 1f)
-        animator.duration = ANIMATOR
+        animator.duration = E4PicChartView.ANIMATOR
         animator.addUpdateListener {
             currentFraction = it.animatedValue as Float
             invalidate()
@@ -71,15 +59,21 @@ open class E4PicChartView @JvmOverloads constructor(
         animator.start()
     }
 
+    open var clickPosition = -1
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val width = resolveSize((RADIUS + DISTANCE * 2).toInt(), widthMeasureSpec)
+        val height = resolveSize(width, heightMeasureSpec)
+        setMeasuredDimension(width, height)
+    }
+
     private var offsetAngle = 0f
     private var downAngle = 0f
     private var originAngle = 0f
 
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-
-
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 downAngle = (PointF(event.x, event.y)).angle(PointF(width / 2f, height / 2f))
@@ -87,7 +81,6 @@ open class E4PicChartView @JvmOverloads constructor(
             }
 
             MotionEvent.ACTION_MOVE -> {
-
                 parent.requestDisallowInterceptTouchEvent(true)
 
                 offsetAngle = (PointF(event.x, event.y)).angle(
@@ -96,8 +89,10 @@ open class E4PicChartView @JvmOverloads constructor(
                         height / 2f
                     )
                 ) - downAngle + originAngle
-                Log.e("szjOffsetAngle", "$offsetAngle")
+
+                invalidate()
             }
+
             MotionEvent.ACTION_UP -> {
                 // 每一格的大小
                 val each = 360 / totalNumber
@@ -142,7 +137,6 @@ open class E4PicChartView @JvmOverloads constructor(
                 }
             }
         }
-        invalidate()
         return true
     }
 
@@ -157,27 +151,14 @@ open class E4PicChartView @JvmOverloads constructor(
         return a % 360f
     }
 
-    // 总数
-    private val totalNumber: Float
-        get() {
-            return data.map { it.second }.fold(0f) { a, b -> a + b }
-        }
-
-    private val path: Path by lazy {
-        Path().also {
-            it.addCircle(width / 2f, height / 2f, RADIUS / 6f, Path.Direction.CCW)
-        }
-    }
 
     override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
 
 //        canvas.rotate(offsetAngle, width / 2f, height / 2f)
 
-        // 需要android版本 >= api26 (8.0)
-        canvas.clipOutPath(path)
 
-        // 每一格的大小
-        val each = 360 / totalNumber
+        drawClipCircle(canvas)
 
         // 居中显示
         val left = width / 2f - RADIUS / 2f
@@ -185,6 +166,10 @@ open class E4PicChartView @JvmOverloads constructor(
         val right = left + RADIUS
         val bottom = top + RADIUS
 
+        // 每一份的大小
+        val each = 360f / totalNumber
+
+        // 开始位置
         var startAngle = 0f
         data.forEachIndexed { position, value ->
 
@@ -211,22 +196,18 @@ open class E4PicChartView @JvmOverloads constructor(
             }
             paint.color = value.first
 
-            // 设置动画
-            startAngle *= currentFraction
-            Log.e(
-                "szjPosition",
-                "position:${position}\tcurrent:${currentFraction}\t减:${position - currentFraction}"
-            )
             canvas.withSave {
                 canvas.rotate(offsetAngle, width / 2f, height / 2f)
                 // 绘制扇形
+                startAngle *= currentFraction
+
                 canvas.drawArc(left, top, right, bottom, startAngle, ration, true, paint)
                 canvas.rotate(-offsetAngle, width / 2f, height / 2f)
             }
 
 
             // 绘制文字
-            drawText(canvas, startAngle, startAngle + ration, position)
+            drawText(canvas, startAngle, ration, position)
 
             startAngle += ration
 
@@ -237,17 +218,35 @@ open class E4PicChartView @JvmOverloads constructor(
         }
     }
 
+    private val path: Path by lazy {
+        Path().also {
+            it.addCircle(width / 2f, height / 2f, RADIUS / 6f, Path.Direction.CCW)
+        }
+    }
+
     /*
      * 作者:史大拿
-     * 创建时间: 9/28/22 2:29 PM
-     * TODO 绘制文字
-     * @startAngle: 开始角度
-     * @endAngle: 结束角度
+     * 创建时间: 9/29/22 3:20 PM
+     * TODO 扣内圆
      */
-    private fun drawText(canvas: Canvas, startAngle: Float, endAngle: Float, position: Int) {
+    private fun drawClipCircle(canvas: Canvas) {
+        // 需要android版本 >= api26 (8.0)
+        canvas.clipOutPath(path)
+    }
 
-        val ration = (endAngle - startAngle) / 2f + startAngle + offsetAngle
-        val radius = RADIUS / 3f
+    /*
+     * 作者:史大拿
+     * 创建时间: 9/29/22 10:57 AM
+     * TODO
+     * @param startAngle:开始角度
+     * @param sweepAngle:划过的角度
+     */
+    private fun drawText(canvas: Canvas, startAngle: Float, sweepAngle: Float, position: Int) {
+
+        // 当前角度 = 开始角度 + 划过角度的一半
+        val ration = startAngle + sweepAngle / 2f + offsetAngle
+        // 当前文字半径 = 半径一半的70%
+        val radius = (RADIUS / 2f) * 0.7f
 
         val dx =
             radius * cos(Math.toRadians(ration * 1.0)).toFloat() + width / 2f
@@ -255,11 +254,11 @@ open class E4PicChartView @JvmOverloads constructor(
             radius * sin(Math.toRadians(ration * 1.0)).toFloat() + height / 2f
 
 
-        paint.textSize = 16.dp
-//        paint.color = colorRandom
         paint.color = Color.BLACK
-
 //        canvas.drawCircle(dx, dy, 2.dp, paint)
+
+
+        paint.textSize = 16.dp
 
         val text = "${data[position].third}$position"
         val textWidth = paint.measureText(text) // 文字宽度
@@ -270,4 +269,5 @@ open class E4PicChartView @JvmOverloads constructor(
 
         canvas.drawText(text, 0, text.length, textX, textY, paint)
     }
+
 }
