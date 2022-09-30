@@ -108,7 +108,8 @@ open class E5HalfPicChartView @JvmOverloads constructor(
                     // 结束位置
                     val end = start + element.second * eachAngle
 
-                    if (angle in start..end) {
+                    // currentFraction>= 1 表示动画结束
+                    if (angle in start..end && currentFraction >= 1) {
                         Log.e("szjIndex", "$index")
                         selectPosition = if (selectPosition == index && selectPosition != -1) {
                             -1
