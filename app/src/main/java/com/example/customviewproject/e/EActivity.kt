@@ -48,8 +48,16 @@ class EActivity : BaseActivity<EActivityBinding>() {
             jumpTabActivity(
                 it,
                 listOf(
-                    "饼状图(Blog)" to R.layout.e4_blog_item,
                     "饼状图" to R.layout.e4_item,
+                    "饼状图(Blog)" to R.layout.e4_blog_item,
+                ),
+            )
+        }
+        binding.bt5.click {
+            jumpTabActivity(
+                it,
+                listOf(
+                    "半-饼状图" to R.layout.e5_item,
                 ),
             )
         }

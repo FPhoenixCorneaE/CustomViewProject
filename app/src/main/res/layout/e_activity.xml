@@ -49,4 +49,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="饼状图" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="半-饼状图" />
 </LinearLayout>
