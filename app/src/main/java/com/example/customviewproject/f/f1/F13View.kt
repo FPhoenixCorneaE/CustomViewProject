@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
 import android.util.AttributeSet
@@ -115,9 +114,9 @@ class F13View @JvmOverloads constructor(
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
 
-        paint.color = Color.RED
-        paint.alpha = (255 * 0.1f).toInt()
-        canvas.drawCircle(movePointF.x, movePointF.y, RADIUS, paint)
+//        paint.color = Color.RED
+//        paint.alpha = (255 * 0.1f).toInt()
+//        canvas.drawCircle(movePointF.x, movePointF.y, RADIUS, paint)
 
         list.forEach {
             paint.color = it.color

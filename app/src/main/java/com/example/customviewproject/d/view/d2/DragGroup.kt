@@ -13,7 +13,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.widget.ListViewCompat
 import androidx.customview.widget.ViewDragHelper
 import com.example.customviewproject.R
-import com.example.customviewproject.ext.dp
 
 /**
  *
