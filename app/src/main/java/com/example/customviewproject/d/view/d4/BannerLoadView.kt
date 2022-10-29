@@ -132,6 +132,8 @@ open class BannerLoadView @JvmOverloads constructor(
             TAG,
             "onInterceptTouchEvent:isSwipeLeft:${isLastPageSwipeLeft}\t:${ev.action}\t:isTouchLeft:${isTouchLeft}"
         )
+
+
         if (isLastPage() && isLastPageSwipeLeft) {
             return true
         }
