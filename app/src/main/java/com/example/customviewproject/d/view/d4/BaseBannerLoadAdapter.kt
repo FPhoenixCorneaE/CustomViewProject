@@ -5,6 +5,7 @@ import androidx.annotation.FloatRange
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  *
@@ -28,7 +29,7 @@ abstract class BaseBannerLoadAdapter {
      * 创建时间: 10/28/22 11:14 AM
      * TODO viewpager通过fragment，所以需要 fragmentManager
      */
-    abstract fun getFragmentManager(): FragmentManager
+    abstract fun getAdapter(): RecyclerView.Adapter<*>
 
     /*
      * 作者:史大拿
@@ -64,7 +65,7 @@ abstract class BaseBannerLoadAdapter {
          */
         fun loadView(view: View)
 
-        // ViewPager中的方法
+        // ViewPager2中的方法
         fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int)
         fun onPageSelected(position: Int)
         fun onPageScrollStateChanged(state: Int)

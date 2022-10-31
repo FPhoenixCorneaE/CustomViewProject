@@ -1,6 +1,6 @@
 package com.example.customviewproject.d.view.d4
 
-import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  *
@@ -10,11 +10,10 @@ import androidx.fragment.app.FragmentManager
  * TODO
  */
 class BannerLoadAdapter(
-    private val fragmentManager: FragmentManager,
     private val listId: List<Int>,
     private val loadId: Int
 ) : BaseBannerLoadAdapter() {
-    override fun getFragmentManager() = fragmentManager
+    override fun getAdapter(): RecyclerView.Adapter<*> = ViewPagerAdapter(listId)
 
     override fun getListLayoutId() = listId
 

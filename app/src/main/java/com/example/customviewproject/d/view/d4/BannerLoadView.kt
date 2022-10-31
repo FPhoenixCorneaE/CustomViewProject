@@ -7,12 +7,10 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE
 import android.widget.LinearLayout
 import androidx.core.animation.doOnEnd
-import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING
-import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_SETTLING
-import androidx.viewpager.widget.ViewPager
+import androidx.core.animation.doOnStart
+import androidx.viewpager2.widget.ViewPager2
 import com.example.customviewproject.ext.screenWidth
 import kotlin.math.abs
 
@@ -25,7 +23,7 @@ import kotlin.math.abs
  */
 open class BannerLoadView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr), ViewPager.OnPageChangeListener {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     companion object {
         const val TAG = "szjBannerLoadView"
@@ -33,7 +31,7 @@ open class BannerLoadView @JvmOverloads constructor(
     }
 
     private val viewPager by lazy {
-        BannerLoadViewPager(context, attrs).apply {
+        ViewPager2(context, attrs).apply {
             id = generateViewId()
         }
     }
@@ -52,14 +50,13 @@ open class BannerLoadView @JvmOverloads constructor(
      */
     private var viewPagerPosition = 0
 
-    private lateinit var adapter: BannerLoadViewPagerAdapter
 
     override fun onFinishInflate() {
         super.onFinishInflate()
         orientation = HORIZONTAL
         addView(
             viewPager,
-            LayoutParams(MarginLayoutParams.WRAP_CONTENT, MarginLayoutParams.MATCH_PARENT)
+            LayoutParams(MarginLayoutParams.MATCH_PARENT, MarginLayoutParams.MATCH_PARENT)
         )
     }
 
@@ -82,15 +79,14 @@ open class BannerLoadView @JvmOverloads constructor(
         loadAdapter: BaseBannerLoadAdapter
     ) {
         this.loadAdapter = loadAdapter
-        val fragments = loadAdapter.getListLayoutId().map {
-            BannerLoadFragment.getInstance(it)
-        }.toList()
 
-        adapter = BannerLoadViewPagerAdapter(getAdapter().getFragmentManager(), fragments)
-        viewPager.adapter = adapter
+        viewPager.adapter = getAdapter().getAdapter()
+
 
         // 监听viewpager滑动
-        viewPager.addOnPageChangeListener(this)
+        viewPager.registerOnPageChangeCallback(
+            MyPageChangeCallback()
+        )
 
         val view = LayoutInflater.from(context).inflate(getAdapter().loadId(), null, false)
 
@@ -117,6 +113,7 @@ open class BannerLoadView @JvmOverloads constructor(
         when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
                 mLastDownX = ev.x
+                downX = ev.x
             }
             MotionEvent.ACTION_MOVE -> {
                 isTouchLeft = mLastDownX - ev.x > 0 //判断滑动方向
@@ -126,19 +123,22 @@ open class BannerLoadView @JvmOverloads constructor(
     }
 
 
-    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
-        Log.e("szj事件分发", "onInterceptTouchEvent:${ev.action}")
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        Log.e("szj事件分发", "onInterceptTouchEvent:${ev?.action}")
+
+
+        var isIntercept = super.onInterceptTouchEvent(ev)
+        if (ev?.action == MotionEvent.ACTION_MOVE) {
+//            if (isLastPageSwipeLeft) {
+//                return true
+//            }
+            isIntercept = isLastPageSwipeLeft
+        }
         Log.e(
             TAG,
-            "onInterceptTouchEvent:isSwipeLeft:${isLastPageSwipeLeft}\t:${ev.action}\t:isTouchLeft:${isTouchLeft}"
+            "onInterceptTouchEvent:isIntercept:${isIntercept}\t"
         )
-
-
-        if (isLastPage() && isLastPageSwipeLeft) {
-            return true
-        }
-
-        return super.onInterceptTouchEvent(ev)
+        return isIntercept
     }
 
     private var downX = 0f
@@ -150,10 +150,11 @@ open class BannerLoadView @JvmOverloads constructor(
         Log.e("szj事件分发", "onTouchEvent:${event.action}")
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                // 正常情况下这里不会执行，所以需要从dispatchTouchEvent中拿取downX事件
                 downX = event.x
             }
             MotionEvent.ACTION_MOVE -> {
-                Log.e(TAG, "MOVE:offset${offsetX}\tsecondWidth:${secondWidth}")
+                Log.e(TAG, "MOVE:X${event.x}\t:downX:${downX}\tsecondWidth:${secondWidth}")
                 offsetX = event.x - downX
 
                 if (abs(offsetX) >= secondWidth.toFloat()) {
@@ -168,14 +169,16 @@ open class BannerLoadView @JvmOverloads constructor(
 
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                if (offsetX < 0 && isLastPage()) {
+                if (offsetX < 0) {
                     closeAnimator()
                 }
 
-                viewPager.setSlide(false)
+                Log.i(TAG, "松开了")
+
+//                viewPager.setSlide(true)
             }
         }
-        return true
+        return super.onTouchEvent(event)
     }
 
     private fun closeAnimator() {
@@ -186,38 +189,20 @@ open class BannerLoadView @JvmOverloads constructor(
             scrollTo((-offsetX).toInt(), 0)
         }
 
+        animator.doOnStart {
+//            isLastPageSwipeLeft = false
+        }
+
         // 动画结束回调
         animator.doOnEnd {
             offsetX = 0f
             isLastPageSwipeLeft = false
-//            getAdapter().click?.loadMore()
+            getAdapter().click?.loadMore()
         }
         animator.duration = getAdapter().closeTime()
         animator.start()
     }
 
-
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-        getAdapter().click?.onPageScrolled(position, positionOffset, positionOffsetPixels)
-        Log.e(
-            TAG,
-            "onPageScrolled11:p:$position\tcurrentState:${currentState}"
-        )
-    }
-
-    /*
-     * 作者:史大拿
-     * 创建时间: 10/27/22 3:14 PM
-     * TODO 当页面切换完成时候回调
-     */
-    override fun onPageSelected(position: Int) {
-        getAdapter().click?.onPageSelected(position)
-        viewPagerPosition = position
-        Log.e(
-            TAG,
-            "onPageScrolled22:$position"
-        )
-    }
 
     /*
      * 作者:史大拿
@@ -225,48 +210,79 @@ open class BannerLoadView @JvmOverloads constructor(
      * TODO 是否是最后一页
      */
     private fun isLastPage(): Boolean {
-        Log.e(TAG, "viewPagerPosition:${viewPagerPosition}\tcount:${adapter.count - 1}")
-        return viewPagerPosition == adapter.count - 1
-    }
 
-
-    /*
-     * 作者:史大拿
-     * 创建时间: 10/28/22 10:11 AM
-     * TODO 当前viewPager滑动状态
-     */
-    private var currentState = 0
-
-    /*
-     * 作者:史大拿
-     * 创建时间: 10/27/22 3:14 PM
-     * TODO 当页面状态发生变化时候回调
-     */
-    override fun onPageScrollStateChanged(state: Int) {
-        getAdapter().click?.onPageScrollStateChanged(state)
-        currentState = state
-        when (state) {
-            SCROLL_STATE_IDLE -> {
-
-                Log.e(TAG, "onPageScrollStateChanged:页面空闲中..")
-            }
-            SCROLL_STATE_DRAGGING -> {
-                // 如果是最后一页 并且向左滑动 并且 正处于空闲状态
-                if (isLastPage() && isTouchLeft) {
-                    isLastPageSwipeLeft = true
-                    viewPager.setSlide(true)
-                }
-                Log.e(TAG, "onPageScrollStateChanged:拖动中..")
-            }
-            SCROLL_STATE_SETTLING -> {
-                Log.e(TAG, "onPageScrollStateChanged:拖动停止了..")
-            }
-        }
+        val count = getAdapter().getAdapter().itemCount - 1
         Log.e(
-            "onPageScrolled33",
-            "state:${state}\tcurrentItem:${viewPager.currentItem}\tisLastPageSwipeLeft:${isLastPageSwipeLeft}"
+            TAG,
+            "viewPagerPosition:${viewPagerPosition}\tcount:$count"
         )
+        return viewPagerPosition == count
     }
 
+
+    inner class MyPageChangeCallback : ViewPager2.OnPageChangeCallback() {
+        /*
+            * 作者:史大拿
+            * 创建时间: 10/28/22 10:11 AM
+            * TODO 当前viewPager滑动状态
+            */
+        private var currentState = 0
+
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            getAdapter().click?.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            Log.e(
+                TAG,
+                "onPageScrolled11:p:$position\tcurrentState:${currentState}"
+            )
+        }
+
+        /*
+         * 作者:史大拿
+         * 创建时间: 10/27/22 3:14 PM
+         * TODO 当页面切换完成时候回调
+         */
+        override fun onPageSelected(position: Int) {
+            getAdapter().click?.onPageSelected(position)
+            viewPagerPosition = position
+            Log.e(
+                TAG,
+                "onPageScrolled22:$position"
+            )
+        }
+
+        /*
+         * 作者:史大拿
+         * 创建时间: 10/27/22 3:14 PM
+         * TODO 当页面状态发生变化时候回调
+         */
+        override fun onPageScrollStateChanged(state: Int) {
+            getAdapter().click?.onPageScrollStateChanged(state)
+            currentState = state
+            when (state) {
+                ViewPager2.SCROLL_STATE_IDLE -> {
+                    Log.e(TAG, "onPageScrollStateChanged:页面空闲中..")
+                }
+                ViewPager2.SCROLL_STATE_DRAGGING -> {
+                    // 如果是最后一页 并且向左滑动 并且 正处于空闲状态
+                    if (isLastPage() && isTouchLeft) {
+                        isLastPageSwipeLeft = true
+//                    viewPager.setSlide(false)
+                    }
+                    Log.e(TAG, "onPageScrollStateChanged:拖动中..")
+                }
+                ViewPager2.SCROLL_STATE_SETTLING -> {
+                    Log.e(TAG, "onPageScrollStateChanged:拖动停止了..")
+                }
+            }
+            Log.e(
+                "onPageScrolled33",
+                "state:${state}\tcurrentItem:${viewPager.currentItem}\tisLastPageSwipeLeft:${isLastPageSwipeLeft}"
+            )
+        }
+    }
 
 }

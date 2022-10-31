@@ -30,7 +30,6 @@ class D4Activity : BaseActivity<D4ActivityBinding>() {
         )
 
         val adapter = BannerLoadAdapter(
-            supportFragmentManager,
             list,
             R.layout.load_view
         )

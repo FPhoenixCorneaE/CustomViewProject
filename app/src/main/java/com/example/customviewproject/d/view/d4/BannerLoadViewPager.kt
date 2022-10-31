@@ -21,10 +21,10 @@ open class BannerLoadViewPager(context: Context, attrs: AttributeSet?) : ViewPag
 
     private var slide = false
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(ev: MotionEvent?): Boolean {
-        return if (slide) true else super.onTouchEvent(ev)
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        return if (slide) true else super.onInterceptTouchEvent(ev)
     }
+
 
     open fun setSlide(slide: Boolean) {
         this.slide = slide
