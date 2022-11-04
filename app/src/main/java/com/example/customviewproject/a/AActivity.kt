@@ -94,5 +94,17 @@ class AActivity : BaseActivity<AActivityBinding>() {
                 R.layout.gradient_head
             )
         }
+
+        binding.bt11.click {
+            jumpTabActivity(
+                it,
+                listOf(
+                    "PosTan()" to R.layout.path_measure_post_tan,
+
+                    "getSegment()" to R.layout.path_measure_segment,
+                    "nextContour()" to R.layout.path_measure_next_contour,
+                )
+            )
+        }
     }
 }

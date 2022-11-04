@@ -3,16 +3,14 @@
     package="com.example.customviewproject">
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomViewProject">
-        <!--        <activity android:name=".MainActivity">-->
+        <activity android:name=".MainActivity">
 
-        <activity android:name=".d.activity.D4Activity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,6 +59,8 @@
         <activity android:name=".f.FActivity" />
         <activity android:name=".e.EActivity" />
         <activity android:name=".e.e2.E2Activity" />
+        <activity android:name=".d.activity.D4Activity" />
+
 
     </application>
 </manifest>

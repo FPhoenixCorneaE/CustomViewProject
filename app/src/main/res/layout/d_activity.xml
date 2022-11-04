@@ -25,7 +25,13 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt4"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="wrap_content"
-        android:text="九宫格Blog" />
+        android:text="九宫格Blog"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ViewPager加载更多" />
 </LinearLayout>

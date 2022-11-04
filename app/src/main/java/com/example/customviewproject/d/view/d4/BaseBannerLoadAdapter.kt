@@ -3,8 +3,6 @@ package com.example.customviewproject.d.view.d4
 import android.view.View
 import androidx.annotation.FloatRange
 import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -42,10 +40,9 @@ abstract class BaseBannerLoadAdapter {
     /*
      * 作者:史大拿
      * 创建时间: 10/28/22 11:15 AM
-     * TODO 加载更多页面id
+     * TODO 加载更多页面
      */
-    @LayoutRes
-    abstract fun loadId(): Int
+    abstract fun loadView(): View
 
     /*
      * 作者:史大拿
@@ -53,17 +50,20 @@ abstract class BaseBannerLoadAdapter {
      * TODO 加载更多宽度 = 屏幕宽度 * loadWidth
      */
     @FloatRange(from = 0.0, to = 1.0)
-    fun loadWidth() = 0.2
+    fun loadWidth() = 0.3
 
 
     interface Click {
+
         /*
          * 作者:史大拿
-         * 创建时间: 10/28/22 2:53 PM
-         * TODO 加载的view
-         * tips: 需要在 BannerLoadView#setAdapter()前调用
+         * 创建时间: 11/1/22 1:20 PM
+         * TODO loadView参数
+         * @param positionOffset: 当前滑动百分比
+         * @param positionOffsetPixels: 当前滑动距离
+         * @param maxWidth: 最大滑动距离
          */
-        fun loadView(view: View)
+        fun onLoadViewScrolled(offset: Float, offsetPixels: Float, maxOffset: Float)
 
         // ViewPager2中的方法
         fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int)

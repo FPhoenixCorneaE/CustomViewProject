@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.LinearLayout
 import androidx.core.animation.doOnEnd
@@ -27,7 +26,6 @@ open class BannerLoadView @JvmOverloads constructor(
 
     companion object {
         const val TAG = "szjBannerLoadView"
-
     }
 
     private val viewPager by lazy {
@@ -41,7 +39,7 @@ open class BannerLoadView @JvmOverloads constructor(
      * 创建时间: 10/28/22 9:44 AM
      * TODO 第二个view的宽
      */
-    private var secondWidth = 0
+    private var secondWidth = 0f
 
     /*
      * 作者:史大拿
@@ -62,7 +60,7 @@ open class BannerLoadView @JvmOverloads constructor(
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         super.onLayout(changed, l, t, r, b)
-        secondWidth = getChildAt(1).width
+        secondWidth = getChildAt(1).width.toFloat()
     }
 
     private var loadAdapter: BaseBannerLoadAdapter? = null
@@ -88,9 +86,8 @@ open class BannerLoadView @JvmOverloads constructor(
             MyPageChangeCallback()
         )
 
-        val view = LayoutInflater.from(context).inflate(getAdapter().loadId(), null, false)
 
-        getAdapter().click?.loadView(view)
+        val view = getAdapter().loadView()
 
         // 添加更多的数据
         addView(
@@ -157,13 +154,22 @@ open class BannerLoadView @JvmOverloads constructor(
                 Log.e(TAG, "MOVE:X${event.x}\t:downX:${downX}\tsecondWidth:${secondWidth}")
                 offsetX = event.x - downX
 
-                if (abs(offsetX) >= secondWidth.toFloat()) {
-                    offsetX = -secondWidth.toFloat()
+                if (abs(offsetX) >= secondWidth) {
+                    offsetX = -secondWidth
                 }
 
                 if (offsetX > 0f) {
                     offsetX = 0f
                 }
+
+                val positionOffset = abs(offsetX) / secondWidth
+                val positionOffsetPixels = abs(offsetX)
+                val maxOffset = secondWidth
+                getAdapter().click?.onLoadViewScrolled(
+                    positionOffset,
+                    positionOffsetPixels,
+                    maxOffset
+                )
 
                 scrollTo(-offsetX.toInt(), 0)
 
@@ -186,6 +192,16 @@ open class BannerLoadView @JvmOverloads constructor(
         animator.addUpdateListener {
             val value = it.animatedValue as Float
             offsetX = value
+
+            val positionOffset = abs(offsetX) / secondWidth
+            val positionOffsetPixels = abs(offsetX)
+            val maxOffset = secondWidth
+            getAdapter().click?.onLoadViewScrolled(
+                positionOffset,
+                positionOffsetPixels,
+                maxOffset
+            )
+
             scrollTo((-offsetX).toInt(), 0)
         }
 

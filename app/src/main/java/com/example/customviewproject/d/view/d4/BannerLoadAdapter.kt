@@ -1,5 +1,6 @@
 package com.example.customviewproject.d.view.d4
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -11,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class BannerLoadAdapter(
     private val listId: List<Int>,
-    private val loadId: Int
+    private val loadView: View
 ) : BaseBannerLoadAdapter() {
     override fun getAdapter(): RecyclerView.Adapter<*> = ViewPagerAdapter(listId)
 
     override fun getListLayoutId() = listId
 
-    override fun loadId() = loadId
+    override fun loadView() = loadView
 }

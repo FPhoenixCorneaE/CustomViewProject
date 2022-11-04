@@ -2,10 +2,7 @@ package com.example.customviewproject.d
 
 import android.os.Bundle
 import com.example.customviewproject.base.BaseActivity
-import com.example.customviewproject.d.activity.D1Activity
-import com.example.customviewproject.d.activity.D2Activity
-import com.example.customviewproject.d.activity.D3Activity
-import com.example.customviewproject.d.activity.D3BlogActivity
+import com.example.customviewproject.d.activity.*
 import com.example.customviewproject.databinding.DActivityBinding
 import com.example.customviewproject.ext.click
 import com.example.customviewproject.ext.jumpActivity
@@ -33,6 +30,15 @@ class DActivity : BaseActivity<DActivityBinding>() {
 
         binding.bt4.click {
             jumpActivity(it, D3BlogActivity::class.java)
+        }
+
+        /*
+         * 作者:史大拿
+         * 创建时间: 11/1/22 3:10 PM
+         * TODO viewPager加载更多
+         */
+        binding.bt5.click {
+            jumpActivity(it, D4Activity::class.java)
         }
     }
 }
