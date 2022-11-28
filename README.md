@@ -1,5 +1,8 @@
 # customViewProject
 
+# 2022-11-28
+[android 自定义view: 跑马灯-光圈效果](https://blog.csdn.net/weixin_44819566/article/details/128085734)
+
 # 2022-9-30
 [android 自定义View: 饼状图(四)](https://juejin.cn/post/7148975949562789896)
 

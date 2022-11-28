@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--参考视频: https://www.bilibili.com/video/BV1Jg411p7kc/?spm_id_from=333.880.my_history.page.click&vd_source=346cf2bcad1de2af2c354cdbeed25c53 -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跑马灯光圈</title>
+    <style>
+        :root {
+            --backgroundColor: rgb(145, 140, 140);
+            --color1: rgb(242, 88, 175);
+            --color2: rgb(73, 67, 246);
+            --clearColor: rgba(0, 0, 0, 0);
+            --radius:20px;
+        }
+
+        html {
+            background-color: var(--backgroundColor);
+        }
+
+        .container {
+            width: 200px;
+            height: 200px;
+            border-radius: var(--radius);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background-color: yellow;
+        }
+
+        /* 最外层 */
+        .content {
+            background-color: var(--backgroundColor);
+            width: 190px;
+            height: 190px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: var(--radius);
+            z-index: 2;
+        }
+
+        .container::before {
+            content: '';
+            width: 198px;
+            height: 198px;
+            background: linear-gradient(var(--clearColor), var(--clearColor), var(--color1),var(--color1) );
+            position: absolute;
+            animation: animate 2s linear infinite;
+            left: 50%;
+            top: -50%;
+            transform-origin: bottom left;
+        }
+        
+        .container::after {
+            content: '';
+            width: 198px;
+            height: 198px;
+            background: linear-gradient( var(--color2), var(--color2), var(--clearColor), var(--clearColor));
+            position: absolute;
+            animation: animate 2s linear infinite;
+            left: -50%;
+            top: 50%;
+            transform-origin: top right;
+        }
+
+        @keyframes animate{
+            0%{
+                transform: rotate(0deg);
+            }
+
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+
+        .box1{
+            width: 300px;
+            height: 300px;
+            background-color: red;
+            z-index: 3;
+            position: absolute;
+        }
+        .box2{
+            width: 200px;
+            height: 200px;
+            background-color: rgb(149, 255, 0);
+            z-index: 2;
+            position: absolute;
+        }
+        .box3{
+            width: 100px;
+            height: 100px;
+            background-color: rgb(0, 0, 255);
+            z-index: 1;
+            position: absolute;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- 光圈 -->
+    <div class="container"> 
+        <!-- 内容区 -->
+        <div class="content">
+            szj
+        </div>
+     </div>
+
+
+</body>
+
+</html>

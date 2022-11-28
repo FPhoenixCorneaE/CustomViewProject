@@ -20,10 +20,17 @@ class ApertureView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
     companion object {
-        private val DEF_WIDTH = 200.dp
-        private val DEF_HEIGHT = DEF_WIDTH
-
+        val DEF_WIDTH = 200.dp
+        val DEF_HEIGHT = DEF_WIDTH
         private val RADIUS = 20.dp
+    }
+
+    private val animator by lazy {
+        val animator = ObjectAnimator.ofFloat(this, "currentSpeed", 0f, 360f)
+        animator.repeatCount = -1
+        animator.interpolator = null
+        animator.duration = 2000L
+        animator
     }
 
     init {
@@ -35,10 +42,52 @@ class ApertureView @JvmOverloads constructor(
             }
         }
         clipToOutline = true
+
+        animator.start()
+    }
+
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val width = resolveSize(DEF_WIDTH.toInt(), widthMeasureSpec)
+        val height = resolveSize(DEF_HEIGHT.toInt(), heightMeasureSpec)
+        setMeasuredDimension(width, height)
     }
 
 
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    //
+    private val color1 by lazy {
+        LinearGradient(
+            width * 1f,
+            height / 2f,
+            width * 1f,
+            height * 1f,
+            intArrayOf(Color.TRANSPARENT, Color.RED),
+            floatArrayOf(0f, 1f),
+            Shader.TileMode.CLAMP
+        )
+    }
+
+    private val color2 by lazy {
+        LinearGradient(
+            width / 2f,
+            height / 2f,
+            width / 2f,
+            0f,
+            intArrayOf(Color.TRANSPARENT, Color.GREEN),
+            floatArrayOf(0f, 1f),
+            Shader.TileMode.CLAMP
+        )
+    }
+
+
+    private var currentSpeed = 0f
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     private val rectF by lazy {
         val left = 0f + RADIUS / 2f
@@ -48,61 +97,12 @@ class ApertureView @JvmOverloads constructor(
         RectF(left, top, right, bottom)
     }
 
-    private val color1 by lazy {
-        LinearGradient(
-            width * 1f,
-            height / 2f,
-            width * 1f,
-            height * 1f,
-            intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT, Color.RED),
-            floatArrayOf(0f, 0.5f, 1.9f),
-            Shader.TileMode.CLAMP
-        )
+    private val path by lazy {
+        Path().also { it.addRoundRect(rectF, RADIUS, RADIUS, Path.Direction.CCW) }
     }
-
-
-    private val color2 by lazy {
-        LinearGradient(
-            width / 2f,
-            height / 2f,
-            width / 2f,
-            0f,
-            intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT, Color.GREEN),
-            floatArrayOf(0f, 0.5f, 1.9f),
-            Shader.TileMode.CLAMP
-        )
-    }
-    private val animator by lazy {
-        val animator = ObjectAnimator.ofFloat(this, "currentSpeed", 0f, 360f)
-        animator.repeatCount = -1
-//        animator.repeatMode = ObjectAnimator.RESTART
-        animator.interpolator = null
-        animator.duration = 2000L
-        animator
-    }
-
-    var currentSpeed = 0f
-        set(value) {
-            field = value
-            invalidate()
-        }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val width = resolveSize(DEF_WIDTH.toInt(), widthMeasureSpec)
-        val height = resolveSize(DEF_HEIGHT.toInt(), heightMeasureSpec)
-        setMeasuredDimension(width, height)
-    }
-
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        animator.start()
-    }
-
 
     override fun onDraw(canvas: Canvas) {
-
-
+//
         canvas.withSave {
             canvas.rotate(currentSpeed, width / 2f, height / 2f)
             val left1 = rectF.left + rectF.width() / 2f
@@ -120,7 +120,6 @@ class ApertureView @JvmOverloads constructor(
             paint.shader = null
         }
 
-//        paint.color = Color.TRANSPARENT
         canvas.drawRoundRect(rectF, RADIUS, RADIUS, paint)
     }
 }

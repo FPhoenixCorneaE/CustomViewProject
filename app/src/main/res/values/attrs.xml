@@ -30,9 +30,9 @@
     <declare-styleable name="ApertureViewGroup">
         <!--     边框颜色使用background="" 代替   -->
         <!--  边框宽度 -->
-        <attr name="aperture_border_width" format="integer" />
+        <attr name="aperture_border_width" format="dimension" />
         <!--  边框角度  -->
-        <attr name="aperture_border_angle" format="integer" />
+        <attr name="aperture_border_angle" format="dimension" />
 
         <!--      渐变颜色1  -->
         <attr name="aperture_color1" format="color" />

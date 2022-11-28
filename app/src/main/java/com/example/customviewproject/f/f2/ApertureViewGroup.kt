@@ -54,13 +54,12 @@ class ApertureViewGroup @JvmOverloads constructor(
             mColor1 = a.getColor(R.styleable.ApertureViewGroup_aperture_color1, Color.YELLOW)
             mColor2 = a.getColor(R.styleable.ApertureViewGroup_aperture_color2, -1)
             mBorderWidth =
-                a.getInt(R.styleable.ApertureViewGroup_aperture_border_width, 20.dp.toInt())
-                    .toFloat()
+                a.getDimension(R.styleable.ApertureViewGroup_aperture_border_width, 20.dp)
+
             setPadding(mBorderWidth.toInt() / 2)
 //            setPadding(mBorderWidth.toInt(), 0, mBorderWidth.toInt(), 0)
             mBorderAngle =
-                a.getInt(R.styleable.ApertureViewGroup_aperture_border_angle, 20.dp.toInt())
-                    .toFloat()
+                a.getDimension(R.styleable.ApertureViewGroup_aperture_border_angle, 20.dp)
 
             mDuration = a.getInt(R.styleable.ApertureViewGroup_aperture_duration, 3000)
 
@@ -158,6 +157,5 @@ class ApertureViewGroup @JvmOverloads constructor(
         canvas.drawRoundRect(rectF, mBorderAngle, mBorderAngle, paint)
 
         super.dispatchDraw(canvas)
-
     }
 }
