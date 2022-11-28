@@ -87,14 +87,9 @@ class PathMeasurePosTanView @JvmOverloads constructor(
          */
         if (pathMeasure.getPosTan(distance, pos, tan)) {
 
-            val ab = pos[1]
-            val ob = pos[0]
-            val oa = ab.diagonalDistance(ob)
             Log.i(
                 "szjPosTan",
                 "pos:${pos.contentToString()}" +
-                        "cos:${Math.toRadians(Math.cos((ab / oa).toDouble()))}\t" +
-                        "sin:${Math.toRadians(Math.cos((ob / oa).toDouble()))}\t" +
                         "tan:${tan.contentToString()}\t:"
             )
             paint.color = Color.YELLOW

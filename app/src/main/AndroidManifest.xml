@@ -9,9 +9,8 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomViewProject">
+
         <activity android:name=".MainActivity">
-
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -60,6 +59,7 @@
         <activity android:name=".e.EActivity" />
         <activity android:name=".e.e2.E2Activity" />
         <activity android:name=".d.activity.D4Activity" />
+        <activity android:name=".f.f2.F2Activity" />
 
 
     </application>

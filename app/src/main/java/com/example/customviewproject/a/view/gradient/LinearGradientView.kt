@@ -30,7 +30,7 @@ class LinearGradientView @JvmOverloads constructor(
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        var radius = width / 4f
+        val radius = width / 4f
         /*
          * @param x0,y0: 渐变起点坐标
          * @param x1,y1: 渐变终点坐标
@@ -43,8 +43,8 @@ class LinearGradientView @JvmOverloads constructor(
          */
         // TODO 1.=========================
         val shader = LinearGradient(
-            100f, 100f, 400f, 400f,
-            Color.YELLOW,
+            200f, 200f, 400f, 400f,
+            Color.TRANSPARENT,
             Color.RED,
             Shader.TileMode.CLAMP
         )

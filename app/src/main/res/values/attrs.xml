@@ -27,4 +27,25 @@
         <attr name="drag_is_close" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="ApertureViewGroup">
+        <!--     边框颜色使用background="" 代替   -->
+        <!--  边框宽度 -->
+        <attr name="aperture_border_width" format="integer" />
+        <!--  边框角度  -->
+        <attr name="aperture_border_angle" format="integer" />
+
+        <!--      渐变颜色1  -->
+        <attr name="aperture_color1" format="color" />
+
+        <!--      渐变颜色1  -->
+        <attr name="aperture_color2" format="color" />
+
+        <!--    中间颜色    -->
+        <attr name="aperture_middle_color" format="color" />
+
+        <!--   光圈执行速度     -->
+        <attr name="aperture_duration" format="integer" />
+
+    </declare-styleable>
+
 </resources>

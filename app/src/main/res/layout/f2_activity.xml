@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.example.customviewproject.f.f2.ApertureViewGroup
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@color/cccccc"
+        app:aperture_color1="@color/purple_200"
+        app:aperture_color2="@color/color_FFC107"
+        app:aperture_duration="3000"
+        app:aperture_middle_color="@color/white">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:src="@mipmap/emoji_2"
+            android:textColor="@color/white" />
+    </com.example.customviewproject.f.f2.ApertureViewGroup>
+
+    <com.example.customviewproject.f.f2.ApertureViewGroup
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/cccccc"
+        android:gravity="center"
+        app:aperture_border_angle="999"
+        app:aperture_color1="@color/teal_700"
+        app:aperture_color2="@color/purple_700"
+        app:aperture_duration="3000"
+        app:aperture_middle_color="@color/white">
+
+        <Button
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="按钮1" />
+
+    </com.example.customviewproject.f.f2.ApertureViewGroup>
+
+    <com.example.customviewproject.f.f2.ApertureViewGroup
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/cccccc"
+        app:aperture_border_angle="0"
+        app:aperture_color1="#2082E3"
+        app:aperture_duration="3000"
+        app:aperture_middle_color="@color/white">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:text="轩然霞举空洞无物敲锣放砲养家糊口林下风致一字千秋神魂失据青史留名日夜警戒鲽离鹣背怀乡之情忘形之契俗易风移全功尽弃年老龙钟清曹竣府众人国士蚕丛鸟道生物卫星地方自治乘云行泥善以为宝多谋善断不是话头师范学校飞流短长衣紫腰金断墨残楮轰轰烈烈道而不径抽检禄马向平之愿一反既往知人则哲死去活来勺状软骨冲言冲语娇小玲珑以螳挡车发扬光大食为民天去梯之言可操左券扛大个儿矫言伪行知音识趣桃腮杏脸剔肤见骨" />
+
+    </com.example.customviewproject.f.f2.ApertureViewGroup>
+
+</LinearLayout>

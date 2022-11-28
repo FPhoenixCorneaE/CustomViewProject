@@ -5,7 +5,9 @@ import com.example.customviewproject.R
 import com.example.customviewproject.base.BaseActivity
 import com.example.customviewproject.databinding.FActivityBinding
 import com.example.customviewproject.ext.click
+import com.example.customviewproject.ext.jumpActivity
 import com.example.customviewproject.ext.jumpTabActivity
+import com.example.customviewproject.f.f2.F2Activity
 
 /**
  *
@@ -24,6 +26,10 @@ class FActivity : BaseActivity<FActivityBinding>() {
                     "随机滚动" to R.layout.f13_item,
                 )
             )
+        }
+
+        binding.bt2.click {
+            jumpActivity(it, F2Activity::class.java)
         }
     }
 }
